@@ -118,6 +118,9 @@ h1{
 .chip.month[aria-pressed="false"]{opacity:.75}
 .chip.mister-btn{border-color:var(--mister);color:var(--mister)}
 .chip.mister-btn[aria-pressed="true"]{background:var(--mister);color:#fff;opacity:1}
+/* MODALITÀ MISTER NASCOSTA: senza il pulsante la modalità non si può attivare.
+   Per riattivarla cancella (o commenta) la riga qui sotto. */
+.chip.mister-btn{display:none}
 .sep{flex:1 1 auto;min-width:8px}
 
 /* pallino colorato della categoria (chip e pannello Mister) */
