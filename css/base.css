@@ -101,6 +101,15 @@ h1{
 .sub b{color:var(--ink);font-weight:600}
 .sub .hl{color:var(--fondi)}
 
+/* link tra versione completa (index.html) e versione cellulare (mobile.html) */
+.switch-view{
+  display:inline-flex;align-items:center;gap:6px;margin-top:10px;
+  font-family:var(--font-display);font-weight:600;font-size:14px;letter-spacing:.04em;text-transform:uppercase;
+  color:var(--fondi);text-decoration:none;
+  border:1.5px solid var(--fondi);border-radius:var(--radius-chip);padding:4px 12px;
+}
+.switch-view:hover{background:var(--fondi);color:#fff}
+
 /* ---------- filtri ---------- */
 .controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:18px 0 10px}
 .controls.months{margin:0 0 14px}

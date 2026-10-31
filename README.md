@@ -3,7 +3,14 @@
 Tabellone web della stagione 2026/2027 dell'**HC Fondi**: Serie B, U18 F, U16 F, U16 M,
 Under 14, gare interne ed eventi (Selezione Talenti, finali), dal 03/11/2026 al 30/06/2027.
 
-Indirizzo dopo la pubblicazione: **<https://sharkencode80.github.io/HC_Fondi_26_27/>**
+Indirizzo: **<https://sharkencode80.github.io/HC_Fondi_26_27/>**
+
+Il sito ha due versioni e sceglie da solo quella adatta al dispositivo:
+
+| Pagina | Per | Indirizzo |
+|---|---|---|
+| `index.html` | computer e tablet: tabellone giornate × orari | `…/HC_Fondi_26_27/` |
+| `mobile.html` | cellulare: agenda per giornata + dettagli al tocco | `…/HC_Fondi_26_27/mobile.html` |
 
 ---
 
@@ -19,14 +26,18 @@ Indirizzo dopo la pubblicazione: **<https://sharkencode80.github.io/HC_Fondi_26_
 ## 1. Pubblicare su GitHub Pages
 
 GitHub Pages pubblica gratis i file di un repository come sito web. Il sito non ha bisogno
-di un server: bastano `index.html`, la cartella `css/` e i file JSON.
+di un server: bastano le due pagine HTML, le cartelle `css/` e `js/` e i file JSON.
+Con il piano gratuito il limite è **un sito per repository**, non una pagina: un sito
+può contenere tutte le pagine che servono.
 
 ### File da pubblicare
 
 | File | Necessario | Note |
 |---|:-:|---|
-| `index.html` | ✅ | la pagina |
-| `css/` (tutta la cartella) | ✅ | stile e temi |
+| `index.html` | ✅ | versione completa (tabellone) |
+| `mobile.html` | ✅ | versione cellulare |
+| `css/` (tutta la cartella) | ✅ | stile, temi e layout mobile |
+| `js/vista.js` | ✅ | scelta automatica della versione |
 | `calendario.json` | ✅ | il calendario |
 | `risultati.json` | ✅ | i punteggi (anche vuoto) |
 | `README.md`, `.gitignore` | consigliato | queste istruzioni e l'elenco dei file da escludere |
@@ -67,7 +78,7 @@ Da eseguire nella cartella del progetto. L'account GitHub deve essere già colle
 cd ~/IdeaProjects/HC_Fondi_26_27
 
 git init -b main
-git add index.html css calendario.json risultati.json converti_excel.py README.md .gitignore
+git add index.html mobile.html css js calendario.json risultati.json converti_excel.py README.md .gitignore
 # facoltativo: git add "Calendario_HC_Fondi_2026_2027_completo 30 10 2026 verificato.xlsx"
 git commit -m "Prima pubblicazione HC Fondi Campionati 26-27"
 
@@ -150,11 +161,14 @@ Festival della Pallamano (sezione *Risultati extra*).
 
 ### Cambiare tema
 
-In `index.html`, riga 14:
+Il tema si imposta nella riga `<link … id="tema">`, **in entrambe le pagine**
+(riga 16 di `index.html` e di `mobile.html`). Mettere lo stesso tema in tutte e due:
 
 ```html
 <link rel="stylesheet" href="css/tema-rossoblu.css" id="tema">
 ```
+
+In `mobile.html`, subito dopo, resta sempre `<link rel="stylesheet" href="css/mobile.css">`.
 
 | Tema | File |
 |---|---|
@@ -191,11 +205,14 @@ In `index.html`, riga 14:
 |---|---|
 | **Serie B, U18 F, U16 F, …** | mostra/nasconde una categoria (spento = trasparente) |
 | **Tutta la stagione / Novembre 26 / …** | mostra un solo mese o l'intera stagione. All'apertura è selezionato il mese della prossima giornata |
-| **📋 Mister** | attiva la modalità Mister (sotto) |
+| **📋 Mister** | attiva la modalità Mister (sotto). **Ora nascosto**: vedi la nota sotto |
 
 Righe e colonne rimaste vuote dopo i filtri vengono nascoste in automatico.
 
 ### Modalità Mister
+
+> Al momento il pulsante è **nascosto** dalla regola `.chip.mister-btn{display:none}` in
+> `css/base.css`. Per riattivarlo basta cancellare quella riga: il resto è tutto al suo posto.
 
 È pensata per chi segue più squadre nello stesso giorno. Per ogni partita calcola l'ora
 di fine (inizio + durata stimata della categoria). Se tra due gare dello stesso giorno
@@ -206,11 +223,25 @@ non c'è abbastanza **margine**, le segna in rosso con **⚠ possibile accavalla
 - Valori iniziali: Serie B, U18 F e gare interne 70′; U16 60′; Under 14 50′;
   margine 30′, che comprende gli spostamenti.
 
-### Su smartphone
+### Versione cellulare (`mobile.html`)
 
-Il tabellone scorre in orizzontale (giornate) e in verticale (orari). La colonna degli
-orari e l'intestazione con le date restano fisse. Con il tema **compatto** entrano più
-giornate nello schermo. La pagina si ricarica da sola ogni 10 minuti.
+- **Lista per giornata** che scorre in verticale. Ogni card mostra orario, categoria,
+  Casa/Trasferta, avversario e città; se c'è il punteggio, anche il risultato con
+  **Vinta / Persa / Pareggio**.
+- **Filtri** in alto, che scorrono in orizzontale: mese (o "Tutto") e categorie.
+- Le giornate passate sono attenuate; la prossima ha il badge **Prossima** (o **Oggi**) e
+  la pagina si apre già posizionata lì. Il pulsante **↓ Prossima** in basso a destra ci
+  riporta in qualsiasi momento.
+- **Toccando una partita** si apre un pannello con data completa, squadre, punteggio,
+  orario con fine indicativa e impianto, più due pulsanti: **Mappa** (Google Maps) e
+  **Aggiungi al calendario** (scarica un file `.ics`).
+
+### Quale versione si apre
+
+Si apre la versione cellulare sugli schermi larghi **fino a 700 px** (telefoni in
+verticale), quella completa altrimenti. I pulsanti **📱 Versione cellulare** e
+**🖥 Versione completa** permettono di cambiare a mano: la scelta vale finché la scheda
+resta aperta. Entrambe le pagine si ricaricano da sole ogni 10 minuti.
 
 ---
 
@@ -220,13 +251,17 @@ giornate nello schermo. La pagina si ricarica da sola ogni 10 minuti.
 
 ```
 HC_Fondi_26_27/
-├── index.html            pagina: HTML + JavaScript, nessuno stile interno
+├── index.html            versione completa: HTML + JavaScript, nessuno stile interno
+├── mobile.html           versione cellulare (agenda + pannello dettagli)
 ├── calendario.json       dati del calendario (generato dall'Excel)
 ├── risultati.json        punteggi (facoltativo)
 ├── converti_excel.py     Excel → calendario.json
 ├── css/
 │   ├── base.css          struttura + variabili (colori, font, dimensioni)
-│   └── tema-*.css        ogni tema importa base.css e ridefinisce le variabili
+│   ├── tema-*.css        ogni tema importa base.css e ridefinisce le variabili
+│   └── mobile.css        layout agenda di mobile.html (usa le variabili del tema)
+├── js/
+│   └── vista.js          sceglie index.html o mobile.html in base allo schermo
 ├── README.md
 └── .gitignore
 ```
@@ -322,6 +357,11 @@ sequenceDiagram
 - **Nuova categoria:** oltre a riconoscerla in `converti_excel.py` (funzione `cat_code`),
   aggiungi in `base.css` la variabile `--codice`/`--codice-t` e le regole `.dot.codice` e
   `.m.codice`.
+- **Scelta della versione (`js/vista.js`):** caricato nel `<head>` di entrambe le pagine.
+  Se la larghezza dello schermo è al massimo `SOGLIA` (700 px) vuole `mobile.html`,
+  altrimenti `index.html`; se la pagina aperta è l'altra, fa `location.replace`. I link
+  tra le versioni aggiungono `?v=mobile` / `?v=full`, salvato in `sessionStorage` e
+  prioritario sulla scelta automatica; `?v=auto` lo annulla.
 - **Credito:** la scritta in alto a destra viene inserita da uno script in fondo a
   `index.html`. Il testo è codificato in Base64 e lo script lo ripristina se qualcuno lo
   rimuove. L'aspetto è definito dalla regola `#credit` in `css/base.css`.

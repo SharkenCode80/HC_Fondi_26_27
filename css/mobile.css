@@ -1,0 +1,144 @@
+/* ==========================================================================
+   HC Fondi Campionati 26-27 — versione CELLULARE (mobile.html)
+   --------------------------------------------------------------------------
+   Va collegato DOPO il file tema (che a sua volta importa base.css):
+   usa le stesse variabili (--fondi, --head-bg, --serieb, …), quindi
+   cambiando tema cambia anche la versione mobile.
+   Contiene solo il layout "agenda": lista per giornata + pannello dettagli.
+   ========================================================================== */
+
+:root{
+  --bar-pad:12px;          /* margine laterale della pagina */
+  --time-w:54px;           /* colonna dell'orario nelle card */
+  --sheet-radius:18px;     /* angoli del pannello dettagli */
+}
+
+body.mobile{padding:0 0 90px;max-width:720px;margin:0 auto}
+
+/* ---------- testata fissa ---------- */
+.mbar{
+  position:sticky;top:0;z-index:20;background:var(--bg);
+  padding:12px var(--bar-pad) 8px;border-bottom:1px solid var(--line);
+}
+.mbar .eyebrow{font-size:11px;margin:0}
+.mbar h1{font-size:26px;line-height:1}
+.mbar h1::after{display:none}   /* niente decorazioni del titolo su mobile */
+
+/* righe di chip che scorrono in orizzontale */
+.mscroll{
+  display:flex;gap:6px;overflow-x:auto;padding:8px 0 2px;margin:0 calc(-1 * var(--bar-pad));
+  padding-left:var(--bar-pad);padding-right:var(--bar-pad);
+  scrollbar-width:none;-webkit-overflow-scrolling:touch;
+}
+.mscroll::-webkit-scrollbar{display:none}
+.mscroll .chip{flex:0 0 auto;font-size:13.5px;padding:5px 11px;gap:5px}
+
+/* ---------- agenda ---------- */
+.agenda{padding:4px var(--bar-pad) 0}
+.day{margin-top:16px}
+.day-h{
+  display:flex;align-items:baseline;gap:8px;margin:0 2px 6px;
+  font-family:var(--font-display);text-transform:uppercase;letter-spacing:.05em;
+}
+.day-h .dw{font-size:13px;font-weight:600;color:var(--muted)}
+.day-h .dt{font-size:20px;font-weight:700;color:var(--ink)}
+.day-h .tag{
+  font-family:var(--font-body);font-size:10px;font-weight:700;letter-spacing:.08em;
+  padding:2px 8px;border-radius:999px;background:var(--today);color:var(--today-ink);
+}
+.day.past{opacity:.55}
+.day.next .day-h .dt{color:var(--fondi)}
+
+/* card: riusa le classi .m.<categoria> di base.css per i colori */
+.agenda .m{
+  display:grid;grid-template-columns:var(--time-w) 1fr auto;align-items:center;gap:2px 10px;
+  width:100%;text-align:left;font:inherit;color:inherit;cursor:pointer;
+  padding:10px 10px 10px 8px;margin:0 0 8px;min-height:64px;
+  -webkit-tap-highlight-color:transparent;
+}
+.agenda .m:active{transform:scale(.99)}
+.agenda .m .t{
+  grid-row:1 / span 3;font-family:var(--font-display);font-weight:700;font-size:21px;
+  text-align:center;color:var(--ink);line-height:1;
+}
+.agenda .m .t small{display:block;font-size:10px;font-weight:600;letter-spacing:.06em;color:var(--muted);margin-top:2px}
+.agenda .m .top{display:flex;align-items:center;gap:4px;min-width:0;flex-wrap:wrap}
+.agenda .m .cat{margin:0}
+.agenda .m .opp{
+  grid-column:2;font-size:15px;font-weight:600;line-height:1.25;
+  overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+}
+.agenda .m .opp .vs{font-weight:500;color:var(--muted);margin-right:3px}
+.agenda .m .city{grid-column:2;font-size:12px;color:var(--muted)}
+.agenda .m .go{grid-row:1 / span 3;grid-column:3;color:var(--muted);font-size:22px;line-height:1}
+.agenda .m .res{
+  grid-row:1 / span 3;grid-column:3;font-family:var(--font-display);font-weight:700;font-size:18px;
+  text-align:right;line-height:1;white-space:nowrap;
+}
+.agenda .m .res small{display:block;font-size:10px;letter-spacing:.08em;margin-top:3px}
+.res.w small{color:var(--ok)} .res.l small{color:var(--warn)} .res.d small{color:var(--muted)}
+
+.mempty{padding:40px 16px;text-align:center;color:var(--muted)}
+.mfoot{padding:24px var(--bar-pad) 0;font-size:12px;color:var(--muted)}
+.mfoot .switch-view{display:flex;justify-content:center;margin-top:12px;padding:10px 12px}
+
+/* pulsante flottante "Prossima" */
+.fab{
+  position:fixed;right:16px;bottom:calc(18px + env(safe-area-inset-bottom));z-index:30;
+  font-family:var(--font-display);font-weight:700;font-size:15px;letter-spacing:.05em;text-transform:uppercase;
+  border:0;border-radius:999px;padding:12px 18px;cursor:pointer;
+  background:var(--head-bg);color:var(--head-ink);box-shadow:0 4px 14px rgba(0,0,0,.25);
+}
+
+/* ---------- pannello dettagli (dialog dal basso) ---------- */
+dialog.sheet{
+  position:fixed;inset:auto 0 0 0;margin:0 auto;width:100%;max-width:720px;max-height:88vh;
+  border:0;padding:0;border-radius:var(--sheet-radius) var(--sheet-radius) 0 0;
+  background:var(--panel);color:var(--ink);overflow:auto;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+dialog.sheet::backdrop{background:rgba(10,15,25,.5)}
+dialog.sheet[open]{animation:sheet-up .2s ease-out}
+@keyframes sheet-up{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+
+.sheet .grip{width:42px;height:5px;border-radius:3px;background:var(--line-strong);margin:8px auto 0}
+.sheet .sh{padding:10px 18px 0;border-left:6px solid var(--line-strong)}
+.sheet.serieb .sh{border-left-color:var(--serieb)}  .sheet.u18f .sh{border-left-color:var(--u18f)}
+.sheet.u16f .sh{border-left-color:var(--u16f)}      .sheet.u16m .sh{border-left-color:var(--u16m)}
+.sheet.u14 .sh{border-left-color:var(--u14)}        .sheet.interna .sh{border-left-color:var(--interna)}
+.sheet.sel .sh{border-left-color:var(--sel)}
+.sheet .x{
+  position:absolute;top:10px;right:12px;width:36px;height:36px;border-radius:50%;
+  border:1px solid var(--line);background:var(--panel);color:var(--muted);font-size:20px;cursor:pointer;
+}
+.sheet .when{font-family:var(--font-display);font-weight:600;font-size:15px;letter-spacing:.04em;
+  text-transform:uppercase;color:var(--muted);margin:8px 0 2px}
+.sheet .teams{font-family:var(--font-display);font-weight:700;font-size:26px;line-height:1.1;margin:4px 0}
+.sheet .teams .fp{color:var(--fondi)}
+.sheet .teams .vs{color:var(--muted);font-weight:500}
+.sheet .score{font-family:var(--font-display);font-weight:700;font-size:34px;margin:6px 0 0}
+.sheet .score small{font-size:14px;letter-spacing:.08em;margin-left:8px}
+.sheet .tags{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 4px}
+.sheet .tags span{
+  font-family:var(--font-display);font-weight:600;font-size:13px;letter-spacing:.05em;text-transform:uppercase;
+  padding:2px 9px;border-radius:6px;background:var(--line);color:var(--ink);
+}
+.sheet .tags .casa{background:var(--fondi);color:#fff}
+.sheet dl{margin:12px 0 0;padding:0 18px;display:grid;grid-template-columns:auto 1fr;gap:8px 14px;font-size:14.5px}
+.sheet dt{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.06em;padding-top:2px}
+.sheet dd{margin:0;font-weight:500}
+.sheet .acts{display:flex;gap:8px;padding:16px 18px 20px;flex-wrap:wrap}
+.sheet .acts a,.sheet .acts button{
+  flex:1 1 140px;text-align:center;text-decoration:none;cursor:pointer;
+  font-family:var(--font-display);font-weight:700;font-size:15px;letter-spacing:.05em;text-transform:uppercase;
+  padding:12px;border-radius:10px;border:1.5px solid var(--head-bg);
+  background:var(--head-bg);color:var(--head-ink);
+}
+.sheet .acts .alt{background:var(--panel);color:var(--head-bg)}
+
+/* il tema rossoblù disegna le strisce sul body: su mobile le teniamo sottili */
+body.mobile{border-top-width:5px}
+
+@media (min-width:721px){
+  .mbar h1{font-size:32px}
+}
