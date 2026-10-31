@@ -37,8 +37,8 @@
   --interna:#0F766E;    --interna-t:#E1F1EF;
   --sel:#475569;        --sel-t:#ECEFF3;
 
-  /*--today:#F2B705;*/
-  --today:#C8102E;
+  --today:#F2B705;
+  /*--today:#C8102E;*/
   --today-ink:#2A2000;
 
   --mister:var(--blu-medio);
