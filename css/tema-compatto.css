@@ -1,0 +1,29 @@
+/* ==========================================================================
+   TEMA COMPATTO — card e colonne più strette, testo più piccolo:
+   entrano più giornate nello schermo (comodo sullo smartphone).
+   Colori come il tema classico.
+   ========================================================================== */
+@import url("base.css");
+
+:root{
+  --col-min:150px;
+  --col-min-mobile:128px;
+  --teams-size:12px;
+  --radius-card:6px;
+  --card-accent:3px;
+  --board-height:88vh;
+}
+body{padding:12px 10px 40px}
+h1{font-size:clamp(24px,5vw,40px)}
+.sub{font-size:12.5px}
+.controls{margin:12px 0 8px;gap:6px}
+.chip{font-size:13px;padding:4px 9px}
+thead th{padding:7px 8px;font-size:14px}
+tbody th.time{font-size:15px;padding:6px 4px;width:52px;min-width:52px}
+thead th:first-child{width:52px;min-width:52px}
+tbody td{padding:4px}
+.m{padding:4px 6px;margin-bottom:4px}
+.m .cat{font-size:10.5px;padding:0 5px;margin-bottom:2px}
+.m .where{font-size:9.5px;padding:0 4px}
+.m .venue{font-size:10px}
+.m .score{font-size:17px}

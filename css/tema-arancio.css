@@ -1,0 +1,26 @@
+/* ==========================================================================
+   TEMA ARANCIO — colori "da club": intestazione arancione, sfondo caldo,
+   titolo in arancio. Le partite in casa hanno un bordo arancio pieno.
+   ========================================================================== */
+@import url("base.css");
+
+:root{
+  --bg:#FFF7F0;
+  --panel:#FFFFFF;
+  --ink:#2B1A10;
+  --muted:#8A6B58;
+  --line:#F3E1D3;
+  --line-strong:#E7C9B3;
+  --row-alt:#FFFBF7;
+
+  --head-bg:#E8590C;
+  --head-ink:#FFFFFF;
+
+  --fondi:#C2410C;
+  --fondi-tint:#FFEBDC;
+
+  --today:#1D4ED8;
+  --today-ink:#FFFFFF;
+}
+h1{color:var(--head-bg)}
+.m.home{border-color:var(--head-bg)}

@@ -1,0 +1,10 @@
+/* ==========================================================================
+   TEMA CLASSICO — lo stesso aspetto del tabellone del Festival 2026
+   (grigio chiaro, intestazione blu notte, card bianche, casa in arancio)
+   Per cambiare un colore basta ridefinire la variabile in :root qui sotto.
+   ========================================================================== */
+@import url("base.css");
+
+:root{
+  /* nessuna modifica: valori di default di base.css */
+}

@@ -1,0 +1,7 @@
+# file temporanei di Excel/Office (file aperto)
+~$*
+# macOS
+.DS_Store
+# Python
+__pycache__/
+*.pyc

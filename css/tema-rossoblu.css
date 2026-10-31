@@ -1,0 +1,85 @@
+/* ==========================================================================
+   TEMA ROSSOBLÙ — i colori sociali dell'HC Fondi (dal 1967, PalaFondi).
+   Intestazione blu notte, accenti e partite in casa in rosso, una fascia
+   a strisce verticali rosso/blu che richiama la maglia del club.
+   Per regolare le tonalità basta cambiare --rosso e --blu qui sotto.
+   ========================================================================== */
+@import url("base.css");
+
+:root{
+  /* colori del club */
+  --rosso:#C8102E;
+  --rosso-scuro:#9B0C23;
+  --blu:#0B2A5B;
+  --blu-medio:#1C4E9C;
+
+  --bg:#F2F4F9;
+  --panel:#FFFFFF;
+  --ink:#0B2A5B;
+  --muted:#5C6B85;
+  --line:#DFE4EE;
+  --line-strong:#C5CEDF;
+  --row-alt:#F8F9FC;
+
+  --head-bg:var(--blu);
+  --head-ink:#FFFFFF;
+
+  /* "casa" = rosso del club */
+  --fondi:var(--rosso);
+  --fondi-tint:#FDECEE;
+
+  /* categorie: tonalità che non si confondono col rosso "casa" */
+  --serieb:var(--blu);  --serieb-t:#E3EAF6;
+  --u18f:#A21CAF;       --u18f-t:#F6E6F8;
+  --u16f:#0284C7;       --u16f-t:#E0F2FB;
+  --u16m:#B45309;       --u16m-t:#FDF0DD;
+  --u14:#6D28D9;        --u14-t:#EEE7FB;
+  --interna:#0F766E;    --interna-t:#E1F1EF;
+  --sel:#475569;        --sel-t:#ECEFF3;
+
+  /*--today:#F2B705;*/
+  --today:#C8102E;
+  --today-ink:#2A2000;
+
+  --mister:var(--blu-medio);
+
+  /* strisce verticali "maglia" */
+  --strisce:repeating-linear-gradient(90deg, var(--rosso) 0 22px, var(--blu) 22px 44px);
+}
+
+/* fascia a strisce in cima alla pagina */
+body{
+  border-top:8px solid transparent;
+  border-image:var(--strisce) 1;
+}
+
+/* titolo blu con sottolineatura rosso/blu */
+h1{color:var(--blu)}
+h1::after{
+  content:"";display:block;width:120px;height:5px;margin-top:8px;border-radius:3px;
+  background:linear-gradient(90deg, var(--rosso) 0 50%, var(--blu) 50% 100%);
+}
+.eyebrow{color:var(--rosso)}
+
+/* filtri */
+.chip.month[aria-pressed="true"]{background:var(--rosso);border-color:var(--rosso);color:#fff}
+
+/* tabellone: intestazione blu con filo rosso sotto */
+.board{border-top:4px solid var(--rosso)}
+thead th{border-bottom:3px solid var(--rosso)}
+tbody th.time{color:var(--blu)}
+
+/* card: le partite in casa hanno il bordo rosso */
+.m.home{border-top-color:#F1B8C1;border-right-color:#F1B8C1;border-bottom-color:#F1B8C1}
+.m.home .where.casa{background:var(--rosso);border-color:var(--rosso);color:#fff}
+.m .teams .fp{color:var(--rosso)}
+
+/* la Serie B (prima squadra) in evidenza con la doppia striscia */
+.m.serieb{border-left:0;padding-left:12px;position:relative}
+.m.serieb::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:6px;
+  border-radius:var(--radius-card) 0 0 var(--radius-card);
+  background:linear-gradient(90deg, var(--rosso) 0 50%, var(--blu) 50% 100%);
+}
+
+footer{border-top:3px solid transparent;border-image:var(--strisce) 1;padding-top:10px}

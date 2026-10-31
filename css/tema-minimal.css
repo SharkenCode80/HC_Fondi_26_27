@@ -1,0 +1,40 @@
+/* ==========================================================================
+   TEMA MINIMAL — bianco e nero, angoli vivi, niente ombre, un solo font.
+   Pulito e molto leggibile, adatto anche alla stampa.
+   ========================================================================== */
+@import url("base.css");
+
+:root{
+  --font-display:"Inter",system-ui,sans-serif;
+  --font-body:"Inter",system-ui,sans-serif;
+
+  --bg:#FFFFFF;
+  --panel:#FFFFFF;
+  --ink:#111111;
+  --muted:#6E6E6E;
+  --line:#EBEBEB;
+  --line-strong:#D4D4D4;
+  --row-alt:#FFFFFF;
+
+  --head-bg:#111111;
+  --head-ink:#FFFFFF;
+
+  --fondi:#111111;
+  --fondi-tint:#F5F5F5;
+
+  --card-accent:3px;
+  --radius:0;
+  --radius-card:2px;
+  --radius-chip:2px;
+  --shadow:none;
+}
+h1{font-weight:800;letter-spacing:-.02em}
+.chip,.eyebrow,thead th,.m .cat,.m .where{text-transform:none;letter-spacing:0}
+tbody th.time{font-size:15px}
+.m .teams .fp{text-decoration:underline;text-underline-offset:2px}
+@media print{
+  body{padding:0}
+  .controls,#credit,#mister-panel,#mister-banner{display:none!important}
+  .board{max-height:none;overflow:visible;border:0}
+  thead th{position:static}
+}

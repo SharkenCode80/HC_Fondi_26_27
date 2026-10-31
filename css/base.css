@@ -1,0 +1,275 @@
+/* ==========================================================================
+   HC Fondi Campionati 26-27 — struttura della pagina
+   --------------------------------------------------------------------------
+   Questo file contiene la STRUTTURA (layout, card, griglia, Mister).
+   Colori, font e arrotondamenti sono variabili (--nome) definite qui sotto
+   con i valori di default: ogni tema (tema-*.css) importa questo file e
+   ridefinisce solo le variabili / le regole che vuole cambiare.
+   La pagina collega UN SOLO file tema (vedi <link> in index.html).
+   ========================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap");
+
+:root{
+  /* --- font --- */
+  --font-display:"Barlow Condensed",sans-serif;   /* titoli, chip, orari, etichette */
+  --font-body:"Inter",system-ui,sans-serif;       /* testo */
+
+  /* --- colori generali --- */
+  --bg:#EEF1F5;          /* sfondo pagina */
+  --panel:#FFFFFF;       /* tabellone, pannelli */
+  --ink:#16233A;         /* testo principale */
+  --muted:#6B7789;       /* testo secondario */
+  --line:#E2E6EC;        /* bordi leggeri */
+  --line-strong:#CFD6E0; /* bordi marcati */
+  --row-alt:#FAFBFC;     /* righe alterne */
+
+  /* --- intestazione tabella --- */
+  --head-bg:#16233A;
+  --head-ink:#FFFFFF;
+
+  /* --- squadra / partite in casa --- */
+  --fondi:#E8590C;
+  --fondi-tint:#FFF1E6;
+
+  /* --- card partita --- */
+  --card-bg:#FFFFFF;
+  --card-border:var(--line-strong);
+  --card-accent:4px;     /* spessore bordo sinistro colorato */
+
+  /* --- categorie (colore + tinta chiara) --- */
+  --serieb:#15803D;  --serieb-t:#E3F4E8;
+  --u18f:#BE185D;    --u18f-t:#FBE8F1;
+  --u16f:#1D4ED8;    --u16f-t:#E7EDFD;
+  --u16m:#B45309;    --u16m-t:#FDF0DD;
+  --u14:#6D28D9;     --u14-t:#EEE7FB;
+  --interna:#0F766E; --interna-t:#E1F1EF;
+  --sel:#475569;     --sel-t:#ECEFF3;
+
+  /* --- oggi / prossima giornata --- */
+  /*--today:#F2B705;*/
+  --today:#C8102E;
+  --today-ink:#3A2C00;
+
+  /* --- modalità Mister --- */
+  --mister:#0F766E;
+  --ok:#0F7A34;      --ok-t:#DEF7E5;
+  --warn:#C0341D;    --warn-t:#FDE2E2;  --warn-card:#FFE9E6;
+
+  /* --- forme --- */
+  --radius:12px;         /* tabellone */
+  --radius-card:8px;     /* card */
+  --radius-chip:999px;   /* pulsanti filtro */
+  --shadow:0 1px 3px rgba(20,35,58,.06);
+
+  /* --- dimensioni --- */
+  --col-min:190px;       /* larghezza minima colonna giornata */
+  --col-min-mobile:160px;
+  --teams-size:13.5px;
+  --board-height:82vh;
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:var(--font-body);line-height:1.4;
+  padding:20px 16px 60px;
+}
+code{font-size:.92em}
+.wrap{max-width:1400px;margin:0 auto}
+.hidden{display:none!important}
+
+/* credito in alto a destra */
+#credit{position:fixed;top:8px;right:10px;z-index:9999;font-family:var(--font-display);
+  font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
+  background:var(--panel);opacity:.85;padding:2px 9px;border-radius:999px;border:1px solid var(--line);
+  pointer-events:none;user-select:none}
+
+/* ---------- intestazione ---------- */
+header.top{margin-bottom:18px}
+.eyebrow{
+  font-family:var(--font-display);font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+  font-size:13px;margin:0 0 2px;
+}
+h1{
+  font-family:var(--font-display);font-weight:700;
+  font-size:clamp(30px,6vw,52px);line-height:.95;margin:0;letter-spacing:.01em;
+}
+.sub{color:var(--muted);font-size:14px;margin-top:6px}
+.sub b{color:var(--ink);font-weight:600}
+.sub .hl{color:var(--fondi)}
+
+/* ---------- filtri ---------- */
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:18px 0 10px}
+.controls.months{margin:0 0 14px}
+.chip{
+  font-family:var(--font-display);font-weight:600;
+  font-size:15px;letter-spacing:.03em;text-transform:uppercase;
+  border:1.5px solid var(--line-strong);background:var(--panel);color:var(--ink);
+  padding:6px 12px;border-radius:var(--radius-chip);cursor:pointer;user-select:none;
+  display:inline-flex;align-items:center;gap:7px;transition:all .12s ease;
+}
+.chip:hover{border-color:var(--ink)}
+.chip[aria-pressed="false"]{opacity:.4}
+.chip[aria-pressed="false"] .dot{opacity:.5}
+.chip.month[aria-pressed="true"]{background:var(--head-bg);border-color:var(--head-bg);color:var(--head-ink)}
+.chip.month[aria-pressed="false"]{opacity:.75}
+.chip.mister-btn{border-color:var(--mister);color:var(--mister)}
+.chip.mister-btn[aria-pressed="true"]{background:var(--mister);color:#fff;opacity:1}
+.sep{flex:1 1 auto;min-width:8px}
+
+/* pallino colorato della categoria (chip e pannello Mister) */
+.dot{width:10px;height:10px;border-radius:3px;flex:0 0 auto;display:inline-block}
+.dot.serieb{background:var(--serieb)}
+.dot.u18f{background:var(--u18f)}
+.dot.u16f{background:var(--u16f)}
+.dot.u16m{background:var(--u16m)}
+.dot.u14{background:var(--u14)}
+.dot.interna{background:var(--interna)}
+.dot.sel{background:var(--sel)}
+
+/* ---------- tabellone ---------- */
+.board{
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  overflow:auto;box-shadow:var(--shadow);max-height:var(--board-height);
+}
+table{border-collapse:separate;border-spacing:0;width:100%}
+thead th{
+  position:sticky;top:0;z-index:3;background:var(--head-bg);color:var(--head-ink);
+  font-family:var(--font-display);font-weight:600;
+  text-transform:uppercase;letter-spacing:.05em;
+  padding:10px;text-align:left;font-size:16px;white-space:nowrap;
+}
+thead th .dow{display:block;font-size:11px;opacity:.7;letter-spacing:.12em}
+thead th:first-child{left:0;z-index:4;width:64px;min-width:64px}
+tbody th.time{
+  position:sticky;left:0;z-index:2;background:var(--panel);
+  font-family:var(--font-display);font-weight:700;font-size:18px;
+  color:var(--ink);text-align:center;vertical-align:top;
+  padding:8px 6px;border-right:2px solid var(--line-strong);
+  border-top:1px solid var(--line);width:64px;min-width:64px;
+}
+tbody th.time.ev{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+tbody td{
+  border-top:1px solid var(--line);border-right:1px solid var(--line);
+  vertical-align:top;padding:6px;min-width:var(--col-min);
+}
+tbody tr:nth-child(even) th.time,
+tbody tr:nth-child(even) td{background:var(--row-alt)}
+.empty{color:var(--line-strong);font-size:12px;text-align:center;padding-top:6px}
+.none{padding:24px;color:var(--muted);font-size:14px;line-height:1.7}
+.none b{color:var(--ink)}
+
+/* ---------- card partita ---------- */
+.m{
+  border:1px solid var(--card-border);border-radius:var(--radius-card);
+  padding:6px 8px;margin-bottom:6px;background:var(--card-bg);
+  border-left-width:var(--card-accent);
+}
+.m:last-child{margin-bottom:0}
+.m .cat{
+  font-family:var(--font-display);font-weight:600;font-size:12px;
+  letter-spacing:.05em;text-transform:uppercase;
+  display:inline-block;padding:1px 7px;border-radius:5px;margin-bottom:3px;
+}
+.m .where{
+  font-family:var(--font-display);font-weight:600;font-size:11px;
+  letter-spacing:.06em;text-transform:uppercase;margin-left:4px;
+  padding:1px 6px;border-radius:5px;border:1px solid var(--line-strong);color:var(--muted);
+}
+.m .where.casa{border-color:var(--fondi);color:var(--fondi)}
+.m .teams{font-size:var(--teams-size);font-weight:500}
+.m .teams .vs{color:var(--muted)}
+.m .teams .fp{font-weight:700;color:var(--fondi)}
+.m .teams .win{font-weight:800}
+.m.event .teams{font-weight:600}
+.m .venue{font-size:11px;color:var(--muted);margin-top:2px}
+
+/* partite in casa */
+.m.home{background:var(--fondi-tint)}
+
+/* punteggio + stato */
+.m .score{
+  font-family:var(--font-display);font-weight:700;font-size:20px;
+  letter-spacing:.02em;margin-top:3px;display:flex;align-items:center;gap:8px;line-height:1;
+}
+.m .score .badge{
+  font-family:var(--font-body);font-weight:600;font-size:9.5px;letter-spacing:.08em;
+  text-transform:uppercase;padding:2px 6px;border-radius:999px;
+  background:var(--line);color:var(--muted);
+}
+.m .score .badge.fine{background:var(--ok-t);color:var(--ok)}
+.m .score .badge.live{background:var(--warn-t);color:var(--warn)}
+
+/* colori per categoria */
+.m.serieb {border-left-color:var(--serieb)}  .m.serieb  .cat{background:var(--serieb-t); color:var(--serieb)}
+.m.u18f   {border-left-color:var(--u18f)}    .m.u18f    .cat{background:var(--u18f-t);   color:var(--u18f)}
+.m.u16f   {border-left-color:var(--u16f)}    .m.u16f    .cat{background:var(--u16f-t);   color:var(--u16f)}
+.m.u16m   {border-left-color:var(--u16m)}    .m.u16m    .cat{background:var(--u16m-t);   color:var(--u16m)}
+.m.u14    {border-left-color:var(--u14)}     .m.u14     .cat{background:var(--u14-t);    color:var(--u14)}
+.m.interna{border-left-color:var(--interna)} .m.interna .cat{background:var(--interna-t);color:var(--interna)}
+.m.sel    {border-left-color:var(--sel)}     .m.sel     .cat{background:var(--sel-t);    color:var(--sel)}
+
+/* ---------- oggi / prossima giornata ---------- */
+#grid thead th.today{outline:3px solid var(--today);outline-offset:-3px}
+#grid td.today{box-shadow:inset 0 0 0 3px var(--today)}
+#grid thead th .next{display:block;font-family:var(--font-body);font-size:9.5px;font-weight:700;
+  letter-spacing:.08em;color:var(--today)}
+#grid .m .now-badge{display:inline-block;margin-top:4px;font-weight:700;font-size:9.5px;letter-spacing:.08em;
+  text-transform:uppercase;padding:2px 7px;border-radius:999px;background:var(--today);color:var(--today-ink)}
+
+/* ---------- modalità Mister ---------- */
+.m .mister{display:none}
+body.mister .m:not(.event) .mister{
+  display:block;margin-top:5px;padding-top:5px;border-top:1px dashed var(--line-strong);
+}
+.m .mister .clash{font-size:11px;line-height:1.35}
+.m .mister .clash .ok{color:var(--ok)}
+.m .mister .clash b{color:var(--warn)}
+
+#mister-panel{display:none}
+body.mister #mister-panel{
+  display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;
+  background:var(--panel);border:1px solid var(--line);border-radius:10px;
+  padding:11px 14px;margin:0 0 12px;
+}
+#mister-panel .mp-title{
+  font-family:var(--font-display);font-weight:600;text-transform:uppercase;
+  letter-spacing:.05em;font-size:14px;color:var(--muted);margin-right:2px;
+}
+#mister-panel label{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:500}
+#mister-panel input{
+  width:56px;font:700 14px var(--font-body);color:var(--ink);background:var(--panel);
+  border:1px solid var(--line-strong);border-radius:6px;padding:3px 6px;text-align:center;
+}
+#mister-panel .mp-note{font-size:11.5px;color:var(--muted);font-style:italic}
+
+body.mister .m.conflict{
+  background:var(--warn-card);border-color:var(--warn);border-left-color:var(--warn);
+  box-shadow:0 0 0 2px var(--warn) inset;
+}
+body.mister .m.conflict .cat{background:var(--warn);color:#fff}
+
+#mister-banner{display:none;margin:0 0 14px}
+body.mister #mister-banner{
+  display:block;font-family:var(--font-display);font-weight:600;
+  font-size:16px;letter-spacing:.02em;padding:9px 14px;border-radius:10px;
+}
+#mister-banner.clear{background:var(--ok-t);color:var(--ok)}
+#mister-banner.warn{background:var(--warn-t);color:var(--warn)}
+
+footer{margin-top:16px;color:var(--muted);font-size:12px}
+
+/* ---------- smartphone ---------- */
+@media (max-width:600px){
+  #credit{font-size:10px;top:6px;right:6px;padding:2px 7px}
+  tbody td{min-width:var(--col-min-mobile)}
+  .m .teams{font-size:calc(var(--teams-size) - 1px)}
+  .controls{gap:7px}
+  .sep{flex-basis:100%;height:0;min-width:0;margin:1px 0}
+  .chip{font-size:13.5px;padding:5px 10px;gap:5px}
+  #mister-panel{gap:8px 12px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}

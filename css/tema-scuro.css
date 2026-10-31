@@ -1,0 +1,41 @@
+/* ==========================================================================
+   TEMA SCURO — sfondo antracite, ideale la sera o con il telefono in
+   modalità notte. Le categorie usano colori più luminosi.
+   ========================================================================== */
+@import url("base.css");
+
+:root{
+  --bg:#0E1420;
+  --panel:#161E2E;
+  --ink:#E6EBF3;
+  --muted:#8C98AC;
+  --line:#263043;
+  --line-strong:#33405A;
+  --row-alt:#131A28;
+
+  --head-bg:#0A0F18;
+  --head-ink:#E6EBF3;
+
+  --fondi:#FF8A3D;
+  --fondi-tint:#2A1D14;
+
+  --card-bg:#1B2436;
+
+  --serieb:#4ADE80;  --serieb-t:#14321F;
+  --u18f:#F472B6;    --u18f-t:#3A1A2B;
+  --u16f:#60A5FA;    --u16f-t:#16253F;
+  --u16m:#FBBF24;    --u16m-t:#3A2C10;
+  --u14:#A78BFA;     --u14-t:#261D40;
+  --interna:#2DD4BF; --interna-t:#123330;
+  --sel:#94A3B8;     --sel-t:#242C3A;
+
+  --today:#FACC15;
+  --today-ink:#1A1400;
+
+  --mister:#2DD4BF;
+  --ok:#4ADE80;   --ok-t:#14321F;
+  --warn:#F87171; --warn-t:#3B1A1A; --warn-card:#3B1A1A;
+
+  --shadow:0 1px 3px rgba(0,0,0,.4);
+}
+.chip.mister-btn[aria-pressed="true"]{color:#0E1420}
