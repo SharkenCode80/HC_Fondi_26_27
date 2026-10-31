@@ -149,7 +149,6 @@
     "fondi-palasport-fondi": "Fondi Palasport - Fondi",
     "palestra-palumbo-salerno": "Palestra Palumbo - Salerno",
     "palazzetto-dello-sport-c": "Palazzetto dello Sport Comunale - Cerreto Sannita",
-    "palasport-gaeta": "Palasport - Gaeta",
     "pala-valentino-ferrara-e": "Pala Valentino Ferrara ex Paladua - Benevento",
     "impianto-sportivo-poliva": "Impianto Sportivo Polivalente Palasport - Gaeta",
     "palasport-marica-bianchi": "Palasport Marica Bianchi - Pontinia",
@@ -296,7 +295,7 @@
       "gir": "Trasferta",
       "home": "CUS Cassino Gaeta U16F",
       "away": "HC Fondi",
-      "venue": "palasport-gaeta",
+      "venue": "impianto-sportivo-poliva",
       "year": 2026
     },
     {
@@ -531,7 +530,7 @@
       "gir": "Trasferta",
       "home": "CUS Cassino Gaeta U16F",
       "away": "HC Fondi",
-      "venue": "palasport-gaeta",
+      "venue": "impianto-sportivo-poliva",
       "year": 2027
     },
     {
