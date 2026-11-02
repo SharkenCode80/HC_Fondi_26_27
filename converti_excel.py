@@ -38,6 +38,12 @@ DURATE = {"serieb": {"tempo": 30, "pausa": 10}, "u18f": {"tempo": 30, "pausa": 1
           "u14": {"tempo": 20, "pausa": 10}, "interna": {"tempo": 30, "pausa": 10},
           "sel": {"tempo": 0, "pausa": 0}}
 
+# impianti scritti in modi diversi nell'Excel ma che sono lo stesso posto:
+# nome come compare nel file -> nome da usare
+VENUE_ALIAS = {
+    "Palasport - Gaeta": "Impianto Sportivo Polivalente Palasport - Gaeta",
+}
+
 HEAD_RE = re.compile(r"^(?P<cat>.+?)\s*[–-]\s*(?P<h>\d{1,2})[:.](?P<m>\d{2})\s*[–-]\s*(?P<ha>CASA|TRASFERTA)\s*$", re.I)
 
 
@@ -142,6 +148,7 @@ def convert(xlsx):
     venues, venue_code = {}, {}
     for m in matches:
         name = m.pop("venue_name")
+        name = VENUE_ALIAS.get(name, name)
         if not name:
             m["venue"] = ""
             continue
