@@ -98,7 +98,8 @@
 //  Abbonamento ai calendari .ics generati da genera_ics.py.
 //  L'elenco dei calendari arriva da calendari.json (stessa cartella).
 //  - iPhone/Mac: link webcal://…  (iOS chiede "Abbonati")
-//  - Google:     calendar.google.com/calendar/render?cid=webcal://…
+//  - Google:     calendar.google.com/calendar/render?cid=https%3A%2F%2F…  (indirizzo https codificato:
+//                con webcal:// in chiaro l'app Android mostrava il nome con caratteri strani)
 //  - Altro:      link https://… da copiare
 // ==========================================================================
 
@@ -109,7 +110,7 @@ let app = "";
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const httpsUrl = f => new URL(f, location.href).href;
 const webcalUrl = f => httpsUrl(f).replace(/^https?:/, "webcal:");
-const googleUrl = f => "https://calendar.google.com/calendar/render?cid=" + webcalUrl(f);
+const googleUrl = f => "https://calendar.google.com/calendar/render?cid=" + encodeURIComponent(httpsUrl(f));
 
 function defaultApp(){
   const ua = navigator.userAgent;
