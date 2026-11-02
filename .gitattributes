@@ -1,0 +1,2 @@
+# i calendari .ics devono restare con fine riga CRLF (RFC 5545): git non li tocca
+*.ics -text
