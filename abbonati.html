@@ -35,6 +35,20 @@
   </div>
   <p class="hint" id="app-hint"></p>
   <ul class="subs" id="subs"></ul>
+  <div class="steps hidden" id="android-steps">
+    <p><b>Sul telefono Android l'app Google Calendar non permette di abbonarsi</b>: va fatto
+      una volta dal sito di Google, poi il calendario compare da solo anche nell'app.</p>
+    <ol>
+      <li>Tocca <b>Copia link</b> accanto al calendario.</li>
+      <li>Apri la pagina di Google qui sotto. Se invece si apre l'app, aprila dal browser
+        (Chrome) e attiva <b>⋮ → Sito desktop</b>.</li>
+      <li>Incolla il link nel campo <b>URL del calendario</b> e tocca <b>Aggiungi calendario</b>.
+        Ripeti per ogni calendario.</li>
+    </ol>
+    <a class="go" href="https://calendar.google.com/calendar/r/settings/addbyurl" target="_blank" rel="noopener">Apri "Aggiungi da URL" di Google</a>
+    <p class="hint">Più semplice ancora: apri questa pagina da un computer e usa
+      <b>Abbonati</b>.</p>
+  </div>
 </section>
 
 <section class="card">
@@ -83,8 +97,16 @@
   </details>
   <details>
     <summary>Con Android il calendario non compare nell'app</summary>
-    <p>Apri l'app Google Calendar → <b>Impostazioni</b> → tocca il calendario "HC Fondi · …"
-      → attiva <b>Sincronizza</b>.</p>
+    <p>Controlla prima di averlo aggiunto dal sito di Google (vedi il punto 2: dall'app non
+      si può). Poi apri l'app Google Calendar → <b>Impostazioni</b> → tocca il calendario
+      "HC Fondi · …" → attiva <b>Sincronizza</b>. La prima volta le partite possono
+      comparire anche dopo qualche ora.</p>
+  </details>
+  <details>
+    <summary>Su Google il calendario si chiama come l'indirizzo</summary>
+    <p>Google a volte usa l'indirizzo del file come nome. Per cambiarlo: da computer apri
+      <a href="https://calendar.google.com/calendar/r/settings" target="_blank" rel="noopener">le impostazioni di Google Calendar</a>,
+      scegli il calendario a sinistra e scrivi il nome che preferisci nel campo <b>Nome</b>.</p>
   </details>
   <details>
     <summary>Ho già aggiunto alcune partite una per una</summary>
@@ -100,6 +122,9 @@
 //  - iPhone/Mac: link webcal://…  (iOS chiede "Abbonati")
 //  - Google:     calendar.google.com/calendar/render?cid=https%3A%2F%2F…  (indirizzo https codificato:
 //                con webcal:// in chiaro l'app Android mostrava il nome con caratteri strani)
+//                L'app Google Calendar per Android NON sa abbonarsi da indirizzo (legge cid
+//                come ID di un calendario Google e dice "importato" senza aggiungere nulla):
+//                su Android si mostrano "Copia link" + la pagina "Aggiungi da URL" di Google.
 //  - Altro:      link https://… da copiare
 // ==========================================================================
 
@@ -111,6 +136,9 @@ const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;
 const httpsUrl = f => new URL(f, location.href).href;
 const webcalUrl = f => httpsUrl(f).replace(/^https?:/, "webcal:");
 const googleUrl = f => "https://calendar.google.com/calendar/render?cid=" + encodeURIComponent(httpsUrl(f));
+
+// Android (o ?android=1 per provare la versione Android da computer)
+const ANDROID = /Android/i.test(navigator.userAgent) || new URLSearchParams(location.search).has("android");
 
 function defaultApp(){
   const ua = navigator.userAgent;
@@ -132,22 +160,25 @@ function renderCals(){
 
 function renderSubs(){
   const hint = document.getElementById("app-hint");
+  const mode = app==="google" && ANDROID ? "android" : app;   // Google da Android: niente link diretto
   hint.innerHTML = {
+    android: "Segui i passi qui sotto: l'app Google Calendar non permette di abbonarsi direttamente.",
     apple: "Tocca <b>Abbonati</b> accanto a ogni calendario e conferma con <b>Abbonati</b> nella finestra che compare.",
     google: "Si apre Google Calendar: conferma con <b>Aggiungi</b>. Ripeti per ogni calendario. Serve essere collegati al proprio account Google.",
     altro: "Copia il link e incollalo nel tuo programma, nella funzione <b>Aggiungi calendario da URL</b> (o \"Iscriviti\").",
-  }[app];
+  }[mode];
+  document.getElementById("android-steps").classList.toggle("hidden", mode!=="android");
   document.querySelectorAll("#apps .app").forEach(b=> b.setAttribute("aria-pressed", String(b.dataset.app===app)));
 
   const list = CALS.filter(c=> chosen.has(c.key));
   const box = document.getElementById("subs");
   if(!list.length){ box.innerHTML = `<li class="empty-sel">Scegli almeno un calendario al punto 1.</li>`; return; }
   box.innerHTML = list.map(c=>{
-    const btn = app==="altro"
+    const btn = mode==="altro" || mode==="android"
       ? `<button type="button" class="go" data-copy="${esc(httpsUrl(c.file))}">Copia link</button>`
       : `<a class="go" href="${esc(app==="apple" ? webcalUrl(c.file) : googleUrl(c.file))}"${app==="google"?' target="_blank" rel="noopener"':""}>Abbonati</a>`;
     return `<li><span class="dot ${c.key}"></span>
-      <span class="nm">${esc(c.label)}<small>${esc(app==="altro" ? httpsUrl(c.file) : c.count+" eventi")}</small></span>${btn}</li>`;
+      <span class="nm">${esc(c.label)}<small>${esc(mode==="apple" || mode==="google" ? c.count+" eventi" : httpsUrl(c.file))}</small></span>${btn}</li>`;
   }).join("");
 }
 

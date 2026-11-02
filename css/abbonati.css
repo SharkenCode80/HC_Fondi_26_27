@@ -80,6 +80,16 @@ body.abbonati h1{font-size:clamp(28px,7vw,44px);margin-top:8px}
 }
 .go.done{background:var(--panel);color:var(--ok);border-color:var(--ok)}
 .go.done::before{content:"✓ "}
+/* istruzioni per Google su Android */
+.steps{
+  margin-top:12px;padding:12px 14px;border-radius:10px;
+  background:var(--row-alt);border:1px solid var(--line);font-size:14px;line-height:1.5;
+}
+.steps p{margin:0 0 6px}
+.steps ol{margin:4px 0 12px;padding-left:22px}
+.steps .go{display:inline-block}
+.steps .hint{margin:10px 0 0}
+
 .empty-sel{font-size:14px;color:var(--muted);padding:6px 0}
 
 /* ---------- disiscriversi / domande ---------- */
