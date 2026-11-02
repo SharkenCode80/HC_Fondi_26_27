@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Test abbonamento Google · HC Fondi</title>
+<!-- PAGINA DI PROVA TEMPORANEA: serve a scegliere il formato del link Google, poi va eliminata -->
+<link rel="stylesheet" href="css/tema-rossoblu.css">
+<link rel="stylesheet" href="css/abbonati.css">
+</head>
+<body class="abbonati">
+<h1>Test link Google Calendar</h1>
+<p class="lead">Prova ogni link <b>dal telefono Android</b> (app Google Calendar) e <b>dal computer</b>
+  (calendar.google.com). Per ognuno annota se il nome del calendario appare come
+  <b>"HC Fondi · U16 F"</b> o con caratteri strani. Non serve completare l'abbonamento:
+  basta vedere la richiesta e annullare.</p>
+
+<section class="card">
+  <ul class="subs" id="links"></ul>
+</section>
+
+<script>
+const ics = new URL("calendario-u16f.ics", location.href).href;          // https://…
+const webcal = ics.replace(/^https?:/, "webcal:");
+const g = cid => "https://calendar.google.com/calendar/render?cid=" + cid;
+const variants = [
+  ["A", "Base64 di webcal://…", g(encodeURIComponent(btoa(webcal)))],
+  ["B", "Base64 di https://…",  g(encodeURIComponent(btoa(ics)))],
+  ["C", "https://… in chiaro",  g(encodeURIComponent(ics))],
+  ["D", "webcal://… in chiaro (quello attuale, con i caratteri strani)", g(webcal)],
+];
+document.getElementById("links").innerHTML = variants.map(([k, label, href]) =>
+  `<li><span class="nm">Variante ${k}<small>${label}</small></span>
+   <a class="go" href="${href}" target="_blank" rel="noopener">Prova ${k}</a></li>`).join("");
+</script>
+</body>
+</html>
