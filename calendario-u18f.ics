@@ -1,0 +1,198 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//HC Fondi//Campionati 26-27//IT
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:HC Fondi · U18 F
+X-WR-CALDESC:Partite HC Fondi stagione 2026/2027 - https://sharkencode80.gi
+ thub.io/HC_Fondi_26_27/
+X-WR-TIMEZONE:Europe/Rome
+REFRESH-INTERVAL;VALUE=DURATION:PT6H
+X-PUBLISHED-TTL:PT6H
+BEGIN:VTIMEZONE
+TZID:Europe/Rome
+X-LIC-LOCATION:Europe/Rome
+BEGIN:DAYLIGHT
+TZOFFSETFROM:+0100
+TZOFFSETTO:+0200
+TZNAME:CEST
+DTSTART:19700329T020000
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU
+END:DAYLIGHT
+BEGIN:STANDARD
+TZOFFSETFROM:+0200
+TZOFFSETTO:+0100
+TZNAME:CET
+DTSTART:19701025T030000
+RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:u18f-hc-fondi-asd-handball-flavioni-u16f-u18f@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20261108T120000
+DTEND;TZID=Europe/Rome:20261108T131000
+SUMMARY:U18 F · HC Fondi – ASD Handball Flavioni U16F
+LOCATION:Fondi Palasport - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U18 F
+END:VEVENT
+BEGIN:VEVENT
+UID:u18f-pdo-handball-salerno-1985-u16f-hc-fondi-u18f@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20261115T120000
+DTEND;TZID=Europe/Rome:20261115T131000
+SUMMARY:U18 F · PDO Handball Salerno 1985 U16F – HC Fondi
+LOCATION:Palestra Palumbo - Salerno
+DESCRIPTION:In trasferta\nCalendario completo: https://sharkencode80.github
+ .io/HC_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U18 F
+END:VEVENT
+BEGIN:VEVENT
+UID:u18f-hc-fondi-cus-cassino-gaeta-u16f-u18f@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20261122T100000
+DTEND;TZID=Europe/Rome:20261122T111000
+SUMMARY:U18 F · HC Fondi – CUS Cassino Gaeta U16F
+LOCATION:Fondi Palasport - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U18 F
+END:VEVENT
+BEGIN:VEVENT
+UID:interna-hc-fondi-u18f-hc-fondi-u16f-u18f@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20261206T120000
+DTEND;TZID=Europe/Rome:20261206T131000
+SUMMARY:Gara interna · HC Fondi U18F – HC Fondi U16F
+LOCATION:Fondi Palasport - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Gara interna
+END:VEVENT
+BEGIN:VEVENT
+UID:u18f-hc-fondi-asd-handball-flavioni-u18f-u18f@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20261222T150000
+DTEND;TZID=Europe/Rome:20261222T161000
+SUMMARY:U18 F · HC Fondi – ASD Handball Flavioni U18F
+LOCATION:Fondi Palasport - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U18 F
+END:VEVENT
+BEGIN:VEVENT
+UID:u18f-asd-handball-flavioni-u16f-hc-fondi-u18f@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270122T153000
+DTEND;TZID=Europe/Rome:20270122T164000
+SUMMARY:U18 F · ASD Handball Flavioni U16F – HC Fondi
+LOCATION:Palazzetto dello Sport - Civitavecchia
+DESCRIPTION:In trasferta\nCalendario completo: https://sharkencode80.github
+ .io/HC_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U18 F
+END:VEVENT
+BEGIN:VEVENT
+UID:u18f-hc-fondi-pdo-handball-salerno-u16f-u18f@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270124T100000
+DTEND;TZID=Europe/Rome:20270124T111000
+SUMMARY:U18 F · HC Fondi – PDO Handball Salerno U16F
+LOCATION:Fondi Palasport - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U18 F
+END:VEVENT
+BEGIN:VEVENT
+UID:interna-hc-fondi-u16f-hc-fondi-u18f-u18f@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270223T180000
+DTEND;TZID=Europe/Rome:20270223T191000
+SUMMARY:Gara interna · HC Fondi U16F – HC Fondi U18F
+LOCATION:Fondi Palasport - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Gara interna
+END:VEVENT
+BEGIN:VEVENT
+UID:u18f-asd-handball-flavioni-u18f-hc-fondi-u18f@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270305T153000
+DTEND;TZID=Europe/Rome:20270305T164000
+SUMMARY:U18 F · ASD Handball Flavioni U18F – HC Fondi
+LOCATION:Palazzetto dello Sport - Civitavecchia
+DESCRIPTION:In trasferta\nCalendario completo: https://sharkencode80.github
+ .io/HC_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U18 F
+END:VEVENT
+BEGIN:VEVENT
+UID:u18f-finali-u18-20270602-u18f@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;VALUE=DATE:20270602
+DTEND;VALUE=DATE:20270603
+TRANSP:TRANSPARENT
+SUMMARY:U18 F · Finali U18
+DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
+ 6_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U18 F
+END:VEVENT
+BEGIN:VEVENT
+UID:u18f-finali-u18-20270603-u18f@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;VALUE=DATE:20270603
+DTEND;VALUE=DATE:20270604
+TRANSP:TRANSPARENT
+SUMMARY:U18 F · Finali U18
+DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
+ 6_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U18 F
+END:VEVENT
+BEGIN:VEVENT
+UID:u18f-finali-u18-20270604-u18f@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;VALUE=DATE:20270604
+DTEND;VALUE=DATE:20270605
+TRANSP:TRANSPARENT
+SUMMARY:U18 F · Finali U18
+DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
+ 6_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U18 F
+END:VEVENT
+BEGIN:VEVENT
+UID:u18f-finali-u18-20270605-u18f@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;VALUE=DATE:20270605
+DTEND;VALUE=DATE:20270606
+TRANSP:TRANSPARENT
+SUMMARY:U18 F · Finali U18
+DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
+ 6_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U18 F
+END:VEVENT
+BEGIN:VEVENT
+UID:u18f-finali-u18-20270606-u18f@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;VALUE=DATE:20270606
+DTEND;VALUE=DATE:20270607
+TRANSP:TRANSPARENT
+SUMMARY:U18 F · Finali U18
+DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
+ 6_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U18 F
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,55 @@
+{
+  "site": "https://sharkencode80.github.io/HC_Fondi_26_27/",
+  "calendars": [
+    {
+      "key": "tutte",
+      "label": "Tutte le partite",
+      "note": "tutte le categorie ed eventi",
+      "file": "calendario.ics",
+      "count": 71,
+      "all": true
+    },
+    {
+      "key": "serieb",
+      "label": "Serie B",
+      "note": "",
+      "file": "calendario-serieb.ics",
+      "count": 16
+    },
+    {
+      "key": "u18f",
+      "label": "U18 F",
+      "note": "con le gare interne",
+      "file": "calendario-u18f.ics",
+      "count": 14
+    },
+    {
+      "key": "u16f",
+      "label": "U16 F",
+      "note": "con le gare interne",
+      "file": "calendario-u16f.ics",
+      "count": 16
+    },
+    {
+      "key": "u16m",
+      "label": "U16 M",
+      "note": "",
+      "file": "calendario-u16m.ics",
+      "count": 14
+    },
+    {
+      "key": "u14",
+      "label": "Under 14",
+      "note": "",
+      "file": "calendario-u14.ics",
+      "count": 7
+    },
+    {
+      "key": "sel",
+      "label": "Selezione Talenti",
+      "note": "",
+      "file": "calendario-sel.ics",
+      "count": 6
+    }
+  ]
+}

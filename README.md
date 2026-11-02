@@ -159,6 +159,29 @@ Aggiungi i punteggi in `risultati.json`, con lo stesso formato del Festival dell
 girato in automatico). In alternativa si può usare `generatore.html` del progetto
 Festival della Pallamano (sezione *Risultati extra*).
 
+### Calendari da abbonamento (.ics) — in anteprima
+
+`genera_ics.py` crea, da `calendario.json` e `risultati.json`, i calendari a cui ci si
+può abbonare dal telefono (si aggiornano da soli quando cambia il file sul sito):
+
+| File | Contenuto |
+|---|---|
+| `calendario.ics` | tutte le partite ed eventi |
+| `calendario-<categoria>.ics` | una categoria (`serieb`, `u18f`, `u16f`, `u16m`, `u14`, `sel`); le gare interne sono sia in U18 F sia in U16 F |
+| `calendari.json` | elenco dei calendari, letto da `abbonati.html` |
+
+```bash
+python3 genera_ics.py      # nessuna libreria esterna
+```
+
+`converti_excel.py` lo lancia già da solo alla fine. **Se modifichi `calendario.json` o
+`risultati.json` a mano (anche da GitHub), rilancia `genera_ics.py` e pubblica anche i
+`.ics`**, altrimenti i calendari degli abbonati restano indietro.
+
+Le pagine con il pulsante **📅 Abbonati** sono per ora un'anteprima, raggiungibile solo
+con link diretto (e con `noindex`): `anteprima.html`, `anteprima-mobile.html` e
+`abbonati.html`. Quando vanno bene, si sostituiscono a `index.html` / `mobile.html`.
+
 ### Cambiare tema
 
 Il tema si imposta nella riga `<link … id="tema">`, **in entrambe le pagine**
@@ -255,7 +278,8 @@ HC_Fondi_26_27/
 ├── mobile.html           versione cellulare (agenda + pannello dettagli)
 ├── calendario.json       dati del calendario (generato dall'Excel)
 ├── risultati.json        punteggi (facoltativo)
-├── converti_excel.py     Excel → calendario.json
+├── converti_excel.py     Excel → calendario.json (+ lancia genera_ics.py)
+├── genera_ics.py         calendario.json → calendario*.ics + calendari.json
 ├── css/
 │   ├── base.css          struttura + variabili (colori, font, dimensioni)
 │   ├── tema-*.css        ogni tema importa base.css e ridefinisce le variabili

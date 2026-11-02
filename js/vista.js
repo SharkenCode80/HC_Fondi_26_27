@@ -10,12 +10,21 @@
    - ?v=auto annulla la scelta manuale.
    Caricato nel <head> di entrambe le pagine, prima del CSS, per evitare
    di mostrare per un attimo la versione sbagliata.
+   Una coppia di pagine diversa (es. l'anteprima) si indica sul tag:
+     <script src="js/vista.js" data-full="anteprima.html"
+             data-mobile="anteprima-mobile.html"></script>
+   Senza attributi la coppia è index.html / mobile.html.
    ========================================================================== */
 (function(){
   var SOGLIA = 700;                 // px: sotto questa larghezza -> versione cellulare
   var KEY = "hcfondi_vista";
 
-  var page = /mobile\.html$/.test(location.pathname) ? "mobile" : "full";
+  var tag = document.currentScript;
+  var FULL = (tag && tag.getAttribute("data-full")) || "index.html";
+  var MOBILE = (tag && tag.getAttribute("data-mobile")) || "mobile.html";
+
+  var file = location.pathname.split("/").pop() || "index.html";
+  var page = file === MOBILE ? "mobile" : "full";
   var q = new URLSearchParams(location.search).get("v");
   try{
     if(q === "mobile" || q === "full") sessionStorage.setItem(KEY, q);
@@ -26,5 +35,5 @@
   try{ pref = sessionStorage.getItem(KEY); }catch(e){}
   var want = pref || (window.matchMedia("(max-width:" + SOGLIA + "px)").matches ? "mobile" : "full");
 
-  if(want !== page) location.replace(want === "mobile" ? "mobile.html" : "index.html");
+  if(want !== page) location.replace(want === "mobile" ? MOBILE : FULL);
 })();

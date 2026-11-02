@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta http-equiv="refresh" content="600" data-auto-refresh>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0B2A5B">
+<title>HC Fondi Campionati 26-27</title>
+<!-- sceglie in automatico la versione completa o cellulare (vedi js/vista.js) -->
+<!-- ANTEPRIMA (pulsante "Abbonati al calendario"): raggiungibile solo con link diretto -->
+<meta name="robots" content="noindex">
+<script src="js/vista.js" data-full="anteprima.html" data-mobile="anteprima-mobile.html"></script>
+<!-- ===== STILE =====
+     1) il tema (lo stesso di index.html): css/tema-classico.css, tema-scuro,
+        tema-arancio, tema-minimal, tema-compatto, tema-rossoblu
+     2) css/mobile.css: layout agenda per cellulare (sempre DOPO il tema)
+-->
+<link rel="stylesheet" href="css/tema-rossoblu.css" id="tema">
+<link rel="stylesheet" href="css/mobile.css">
+</head>
+<body class="mobile">
+
+<header class="mbar">
+  <p class="eyebrow" id="ev-eyebrow">HC Fondi</p>
+  <div class="ab-top">
+    <h1 id="ev-title">HC Fondi Campionati 26-27</h1>
+    <a class="ab-btn" href="abbonati.html">📅 Abbonati</a>
+  </div>
+  <nav class="mscroll" id="months" aria-label="Mese"></nav>
+  <nav class="mscroll" id="cats" aria-label="Categorie"></nav>
+</header>
+
+<main class="agenda" id="agenda"></main>
+
+<footer class="mfoot">
+  <span id="ev-foot"></span>
+  <a class="switch-view" href="anteprima.html?v=full">🖥 Versione completa (tabellone)</a>
+</footer>
+
+<button class="fab hidden" id="fab" type="button">↓ Prossima</button>
+
+<dialog class="sheet" id="sheet" aria-labelledby="sh-teams"></dialog>
+
+<script>
+// ==========================================================================
+//  Versione cellulare: stessa fonte dati di index.html
+//  (calendario.json + risultati.json nella stessa cartella).
+//  Lista per giornata; toccando una partita si apre il pannello dettagli.
+// ==========================================================================
+
+const MESI = ["","gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"];
+const MESI_LUNGHI = ["","gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"];
+const GIORNI = ["domenica","lunedì","martedì","mercoledì","giovedì","venerdì","sabato"];
+
+let V={}, CAT={}, DOW={}, TEAM="HC Fondi", D=[], DAYS=[], RES={}, DUR={};
+const state = { cats:{}, month:"" };
+
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const isOurs = name => name===TEAM || (name||"").startsWith(TEAM+" ");
+const normTeam = s => (s||"").toUpperCase().replace(/\s+/g," ").trim();
+const resKey = (d,c,h,a) => (d||"").slice(0,5)+"|"+(c||"")+"|"+normTeam(h)+"|"+normTeam(a);
+const yearOf = m => m.year;
+const dateOf = m => new Date(yearOf(m), +m.date.slice(3,5)-1, +m.date.slice(0,2));
+const dayKey = m => yearOf(m)*10000 + (+m.date.slice(3,5))*100 + (+m.date.slice(0,2));
+const monthKey = m => yearOf(m) + "-" + m.date.slice(3,5);
+const todayKey = () => { const n=new Date(); return n.getFullYear()*10000+(n.getMonth()+1)*100+n.getDate(); };
+const city = v => { const s = V[v] || v || ""; const i = s.lastIndexOf(" - "); return i>=0 ? s.slice(i+3) : s; };
+
+function resultFor(m){
+  const r = RES[resKey(m.date,m.cat,m.home,m.away)];
+  if(r) return {hs:+r.hs, as:+r.as, status:r.status};
+  const rr = RES[resKey(m.date,m.cat,m.away,m.home)];
+  if(rr) return {hs:+rr.as, as:+rr.hs, status:rr.status};
+  return null;
+}
+// esito dal punto di vista di HC Fondi: "w" / "l" / "d" (gare interne: nessun esito)
+function outcome(m, r){
+  if(!r || !Number.isFinite(r.hs) || !Number.isFinite(r.as)) return null;
+  const homeOurs = isOurs(m.home), awayOurs = isOurs(m.away);
+  if(homeOurs && awayOurs) return null;
+  const our = homeOurs ? r.hs : r.as, their = homeOurs ? r.as : r.hs;
+  return our>their ? "w" : our<their ? "l" : "d";
+}
+const OUT_LABEL = { w:"Vinta", l:"Persa", d:"Pareggio" };
+
+// avversario mostrato nella card (per le gare interne: entrambe le squadre)
+function opponentHTML(m){
+  if(m.event) return esc(m.home);
+  if(isOurs(m.home) && isOurs(m.away)) return `${esc(m.home)} <span class="vs">vs</span> ${esc(m.away)}`;
+  return `<span class="vs">vs</span>${esc(isOurs(m.home) ? m.away : m.home)}`;
+}
+
+function cardHTML(m, i){
+  const home = !m.event && isOurs(m.home);
+  const r = m.event ? null : resultFor(m);
+  const o = outcome(m, r);
+  const right = r && Number.isFinite(r.hs)
+    ? `<span class="res ${o||""}">${r.hs}–${r.as}${o?`<small>${OUT_LABEL[o]}</small>`:""}</span>`
+    : `<span class="go" aria-hidden="true">›</span>`;
+  return `<button type="button" class="m ${m.cat}${home?" home":""}${m.event?" event":""}" data-i="${i}">
+    <span class="t">${m.time || "—"}${m.event ? "<small>evento</small>" : ""}</span>
+    <span class="top"><span class="cat">${esc(CAT[m.cat]||m.cat)}</span>${m.event ? "" :
+      `<span class="where${home?" casa":""}">${esc(m.gir)}</span>`}</span>
+    <span class="opp">${opponentHTML(m)}</span>
+    ${m.event ? "" : `<span class="city">${esc(city(m.venue))}</span>`}
+    ${right}
+  </button>`;
+}
+
+function render(){
+  const box = document.getElementById("agenda");
+  const list = D.map((m,i)=>[m,i]).filter(([m])=> state.cats[m.cat] && (!state.month || monthKey(m)===state.month));
+  if(!list.length){ box.innerHTML = `<p class="mempty">Nessuna partita per i filtri selezionati.</p>`; updateFab(); return; }
+
+  const today = todayKey();
+  const next = DAYS.find(k=> k >= today);
+  let html = "", cur = null;
+  list.forEach(([m,i])=>{
+    const k = dayKey(m);
+    if(k!==cur){
+      if(cur!==null) html += `</section>`;
+      cur = k;
+      const cls = k<today ? " past" : (k===next ? " next" : "");
+      const tag = k===next ? `<span class="tag">${k===today ? "Oggi" : "Prossima"}</span>` : "";
+      html += `<section class="day${cls}" data-day="${k}">
+        <h2 class="day-h"><span class="dw">${DOW[m.date]||""}</span><span class="dt">${+m.date.slice(0,2)} ${MESI[+m.date.slice(3,5)]}</span>${tag}</h2>`;
+    }
+    html += cardHTML(m, i);
+  });
+  box.innerHTML = html + `</section>`;
+  updateFab();
+}
+
+// ---------- pannello dettagli ----------
+function openSheet(i){
+  const m = D[i], d = dateOf(m), sh = document.getElementById("sheet");
+  const r = m.event ? null : resultFor(m), o = outcome(m, r);
+  const venue = V[m.venue] || m.venue || "";
+  const when = `${GIORNI[d.getDay()]} ${d.getDate()} ${MESI_LUNGHI[d.getMonth()+1]} ${d.getFullYear()}${m.time ? " · ore "+m.time.replace(".",":") : ""}`;
+  const team = n => `<span class="${isOurs(n)?"fp":""}">${esc(n)}</span>`;
+  const teams = m.event ? esc(m.home) : `${team(m.home)} <span class="vs">–</span> ${team(m.away)}`;
+  const score = r && Number.isFinite(r.hs)
+    ? `<p class="score res ${o||""}">${r.hs} – ${r.as}${o?`<small>${OUT_LABEL[o]}</small>`:""}</p>` : "";
+  const end = m.time ? (()=>{ const [h,mm]=m.time.split(".").map(Number); const t=h*60+mm+(DUR[m.cat]||60);
+    return `${Math.floor(t/60)}:${String(t%60).padStart(2,"0")}`; })() : "";
+
+  sh.className = "sheet " + m.cat;
+  sh.innerHTML = `<div class="grip"></div>
+    <button type="button" class="x" data-close aria-label="Chiudi">×</button>
+    <div class="sh">
+      <p class="when">${when}</p>
+      <h3 class="teams" id="sh-teams">${teams}</h3>
+      ${score}
+      <div class="tags"><span>${esc(CAT[m.cat]||m.cat)}</span>${m.event ? "" :
+        `<span class="${isOurs(m.home)?"casa":""}">${esc(m.gir)}</span>`}</div>
+    </div>
+    <dl>
+      ${m.time ? `<dt>Orario</dt><dd>${m.time.replace(".",":")}${end ? ` – fine indicativa ${end}` : ""}</dd>` : ""}
+      ${venue ? `<dt>Impianto</dt><dd>${esc(venue)}</dd>` : ""}
+      ${r && r.status ? `<dt>Stato</dt><dd>${esc(r.status)}</dd>` : ""}
+    </dl>
+    <div class="acts">
+      ${venue ? `<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(venue)}" target="_blank" rel="noopener">Mappa</a>` : ""}
+      <button type="button" class="alt" data-ics="${i}">Aggiungi al calendario</button>
+    </div>`;
+  sh.showModal();
+}
+
+// file .ics per aggiungere la partita al calendario del telefono
+function downloadICS(i){
+  const m = D[i], d = dateOf(m), p = n => String(n).padStart(2,"0");
+  const ymd = `${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}`;
+  let when;
+  if(m.time){
+    const [h,mm] = m.time.split(".").map(Number), e = h*60+mm+(DUR[m.cat]||60);
+    when = `DTSTART:${ymd}T${p(h)}${p(mm)}00\r\nDTEND:${ymd}T${p(Math.floor(e/60)%24)}${p(e%60)}00`;
+  } else {
+    const n = new Date(d); n.setDate(n.getDate()+1);
+    when = `DTSTART;VALUE=DATE:${ymd}\r\nDTEND;VALUE=DATE:${n.getFullYear()}${p(n.getMonth()+1)}${p(n.getDate())}`;
+  }
+  const icsText = s => String(s).replace(/([,;\\])/g,"\\$1");
+  const title = m.event ? `${CAT[m.cat]||m.cat}: ${m.home}` : `${CAT[m.cat]||m.cat} · ${m.home} – ${m.away}`;
+  const ics = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//HC Fondi//Campionati 26-27//IT","BEGIN:VEVENT",
+    `UID:hcfondi-${ymd}-${m.cat}-${i}@hcfondi`,
+    `DTSTAMP:${new Date().toISOString().replace(/[-:]/g,"").slice(0,15)}Z`,
+    when, `SUMMARY:${icsText(title)}`,
+    V[m.venue] ? `LOCATION:${icsText(V[m.venue])}` : "",
+    "END:VEVENT","END:VCALENDAR"].filter(Boolean).join("\r\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([ics], {type:"text/calendar"}));
+  a.download = `HCFondi_${ymd}_${m.cat}.ics`;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=> URL.revokeObjectURL(a.href), 2000);
+}
+
+// ---------- filtri ----------
+function buildControls(){
+  const months = [...new Set(D.map(monthKey))];
+  const mbox = document.getElementById("months");
+  mbox.innerHTML = `<button type="button" class="chip month" data-month="">Tutto</button>` +
+    months.map(k=>{ const [y,mm]=k.split("-"); return `<button type="button" class="chip month" data-month="${k}">${MESI[+mm]} ${y.slice(2)}</button>`; }).join("");
+  mbox.addEventListener("click", e=>{
+    const b = e.target.closest(".chip"); if(!b) return;
+    setMonth(b.dataset.month); window.scrollTo({top:0});
+  });
+
+  const cbox = document.getElementById("cats");
+  cbox.innerHTML = Object.keys(CAT).filter(c=> D.some(m=>m.cat===c)).map(c=>
+    `<button type="button" class="chip" data-cat="${c}" aria-pressed="true"><span class="dot ${c}"></span>${esc(CAT[c])}</button>`).join("");
+  cbox.addEventListener("click", e=>{
+    const b = e.target.closest(".chip"); if(!b) return;
+    const on = b.getAttribute("aria-pressed")==="true";
+    b.setAttribute("aria-pressed", String(!on));
+    state.cats[b.dataset.cat] = !on;
+    render();
+  });
+}
+function setMonth(k){
+  state.month = k;
+  document.querySelectorAll("#months .chip").forEach(b=>{
+    const on = b.dataset.month===k;
+    b.setAttribute("aria-pressed", String(on));
+    if(on) b.scrollIntoView({inline:"center", block:"nearest"});
+  });
+  render();
+}
+
+// ---------- "Prossima": porta alla prossima giornata ----------
+function nextSection(){ return document.querySelector(".day.next"); }
+function updateFab(){
+  const fab = document.getElementById("fab");
+  const nextK = DAYS.find(k=> k >= todayKey());
+  fab.classList.toggle("hidden", !nextK);
+}
+function goNext(){
+  const nextK = DAYS.find(k=> k >= todayKey()); if(!nextK) return;
+  const m = D.find(x=> dayKey(x)===nextK);
+  if(!nextSection() && state.month) setMonth(monthKey(m));
+  const s = nextSection();
+  if(s){
+    const top = s.getBoundingClientRect().top + window.scrollY - document.querySelector(".mbar").offsetHeight - 8;
+    window.scrollTo({top, behavior:"smooth"});
+  }
+}
+
+function applyMeta(ev, resMeta){
+  const set=(id,txt)=>{ const el=document.getElementById(id); if(el&&txt) el.textContent=txt; };
+  if(ev){ set("ev-eyebrow", ev.eyebrow); set("ev-title", ev.title); if(ev.title) document.title = ev.title; }
+  const cal = `Calendario agg. ${ev&&ev.updated||"—"}.`;
+  const ris = resMeta&&resMeta.updated ? ` Risultati agg. ${resMeta.updated}.` : "";
+  document.getElementById("ev-foot").textContent = cal + ris + " ";
+}
+
+async function loadResults(){
+  try{
+    const res = await fetch("risultati.json", {cache:"no-store"});
+    if(!res.ok) return null;
+    const data = await res.json();
+    (data.results||[]).forEach(r=>{ RES[resKey(r.date,r.cat,r.home,r.away)] = r; });
+    return data;
+  }catch(_){ return null; }
+}
+
+async function init(){
+  try{
+    const res = await fetch("calendario.json", {cache:"no-store"});
+    if(!res.ok) throw new Error("HTTP "+res.status);
+    const data = await res.json();
+    V = data.venues || {}; CAT = data.categories || {}; DOW = data.dow || {};
+    TEAM = data.fondiTeam || "HC Fondi";
+
+    // anno di ogni partita: campo "year", altrimenti dedotto dalla data di inizio stagione
+    const y0 = +(data.start||"").slice(6,10) || data.year || new Date().getFullYear();
+    const m0 = +(data.start||"").slice(3,5) || 1;
+    D = (data.matches||[]).map(m=> ({...m, year: m.year || (+m.date.slice(3,5) >= m0 ? y0 : y0+1)}))
+      .sort((a,b)=> dayKey(a)-dayKey(b) || (a.time||"").localeCompare(b.time||""));
+    DAYS = [...new Set(D.map(dayKey))];
+    Object.keys(CAT).forEach(c=> state.cats[c]=true);
+    const dur = (data.mister||{}).durate || {};
+    Object.keys(dur).forEach(c=> DUR[c] = 2*(+dur[c].tempo||0) + (+dur[c].pausa||0));
+
+    const resMeta = await loadResults();
+    applyMeta(data.event, resMeta);
+    buildControls();
+
+    // mese iniziale: quello della prossima giornata (o l'ultimo, a stagione finita)
+    const nextK = DAYS.find(k=> k >= todayKey());
+    const ref = D.find(m=> dayKey(m)===(nextK ?? DAYS[DAYS.length-1]));
+    setMonth(ref ? monthKey(ref) : "");
+    if(nextK) requestAnimationFrame(goNext);
+  }catch(err){
+    document.getElementById("agenda").innerHTML =
+      `<p class="mempty"><b>Impossibile caricare calendario.json.</b><br>
+       Il file deve stare nella stessa cartella di questa pagina.<br><small>${esc(err.message)}</small></p>`;
+  }
+}
+
+// eventi: tocco su una card, chiusura pannello, .ics, pulsante "Prossima"
+document.getElementById("agenda").addEventListener("click", e=>{
+  const c = e.target.closest(".m[data-i]"); if(c) openSheet(+c.dataset.i);
+});
+document.getElementById("sheet").addEventListener("click", e=>{
+  const sh = e.currentTarget;
+  if(e.target===sh || e.target.closest("[data-close]")) sh.close();     // tocco sullo sfondo o sulla ×
+  const ics = e.target.closest("[data-ics]"); if(ics) downloadICS(+ics.dataset.ics);
+});
+document.getElementById("fab").addEventListener("click", goNext);
+init();
+
+/* credito (offuscato, reinserito se rimosso) */
+(function(){
+  const n = new TextDecoder().decode(Uint8Array.from(atob("Y3JlYXRlZCBieSBWaW5jZW56byBGb3J0ZQ=="), c=>c.charCodeAt(0)));
+  function ensure(){
+    let el = document.getElementById("credit");
+    if(!el){ el = document.createElement("div"); el.id = "credit"; document.body.appendChild(el); }
+    if(el.textContent !== n) el.textContent = n;
+  }
+  ensure();
+  try{ new MutationObserver(ensure).observe(document.body, {childList:true, subtree:true}); }catch(_){}
+})();
+</script>
+</body>
+</html>

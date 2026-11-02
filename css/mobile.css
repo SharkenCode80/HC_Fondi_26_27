@@ -24,6 +24,14 @@ body.mobile{padding:0 0 90px;max-width:720px;margin:0 auto}
 .mbar h1{font-size:26px;line-height:1}
 .mbar h1::after{display:none}   /* niente decorazioni del titolo su mobile */
 
+/* titolo + pulsante "Abbonati" sulla stessa riga */
+.ab-top{display:flex;align-items:flex-end;justify-content:space-between;gap:8px}
+.ab-btn{
+  flex:0 0 auto;display:inline-flex;align-items:center;gap:5px;text-decoration:none;
+  font-family:var(--font-display);font-weight:700;font-size:13px;letter-spacing:.04em;text-transform:uppercase;
+  background:var(--fondi);color:#fff;border-radius:999px;padding:6px 11px;white-space:nowrap;
+}
+
 /* righe di chip che scorrono in orizzontale */
 .mscroll{
   display:flex;gap:6px;overflow-x:auto;padding:8px 0 2px;margin:0 calc(-1 * var(--bar-pad));

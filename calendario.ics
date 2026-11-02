@@ -1,0 +1,882 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//HC Fondi//Campionati 26-27//IT
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:HC Fondi · Tutte le partite
+X-WR-CALDESC:Partite HC Fondi stagione 2026/2027 - https://sharkencode80.gi
+ thub.io/HC_Fondi_26_27/
+X-WR-TIMEZONE:Europe/Rome
+REFRESH-INTERVAL;VALUE=DURATION:PT6H
+X-PUBLISHED-TTL:PT6H
+BEGIN:VTIMEZONE
+TZID:Europe/Rome
+X-LIC-LOCATION:Europe/Rome
+BEGIN:DAYLIGHT
+TZOFFSETFROM:+0100
+TZOFFSETTO:+0200
+TZNAME:CEST
+DTSTART:19700329T020000
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU
+END:DAYLIGHT
+BEGIN:STANDARD
+TZOFFSETFROM:+0200
+TZOFFSETTO:+0100
+TZNAME:CET
+DTSTART:19701025T030000
+RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:u16f-hc-fondi-pdo-handball-salerno-u16f-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20261103T180000
+DTEND;TZID=Europe/Rome:20261103T190000
+SUMMARY:U16 F · HC Fondi – PDO Handball Salerno U16F
+LOCATION:Fondi Palasport - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U16 F
+END:VEVENT
+BEGIN:VEVENT
+UID:u16m-hc-fondi-bcc-roma-pontinia-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20261105T180000
+DTEND;TZID=Europe/Rome:20261105T190000
+SUMMARY:U16 M · HC Fondi – BCC Roma Pontinia
+LOCATION:Fondi Palasport - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U16 M
+END:VEVENT
+BEGIN:VEVENT
+UID:serieb-hc-fondi-benevento-23-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20261107T180000
+DTEND;TZID=Europe/Rome:20261107T191000
+SUMMARY:Serie B · HC Fondi – BENEVENTO 23
+LOCATION:Fondi Palasport - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Serie B
+END:VEVENT
+BEGIN:VEVENT
+UID:u18f-hc-fondi-asd-handball-flavioni-u16f-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20261108T120000
+DTEND;TZID=Europe/Rome:20261108T131000
+SUMMARY:U18 F · HC Fondi – ASD Handball Flavioni U16F
+LOCATION:Fondi Palasport - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U18 F
+END:VEVENT
+BEGIN:VEVENT
+UID:u16m-genea-handball-lanzara-2012-a-hc-fondi-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20261115T103000
+DTEND;TZID=Europe/Rome:20261115T113000
+SUMMARY:U16 M · GENEA HANDBALL LANZARA 2012 A – HC Fondi
+LOCATION:Palestra Palumbo - Salerno
+DESCRIPTION:In trasferta\nCalendario completo: https://sharkencode80.github
+ .io/HC_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U16 M
+END:VEVENT
+BEGIN:VEVENT
+UID:u18f-pdo-handball-salerno-1985-u16f-hc-fondi-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20261115T120000
+DTEND;TZID=Europe/Rome:20261115T131000
+SUMMARY:U18 F · PDO Handball Salerno 1985 U16F – HC Fondi
+LOCATION:Palestra Palumbo - Salerno
+DESCRIPTION:In trasferta\nCalendario completo: https://sharkencode80.github
+ .io/HC_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U18 F
+END:VEVENT
+BEGIN:VEVENT
+UID:u16m-hc-fondi-genea-handball-lanzara-2012-b-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20261119T180000
+DTEND;TZID=Europe/Rome:20261119T190000
+SUMMARY:U16 M · HC Fondi – GENEA HANDBALL LANZARA 2012 B
+LOCATION:Fondi Palasport - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U16 M
+END:VEVENT
+BEGIN:VEVENT
+UID:u16f-asd-handball-flavioni-u18f-hc-fondi-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20261120T153000
+DTEND;TZID=Europe/Rome:20261120T163000
+SUMMARY:U16 F · ASD Handball Flavioni U18F – HC Fondi
+LOCATION:Palazzetto dello Sport - Civitavecchia
+DESCRIPTION:In trasferta\nCalendario completo: https://sharkencode80.github
+ .io/HC_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U16 F
+END:VEVENT
+BEGIN:VEVENT
+UID:u18f-hc-fondi-cus-cassino-gaeta-u16f-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20261122T100000
+DTEND;TZID=Europe/Rome:20261122T111000
+SUMMARY:U18 F · HC Fondi – CUS Cassino Gaeta U16F
+LOCATION:Fondi Palasport - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U18 F
+END:VEVENT
+BEGIN:VEVENT
+UID:serieb-genea-lanzara-2012-hc-fondi-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20261122T180000
+DTEND;TZID=Europe/Rome:20261122T191000
+SUMMARY:Serie B · GENEA LANZARA 2012 – HC Fondi
+LOCATION:Palestra Palumbo - Salerno
+DESCRIPTION:In trasferta\nCalendario completo: https://sharkencode80.github
+ .io/HC_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Serie B
+END:VEVENT
+BEGIN:VEVENT
+UID:u16f-cus-cassino-gaeta-u16f-hc-fondi-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20261128T120000
+DTEND;TZID=Europe/Rome:20261128T130000
+SUMMARY:U16 F · CUS Cassino Gaeta U16F – HC Fondi
+LOCATION:Impianto Sportivo Polivalente Palasport - Gaeta
+DESCRIPTION:In trasferta\nCalendario completo: https://sharkencode80.github
+ .io/HC_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U16 F
+END:VEVENT
+BEGIN:VEVENT
+UID:u16m-asd-pallamanobenevento23-hc-fondi-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20261128T180000
+DTEND;TZID=Europe/Rome:20261128T190000
+SUMMARY:U16 M · ASD PALLAMANOBENEVENTO23 – HC Fondi
+LOCATION:Pala Valentino Ferrara ex Paladua - Benevento
+DESCRIPTION:In trasferta\nCalendario completo: https://sharkencode80.github
+ .io/HC_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U16 M
+END:VEVENT
+BEGIN:VEVENT
+UID:sel-selezione-dei-talenti-20261129-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;VALUE=DATE:20261129
+DTEND;VALUE=DATE:20261130
+TRANSP:TRANSPARENT
+SUMMARY:Selezione dei Talenti
+DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
+ 6_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Selezione Talenti
+END:VEVENT
+BEGIN:VEVENT
+UID:interna-hc-fondi-u18f-hc-fondi-u16f-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20261206T120000
+DTEND;TZID=Europe/Rome:20261206T131000
+SUMMARY:Gara interna · HC Fondi U18F – HC Fondi U16F
+LOCATION:Fondi Palasport - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Gara interna
+END:VEVENT
+BEGIN:VEVENT
+UID:u16m-hc-fondi-cus-cassino-gaeta-blu-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20261210T180000
+DTEND;TZID=Europe/Rome:20261210T190000
+SUMMARY:U16 M · HC Fondi – CUS CASSINO GAETA BLU
+LOCATION:Fondi Palasport - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U16 M
+END:VEVENT
+BEGIN:VEVENT
+UID:serieb-hc-fondi-theo-gaeta-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20261212T180000
+DTEND;TZID=Europe/Rome:20261212T191000
+SUMMARY:Serie B · HC Fondi – THEO GAETA
+LOCATION:Fondi Palasport - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Serie B
+END:VEVENT
+BEGIN:VEVENT
+UID:u14-under-14-20261213-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;VALUE=DATE:20261213
+DTEND;VALUE=DATE:20261214
+TRANSP:TRANSPARENT
+SUMMARY:Under 14 · UNDER 14
+DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
+ 6_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Under 14
+END:VEVENT
+BEGIN:VEVENT
+UID:u16f-asd-handball-flavioni-u16f-hc-fondi-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20261218T153000
+DTEND;TZID=Europe/Rome:20261218T163000
+SUMMARY:U16 F · ASD Handball Flavioni U16F – HC Fondi
+LOCATION:Palazzetto dello Sport - Civitavecchia
+DESCRIPTION:In trasferta\nCalendario completo: https://sharkencode80.github
+ .io/HC_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U16 F
+END:VEVENT
+BEGIN:VEVENT
+UID:sel-selezione-dei-talenti-20261220-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;VALUE=DATE:20261220
+DTEND;VALUE=DATE:20261221
+TRANSP:TRANSPARENT
+SUMMARY:Selezione dei Talenti
+DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
+ 6_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Selezione Talenti
+END:VEVENT
+BEGIN:VEVENT
+UID:serieb-hc-fondi-hc-roma-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20261220T153000
+DTEND;TZID=Europe/Rome:20261220T164000
+SUMMARY:Serie B · HC Fondi – HC ROMA
+LOCATION:Fondi Palasport - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Serie B
+END:VEVENT
+BEGIN:VEVENT
+UID:u18f-hc-fondi-asd-handball-flavioni-u18f-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20261222T150000
+DTEND;TZID=Europe/Rome:20261222T161000
+SUMMARY:U18 F · HC Fondi – ASD Handball Flavioni U18F
+LOCATION:Fondi Palasport - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U18 F
+END:VEVENT
+BEGIN:VEVENT
+UID:u16f-hc-fondi-cus-cassino-gaeta-u16f-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270110T100000
+DTEND;TZID=Europe/Rome:20270110T110000
+SUMMARY:U16 F · HC Fondi – CUS Cassino Gaeta U16F
+LOCATION:Fondi Palasport - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U16 F
+END:VEVENT
+BEGIN:VEVENT
+UID:u16m-cus-cassino-gaeta-nero-hc-fondi-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270114T183000
+DTEND;TZID=Europe/Rome:20270114T193000
+SUMMARY:U16 M · CUS CASSINO GAETA NERO – HC Fondi
+LOCATION:Impianto Sportivo Polivalente Palasport - Gaeta
+DESCRIPTION:In trasferta\nCalendario completo: https://sharkencode80.github
+ .io/HC_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U16 M
+END:VEVENT
+BEGIN:VEVENT
+UID:u16f-pdo-handball-salerno-1985-u16f-hc-fondi-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270117T110000
+DTEND;TZID=Europe/Rome:20270117T120000
+SUMMARY:U16 F · PDO Handball Salerno 1985 U16F – HC Fondi
+LOCATION:Palestra Palumbo - Salerno
+DESCRIPTION:In trasferta\nCalendario completo: https://sharkencode80.github
+ .io/HC_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U16 F
+END:VEVENT
+BEGIN:VEVENT
+UID:serieb-benevento-23-hc-fondi-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270117T190000
+DTEND;TZID=Europe/Rome:20270117T201000
+SUMMARY:Serie B · BENEVENTO 23 – HC Fondi
+LOCATION:Pala Valentino Ferrara ex Paladua - Benevento
+DESCRIPTION:In trasferta\nCalendario completo: https://sharkencode80.github
+ .io/HC_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Serie B
+END:VEVENT
+BEGIN:VEVENT
+UID:u16m-hc-fondi-asd-helios-sporting-club-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270121T180000
+DTEND;TZID=Europe/Rome:20270121T190000
+SUMMARY:U16 M · HC Fondi – ASD HELIOS SPORTING CLUB
+LOCATION:Fondi Palasport - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U16 M
+END:VEVENT
+BEGIN:VEVENT
+UID:u18f-asd-handball-flavioni-u16f-hc-fondi-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270122T153000
+DTEND;TZID=Europe/Rome:20270122T164000
+SUMMARY:U18 F · ASD Handball Flavioni U16F – HC Fondi
+LOCATION:Palazzetto dello Sport - Civitavecchia
+DESCRIPTION:In trasferta\nCalendario completo: https://sharkencode80.github
+ .io/HC_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U18 F
+END:VEVENT
+BEGIN:VEVENT
+UID:u18f-hc-fondi-pdo-handball-salerno-u16f-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270124T100000
+DTEND;TZID=Europe/Rome:20270124T111000
+SUMMARY:U18 F · HC Fondi – PDO Handball Salerno U16F
+LOCATION:Fondi Palasport - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U18 F
+END:VEVENT
+BEGIN:VEVENT
+UID:sel-selezione-dei-talenti-20270131-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;VALUE=DATE:20270131
+DTEND;VALUE=DATE:20270201
+TRANSP:TRANSPARENT
+SUMMARY:Selezione dei Talenti
+DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
+ 6_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Selezione Talenti
+END:VEVENT
+BEGIN:VEVENT
+UID:u16m-bcc-roma-pontinia-hc-fondi-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270206T180000
+DTEND;TZID=Europe/Rome:20270206T190000
+SUMMARY:U16 M · BCC ROMA PONTINIA – HC Fondi
+LOCATION:Palasport Marica Bianchi - Pontinia
+DESCRIPTION:In trasferta\nCalendario completo: https://sharkencode80.github
+ .io/HC_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U16 M
+END:VEVENT
+BEGIN:VEVENT
+UID:u14-under-14-salerno-20270207-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;VALUE=DATE:20270207
+DTEND;VALUE=DATE:20270208
+TRANSP:TRANSPARENT
+SUMMARY:Under 14 · UNDER 14 - salerno
+DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
+ 6_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Under 14
+END:VEVENT
+BEGIN:VEVENT
+UID:serieb-hc-fondi-genea-lanzara-2012-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270207T153000
+DTEND;TZID=Europe/Rome:20270207T164000
+SUMMARY:Serie B · HC Fondi – GENEA LANZARA 2012
+LOCATION:Fondi Palasport - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Serie B
+END:VEVENT
+BEGIN:VEVENT
+UID:serieb-theo-gaeta-hc-fondi-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270213T183000
+DTEND;TZID=Europe/Rome:20270213T194000
+SUMMARY:Serie B · THEO GAETA – HC Fondi
+LOCATION:Impianto Sportivo Polivalente Palasport - Gaeta
+DESCRIPTION:In trasferta\nCalendario completo: https://sharkencode80.github
+ .io/HC_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Serie B
+END:VEVENT
+BEGIN:VEVENT
+UID:u16f-cus-cassino-gaeta-u16f-hc-fondi-2-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270214T110000
+DTEND;TZID=Europe/Rome:20270214T120000
+SUMMARY:U16 F · CUS Cassino Gaeta U16F – HC Fondi
+LOCATION:Impianto Sportivo Polivalente Palasport - Gaeta
+DESCRIPTION:In trasferta\nCalendario completo: https://sharkencode80.github
+ .io/HC_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U16 F
+END:VEVENT
+BEGIN:VEVENT
+UID:u16f-hc-fondi-asd-handball-flavioni-u18f-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270218T180000
+DTEND;TZID=Europe/Rome:20270218T190000
+SUMMARY:U16 F · HC Fondi – ASD Handball Flavioni U18F
+LOCATION:Fondi Palasport - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U16 F
+END:VEVENT
+BEGIN:VEVENT
+UID:sel-selezione-dei-talenti-20270221-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;VALUE=DATE:20270221
+DTEND;VALUE=DATE:20270222
+TRANSP:TRANSPARENT
+SUMMARY:Selezione dei Talenti
+DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
+ 6_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Selezione Talenti
+END:VEVENT
+BEGIN:VEVENT
+UID:interna-hc-fondi-u16f-hc-fondi-u18f-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270223T180000
+DTEND;TZID=Europe/Rome:20270223T191000
+SUMMARY:Gara interna · HC Fondi U16F – HC Fondi U18F
+LOCATION:Fondi Palasport - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Gara interna
+END:VEVENT
+BEGIN:VEVENT
+UID:serieb-hc-roma-hc-fondi-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270228T143000
+DTEND;TZID=Europe/Rome:20270228T154000
+SUMMARY:Serie B · HC ROMA – HC Fondi
+LOCATION:Palamunicipio - Roma
+DESCRIPTION:In trasferta\nCalendario completo: https://sharkencode80.github
+ .io/HC_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Serie B
+END:VEVENT
+BEGIN:VEVENT
+UID:u18f-asd-handball-flavioni-u18f-hc-fondi-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270305T153000
+DTEND;TZID=Europe/Rome:20270305T164000
+SUMMARY:U18 F · ASD Handball Flavioni U18F – HC Fondi
+LOCATION:Palazzetto dello Sport - Civitavecchia
+DESCRIPTION:In trasferta\nCalendario completo: https://sharkencode80.github
+ .io/HC_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U18 F
+END:VEVENT
+BEGIN:VEVENT
+UID:u16f-hc-fondi-asd-handball-flavioni-u16f-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270307T120000
+DTEND;TZID=Europe/Rome:20270307T130000
+SUMMARY:U16 F · HC Fondi – ASD Handball Flavioni U16F
+LOCATION:Fondi Palasport - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U16 F
+END:VEVENT
+BEGIN:VEVENT
+UID:serieb-hc-fondi-benevento-23-2-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270307T160000
+DTEND;TZID=Europe/Rome:20270307T171000
+SUMMARY:Serie B · HC Fondi – BENEVENTO 23
+LOCATION:Fondi Palasport - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Serie B
+END:VEVENT
+BEGIN:VEVENT
+UID:u14-under-14-20270314-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;VALUE=DATE:20270314
+DTEND;VALUE=DATE:20270315
+TRANSP:TRANSPARENT
+SUMMARY:Under 14 · UNDER 14
+DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
+ 6_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Under 14
+END:VEVENT
+BEGIN:VEVENT
+UID:u16m-genea-handball-lanzara-2012-b-hc-fondi-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270314T183000
+DTEND;TZID=Europe/Rome:20270314T193000
+SUMMARY:U16 M · GENEA HANDBALL LANZARA 2012 B – HC Fondi
+LOCATION:Palestra Palumbo - Salerno
+DESCRIPTION:In trasferta\nCalendario completo: https://sharkencode80.github
+ .io/HC_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U16 M
+END:VEVENT
+BEGIN:VEVENT
+UID:u16m-hc-fondi-genea-handball-lanzara-2012-a-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270316T180000
+DTEND;TZID=Europe/Rome:20270316T190000
+SUMMARY:U16 M · HC Fondi – GENEA HANDBALL LANZARA 2012 A
+LOCATION:Fondi Palasport - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U16 M
+END:VEVENT
+BEGIN:VEVENT
+UID:u16m-hc-fondi-asd-pallamanobenevento23-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270320T173000
+DTEND;TZID=Europe/Rome:20270320T183000
+SUMMARY:U16 M · HC Fondi – ASD PALLAMANOBENEVENTO23
+LOCATION:Fondi Palasport - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U16 M
+END:VEVENT
+BEGIN:VEVENT
+UID:sel-selezione-dei-talenti-20270321-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;VALUE=DATE:20270321
+DTEND;VALUE=DATE:20270322
+TRANSP:TRANSPARENT
+SUMMARY:Selezione dei Talenti
+DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
+ 6_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Selezione Talenti
+END:VEVENT
+BEGIN:VEVENT
+UID:serieb-genea-lanzara-2012-hc-fondi-2-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270321T180000
+DTEND;TZID=Europe/Rome:20270321T191000
+SUMMARY:Serie B · GENEA LANZARA 2012 – HC Fondi
+LOCATION:Palestra Palumbo - Salerno
+DESCRIPTION:In trasferta\nCalendario completo: https://sharkencode80.github
+ .io/HC_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Serie B
+END:VEVENT
+BEGIN:VEVENT
+UID:serieb-hc-fondi-theo-gaeta-2-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270403T183000
+DTEND;TZID=Europe/Rome:20270403T194000
+SUMMARY:Serie B · HC Fondi – THEO GAETA
+LOCATION:Fondi Palasport - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Serie B
+END:VEVENT
+BEGIN:VEVENT
+UID:serieb-hc-fondi-hc-roma-2-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270410T180000
+DTEND;TZID=Europe/Rome:20270410T191000
+SUMMARY:Serie B · HC Fondi – HC ROMA
+LOCATION:Fondi Palasport - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Serie B
+END:VEVENT
+BEGIN:VEVENT
+UID:u14-under-14-salerno-20270411-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;VALUE=DATE:20270411
+DTEND;VALUE=DATE:20270412
+TRANSP:TRANSPARENT
+SUMMARY:Under 14 · UNDER 14 - salerno
+DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
+ 6_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Under 14
+END:VEVENT
+BEGIN:VEVENT
+UID:u16m-cus-cassino-gaeta-blu-hc-fondi-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270411T110000
+DTEND;TZID=Europe/Rome:20270411T120000
+SUMMARY:U16 M · CUS CASSINO GAETA BLU – HC Fondi
+LOCATION:Impianto Sportivo Polivalente Palasport - Gaeta
+DESCRIPTION:In trasferta\nCalendario completo: https://sharkencode80.github
+ .io/HC_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U16 M
+END:VEVENT
+BEGIN:VEVENT
+UID:u16m-hc-fondi-cus-cassino-gaeta-nero-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270415T180000
+DTEND;TZID=Europe/Rome:20270415T190000
+SUMMARY:U16 M · HC Fondi – CUS CASSINO GAETA NERO
+LOCATION:Fondi Palasport - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U16 M
+END:VEVENT
+BEGIN:VEVENT
+UID:serieb-benevento-23-hc-fondi-2-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270418T170000
+DTEND;TZID=Europe/Rome:20270418T181000
+SUMMARY:Serie B · BENEVENTO 23 – HC Fondi
+LOCATION:Pala Valentino Ferrara ex Paladua - Benevento
+DESCRIPTION:In trasferta\nCalendario completo: https://sharkencode80.github
+ .io/HC_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Serie B
+END:VEVENT
+BEGIN:VEVENT
+UID:serieb-hc-fondi-genea-lanzara-2012-2-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270422T180000
+DTEND;TZID=Europe/Rome:20270422T191000
+SUMMARY:Serie B · HC Fondi – GENEA LANZARA 2012
+LOCATION:Fondi Palasport - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Serie B
+END:VEVENT
+BEGIN:VEVENT
+UID:sel-selezione-dei-talenti-20270425-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;VALUE=DATE:20270425
+DTEND;VALUE=DATE:20270426
+TRANSP:TRANSPARENT
+SUMMARY:Selezione dei Talenti
+DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
+ 6_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Selezione Talenti
+END:VEVENT
+BEGIN:VEVENT
+UID:u16m-asd-helios-sporting-club-hc-fondi-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270501T110000
+DTEND;TZID=Europe/Rome:20270501T120000
+SUMMARY:U16 M · ASD HELIOS SPORTING CLUB – HC Fondi
+LOCATION:Palazzetto dello Sport Comunale - Cerreto Sannita
+DESCRIPTION:In trasferta\nCalendario completo: https://sharkencode80.github
+ .io/HC_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U16 M
+END:VEVENT
+BEGIN:VEVENT
+UID:u14-under-14-20270509-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;VALUE=DATE:20270509
+DTEND;VALUE=DATE:20270510
+TRANSP:TRANSPARENT
+SUMMARY:Under 14 · UNDER 14
+DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
+ 6_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Under 14
+END:VEVENT
+BEGIN:VEVENT
+UID:serieb-theo-gaeta-hc-fondi-2-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270515T180000
+DTEND;TZID=Europe/Rome:20270515T191000
+SUMMARY:Serie B · THEO GAETA – HC Fondi
+LOCATION:Impianto Sportivo Polivalente Palasport - Gaeta
+DESCRIPTION:In trasferta\nCalendario completo: https://sharkencode80.github
+ .io/HC_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Serie B
+END:VEVENT
+BEGIN:VEVENT
+UID:serieb-hc-roma-hc-fondi-2-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270523T143000
+DTEND;TZID=Europe/Rome:20270523T154000
+SUMMARY:Serie B · HC ROMA – HC Fondi
+LOCATION:Palamunicipio - Roma
+DESCRIPTION:In trasferta\nCalendario completo: https://sharkencode80.github
+ .io/HC_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Serie B
+END:VEVENT
+BEGIN:VEVENT
+UID:u16f-finali-u16-20270526-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;VALUE=DATE:20270526
+DTEND;VALUE=DATE:20270527
+TRANSP:TRANSPARENT
+SUMMARY:U16 F · Finali U16
+DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
+ 6_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U16 F
+END:VEVENT
+BEGIN:VEVENT
+UID:u16f-finali-u16-20270527-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;VALUE=DATE:20270527
+DTEND;VALUE=DATE:20270528
+TRANSP:TRANSPARENT
+SUMMARY:U16 F · Finali U16
+DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
+ 6_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U16 F
+END:VEVENT
+BEGIN:VEVENT
+UID:u16f-finali-u16-20270528-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;VALUE=DATE:20270528
+DTEND;VALUE=DATE:20270529
+TRANSP:TRANSPARENT
+SUMMARY:U16 F · Finali U16
+DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
+ 6_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U16 F
+END:VEVENT
+BEGIN:VEVENT
+UID:u16f-finali-u16-20270529-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;VALUE=DATE:20270529
+DTEND;VALUE=DATE:20270530
+TRANSP:TRANSPARENT
+SUMMARY:U16 F · Finali U16
+DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
+ 6_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U16 F
+END:VEVENT
+BEGIN:VEVENT
+UID:u16f-finali-u16-20270530-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;VALUE=DATE:20270530
+DTEND;VALUE=DATE:20270531
+TRANSP:TRANSPARENT
+SUMMARY:U16 F · Finali U16
+DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
+ 6_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U16 F
+END:VEVENT
+BEGIN:VEVENT
+UID:u18f-finali-u18-20270602-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;VALUE=DATE:20270602
+DTEND;VALUE=DATE:20270603
+TRANSP:TRANSPARENT
+SUMMARY:U18 F · Finali U18
+DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
+ 6_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U18 F
+END:VEVENT
+BEGIN:VEVENT
+UID:u18f-finali-u18-20270603-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;VALUE=DATE:20270603
+DTEND;VALUE=DATE:20270604
+TRANSP:TRANSPARENT
+SUMMARY:U18 F · Finali U18
+DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
+ 6_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U18 F
+END:VEVENT
+BEGIN:VEVENT
+UID:u18f-finali-u18-20270604-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;VALUE=DATE:20270604
+DTEND;VALUE=DATE:20270605
+TRANSP:TRANSPARENT
+SUMMARY:U18 F · Finali U18
+DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
+ 6_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U18 F
+END:VEVENT
+BEGIN:VEVENT
+UID:u18f-finali-u18-20270605-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;VALUE=DATE:20270605
+DTEND;VALUE=DATE:20270606
+TRANSP:TRANSPARENT
+SUMMARY:U18 F · Finali U18
+DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
+ 6_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U18 F
+END:VEVENT
+BEGIN:VEVENT
+UID:u18f-finali-u18-20270606-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;VALUE=DATE:20270606
+DTEND;VALUE=DATE:20270607
+TRANSP:TRANSPARENT
+SUMMARY:U18 F · Finali U18
+DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
+ 6_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U18 F
+END:VEVENT
+BEGIN:VEVENT
+UID:u14-misano-under-14-20270629-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;VALUE=DATE:20270629
+DTEND;VALUE=DATE:20270630
+TRANSP:TRANSPARENT
+SUMMARY:Under 14 · Misano - Under 14
+DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
+ 6_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Under 14
+END:VEVENT
+BEGIN:VEVENT
+UID:u14-misano-under-14-20270630-tutte@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;VALUE=DATE:20270630
+DTEND;VALUE=DATE:20270701
+TRANSP:TRANSPARENT
+SUMMARY:Under 14 · Misano - Under 14
+DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
+ 6_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Under 14
+END:VEVENT
+END:VCALENDAR

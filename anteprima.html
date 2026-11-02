@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta http-equiv="refresh" content="600" data-auto-refresh>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HC Fondi Campionati 26-27</title>
+<!-- sceglie in automatico la versione completa o cellulare (vedi js/vista.js) -->
+<!-- ANTEPRIMA (pulsante "Abbonati al calendario"): raggiungibile solo con link diretto -->
+<meta name="robots" content="noindex">
+<script src="js/vista.js" data-full="anteprima.html" data-mobile="anteprima-mobile.html"></script>
+<!-- ===== STILE =====
+     Tutto l'aspetto della pagina è nei file della cartella css/.
+     Per cambiare tema sostituisci il nome del file qui sotto con uno di:
+       css/tema-classico.css  css/tema-scuro.css  css/tema-arancio.css
+       css/tema-minimal.css   css/tema-compatto.css
+-->
+<link rel="stylesheet" href="css/tema-rossoblu.css" id="tema">
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <p class="eyebrow" id="ev-eyebrow">HC Fondi</p>
+    <h1 id="ev-title">HC Fondi Campionati 26-27</h1>
+    <p class="sub" id="ev-sub">Caricamento…</p>
+    <a class="switch-view" href="anteprima-mobile.html?v=mobile">📱 Versione cellulare</a>
+    <a class="switch-view" href="abbonati.html">📅 Abbonati al calendario</a>
+  </header>
+
+  <div class="controls" id="controls"></div>
+  <div class="controls months" id="months"></div>
+
+  <div id="mister-panel"></div>
+  <div id="mister-banner"></div>
+
+  <div class="board">
+    <table id="grid"></table>
+  </div>
+
+  <footer id="ev-foot"></footer>
+</div>
+
+<script>
+// ==========================================================================
+//  I dati vengono caricati da "calendario.json" (e, se presente, da
+//  "risultati.json") nella STESSA cartella di questa pagina.
+//  calendario.json si rigenera dall'Excel con:  python3 converti_excel.py
+// ==========================================================================
+
+const MESI = ["","Gen","Feb","Mar","Apr","Mag","Giu","Lug","Ago","Set","Ott","Nov","Dic"];
+const MESI_LUNGHI = ["","Gennaio","Febbraio","Marzo","Aprile","Maggio","Giugno","Luglio","Agosto","Settembre","Ottobre","Novembre","Dicembre"];
+const EV_ROW = "—";        // riga per gli eventi senza orario
+
+let V={}, CAT={}, DAYS=[], DOW={}, TEAM="HC Fondi", D=[], TIMES=[];
+let DAY_YEAR={};           // "GG/MM" -> anno (la stagione è a cavallo di due anni)
+let RES={};
+const state = { cats:{}, month:"", mister:false };
+
+const FALLBACK_DUR = { serieb:70, u18f:70, u16f:60, u16m:60, u14:50, interna:70, sel:0 };
+let CAT_TOTAL = {};
+let BUFFER = 30;
+const STORE_KEY = "hcfondi2627_mister";
+let catDur = {};
+function loadDur(){ try{ return JSON.parse(localStorage.getItem(STORE_KEY)) || {}; }catch(_){ return {}; } }
+function saveDur(){ try{ localStorage.setItem(STORE_KEY, JSON.stringify({...catDur, _buffer:BUFFER})); }catch(_){ } }
+const getDur = cat => catDur[cat] ?? CAT_TOTAL[cat] ?? FALLBACK_DUR[cat] ?? 60;
+
+const isOurs = name => name===TEAM || (name||"").startsWith(TEAM+" ");
+const toMin = t => { const [a,b]=String(t).split("."); return (+a)*60+(+b); };
+const fmtMin = x => { const h=Math.floor(x/60), mm=x%60; return `${h}.${String(mm).padStart(2,"0")}`; };
+const shown = el => !el.classList.contains("hidden");
+const monthKey = d => DAY_YEAR[d] + "-" + d.slice(3,5);        // "2026-11"
+const dayNum = d => DAY_YEAR[d]*10000 + (+d.slice(3,5))*100 + (+d.slice(0,2));
+
+const normTeam = s => (s||"").toUpperCase().replace(/\s+/g," ").trim();
+const normDate = s => (s||"").slice(0,5);
+const resKey = (d,c,h,a) => normDate(d)+"|"+(c||"")+"|"+normTeam(h)+"|"+normTeam(a);
+
+function resultFor(m){
+  const r = RES[resKey(m.date,m.cat,m.home,m.away)];
+  if(r) return {hs:+r.hs, as:+r.as, status:r.status};
+  const rr = RES[resKey(m.date,m.cat,m.away,m.home)];
+  if(rr) return {hs:+rr.as, as:+rr.hs, status:rr.status};
+  return null;
+}
+
+function teamHTML(name, win){
+  const cls = (isOurs(name) ? "fp" : "") + (win ? " win" : "");
+  return cls.trim() ? `<span class="${cls.trim()}">${name}</span>` : name;
+}
+function matchHTML(m, i){
+  if(m.event){
+    return `<div class="m event ${m.cat}" data-cat="${m.cat}" data-i="${i}">
+      <span class="cat">${CAT[m.cat]||m.cat}</span>
+      <div class="teams">${m.home}</div>
+    </div>`;
+  }
+  const home = isOurs(m.home);
+  const r = resultFor(m);
+  const homeWin = r && r.hs>r.as, awayWin = r && r.as>r.hs;
+  let scoreLine = "";
+  if(r){
+    const st = (r.status||"").toUpperCase();
+    const cls = st==="FINE" ? "fine" : (st ? "live" : "");
+    const hasScore = Number.isFinite(r.hs) && Number.isFinite(r.as);
+    scoreLine = `<div class="score">${hasScore ? `${r.hs} – ${r.as}` : ""}${st?`<span class="badge ${cls}">${st}</span>`:""}</div>`;
+  }
+  return `<div class="m ${m.cat}${home?" home":""}" data-cat="${m.cat}" data-i="${i}">
+    <span class="cat">${CAT[m.cat]||m.cat}</span><span class="where${home?" casa":""}">${m.gir}</span>
+    <div class="teams">${teamHTML(m.home,homeWin)} <span class="vs">–</span> ${teamHTML(m.away,awayWin)}</div>
+    ${scoreLine}
+    <div class="venue">${V[m.venue]||m.venue||""}</div>
+    <div class="mister"><div class="clash"></div></div>
+  </div>`;
+}
+
+function build(){
+  const t = document.getElementById("grid");
+  let head = "<thead><tr><th>Ora</th>";
+  DAYS.forEach(d=> head += `<th data-day="${d}"><span class="dow">${DOW[d]||""}</span>${+d.slice(0,2)} ${MESI[+d.slice(3,5)]}</th>`);
+  head += "</tr></thead>";
+
+  let body = "<tbody>";
+  TIMES.forEach(time=>{
+    body += `<tr><th class="time${time===EV_ROW?" ev":""}">${time===EV_ROW?"Evento":time}</th>`;
+    DAYS.forEach(day=>{
+      const cell = D.map((m,i)=>[m,i]).filter(([m])=>m.date===day && (m.time||EV_ROW)===time);
+      body += `<td data-day="${day}">`;
+      body += cell.length ? cell.map(([m,i])=>matchHTML(m,i)).join("") : '<div class="empty">·</div>';
+      body += "</td>";
+    });
+    body += "</tr>";
+  });
+  t.innerHTML = head + body + "</tbody>";
+}
+
+function updateView(){
+  document.querySelectorAll("#grid .m[data-cat]").forEach(el=>{
+    el.classList.toggle("hidden", !state.cats[el.dataset.cat]);
+  });
+
+  const inMonth = d => !state.month || monthKey(d)===state.month;
+  const dayVis = {}; DAYS.forEach(d=> dayVis[d]=0);
+  document.querySelectorAll("#grid tbody tr").forEach(tr=>{
+    let rowVis = 0;
+    tr.querySelectorAll("td").forEach(td=>{
+      if(!inMonth(td.dataset.day)) return;
+      const n = [...td.querySelectorAll(".m")].filter(shown).length;
+      rowVis += n; dayVis[td.dataset.day] += n;
+    });
+    tr.classList.toggle("hidden", !rowVis);
+  });
+  const heads = document.querySelectorAll("#grid thead th");
+  let any = false;
+  DAYS.forEach((d,i)=>{
+    const on = inMonth(d) && dayVis[d] > 0; any = any || on;
+    if(heads[i+1]) heads[i+1].classList.toggle("hidden", !on);
+    document.querySelectorAll(`#grid td[data-day="${d}"]`).forEach(td=> td.classList.toggle("hidden", !on));
+  });
+  heads[0].classList.toggle("hidden", !any);
+  let none = document.getElementById("none");
+  if(!any && !none){
+    none = document.createElement("div"); none.id="none"; none.className="none";
+    none.textContent = "Nessuna partita per i filtri selezionati.";
+    document.querySelector(".board").appendChild(none);
+  } else if(any && none) none.remove();
+
+  computeConflicts();
+}
+
+// Partite dello stesso giorno troppo vicine (anche in sedi diverse).
+function computeConflicts(){
+  const cards = [...document.querySelectorAll("#grid .m:not(.event)")];
+  cards.forEach(el=>{ el.classList.remove("conflict"); el.querySelector(".clash").innerHTML=""; });
+  const banner = document.getElementById("mister-banner");
+  if(!state.mister){ banner.className=""; return; }
+
+  const items = cards.filter(el=> shown(el) && shown(el.closest("td"))).map(el=>{
+    const m = D[+el.dataset.i]; const start = toMin(m.time);
+    return { el, m, start, end:start + getDur(m.cat) };
+  });
+  const clashing = new Set();
+  items.forEach(a=>{
+    const partners = items.filter(b => b!==a && b.m.date===a.m.date
+      && a.start < b.end + BUFFER && b.start < a.end + BUFFER);
+    const c = a.el.querySelector(".clash");
+    if(partners.length){
+      a.el.classList.add("conflict"); clashing.add(a);
+      const list = partners.sort((x,y)=>x.start-y.start)
+        .map(p=>`${CAT[p.m.cat]||p.m.cat} ${p.m.time} (${V[p.m.venue]||p.m.venue})`).join(" · ");
+      c.innerHTML = `fine ~${fmtMin(a.end)} · <b>⚠ possibile accavallamento:</b> ${list}`;
+    } else {
+      c.innerHTML = `fine ~${fmtMin(a.end)} · <span class="ok">nessun accavallamento</span>`;
+    }
+  });
+  const n = clashing.size;
+  banner.className = n ? "warn" : "clear";
+  banner.textContent = n
+    ? `⚠ ${n} partite a rischio accavallamento nel periodo visibile (margine ${BUFFER}′ tra una gara e l'altra)`
+    : `✓ Nessun accavallamento nel periodo visibile: tra le gare c'è sempre almeno ${BUFFER}′ di margine`;
+}
+
+function renderMisterPanel(){
+  const p = document.getElementById("mister-panel");
+  let html = `<span class="mp-title">Durata stimata (min)</span>`;
+  Object.keys(CAT).filter(c=>c!=="sel").forEach(c=>{
+    html += `<label><span class="dot ${c}"></span>${CAT[c]}
+      <input type="number" class="catdur" data-cat="${c}" min="10" max="180" step="5" value="${getDur(c)}"></label>`;
+  });
+  html += `<label>Margine <input type="number" id="buffer" min="0" max="240" step="5" value="${BUFFER}"></label>
+    <span class="mp-note">tempo minimo tra la fine di una gara e l'inizio della successiva (spostamenti inclusi)</span>`;
+  p.innerHTML = html;
+  p.addEventListener("input", e=>{
+    if(e.target.id==="buffer") BUFFER = Math.max(0, +e.target.value || 0);
+    else if(e.target.classList.contains("catdur")) catDur[e.target.dataset.cat] = Math.max(5, +e.target.value || 0);
+    else return;
+    saveDur(); computeConflicts();
+  });
+}
+
+function buildControls(){
+  const box = document.getElementById("controls");
+  let html = `<button class="chip mister-btn" data-role="mister" aria-pressed="false">📋 Mister</button><span class="sep"></span>`;
+  Object.keys(CAT).forEach(c=>{
+    html += `<button class="chip" data-cat="${c}" aria-pressed="true"><span class="dot ${c}"></span>${CAT[c]}</button>`;
+  });
+  box.innerHTML = html;
+  box.addEventListener("click", e=>{
+    const btn = e.target.closest(".chip"); if(!btn) return;
+    const on = btn.getAttribute("aria-pressed")==="true";
+    btn.setAttribute("aria-pressed", String(!on));
+    if(btn.dataset.role==="mister"){ state.mister = !on; document.body.classList.toggle("mister", state.mister); }
+    else state.cats[btn.dataset.cat] = !on;
+    updateView();
+  });
+
+  const mbox = document.getElementById("months");
+  const months = [...new Set(DAYS.map(monthKey))];
+  mbox.innerHTML = `<button class="chip month" data-month="">Tutta la stagione</button>` +
+    months.map(k=>{ const [y,m]=k.split("-"); return `<button class="chip month" data-month="${k}">${MESI_LUNGHI[+m]} ${y.slice(2)}</button>`; }).join("");
+  const sync = ()=> mbox.querySelectorAll(".chip").forEach(b=> b.setAttribute("aria-pressed", String(b.dataset.month===state.month)));
+  sync();
+  mbox.addEventListener("click", e=>{
+    const btn = e.target.closest(".chip"); if(!btn) return;
+    state.month = btn.dataset.month; sync(); updateView(); focusToday(false);
+  });
+}
+
+// Oggi (o la prossima giornata in calendario): evidenzia la colonna e la porta in vista.
+function todayInfo(){
+  const n = new Date();
+  const today = n.getFullYear()*10000 + (n.getMonth()+1)*100 + n.getDate();
+  const next = DAYS.find(d=> dayNum(d) >= today);
+  return { next, isToday: !!next && dayNum(next)===today, now: n.getHours()*60+n.getMinutes() };
+}
+function markToday(){
+  const {next, isToday, now} = todayInfo();
+  if(!next) return;
+  const th = document.querySelector(`#grid thead th[data-day="${next}"]`);
+  th.insertAdjacentHTML("beforeend", `<span class="next">${isToday ? "OGGI" : "PROSSIMA"}</span>`);
+  th.classList.add("today");
+  document.querySelectorAll(`#grid td[data-day="${next}"]`).forEach(td=> td.classList.add("today"));
+  if(isToday){
+    document.querySelectorAll(`#grid td[data-day="${next}"] .m:not(.event)`).forEach(el=>{
+      const m = D[+el.dataset.i], s = toMin(m.time);
+      if(now >= s && now <= s + getDur(m.cat)) el.insertAdjacentHTML("beforeend", `<span class="now-badge">in corso</span>`);
+    });
+  }
+}
+function focusToday(scrollPage){
+  const {next} = todayInfo();
+  const board = document.querySelector(".board");
+  const th = next && document.querySelector(`#grid thead th[data-day="${next}"]`);
+  if(!th || !shown(th)){ board.scrollLeft = 0; return; }
+  const first = document.querySelector("#grid thead th").getBoundingClientRect().width;
+  board.scrollLeft += th.getBoundingClientRect().left - board.getBoundingClientRect().left - first - 8;
+  if(scrollPage) board.scrollIntoView({block:"nearest"});
+}
+
+function applyMeta(ev, resMeta){
+  const set=(id,txt)=>{ const el=document.getElementById(id); if(el&&txt) el.textContent=txt; };
+  if(ev){
+    set("ev-eyebrow", ev.eyebrow);
+    set("ev-title", ev.title);
+    if(ev.title) document.title = ev.title;
+    if(ev.subtitle) document.getElementById("ev-sub").innerHTML =
+      `<b>${ev.subtitle}</b> — griglia per giornata (colonne) e orario (righe). Le partite in <b class="hl">casa</b> sono evidenziate.`;
+  }
+  const cal = `Calendario da ${ev&&ev.source||"calendario.json"}${ev&&ev.updated?" (agg. "+ev.updated+")":""}.`;
+  const ris = resMeta&&resMeta.updated ? ` Risultati agg. al ${resMeta.updated}.` : "";
+  document.getElementById("ev-foot").textContent = cal + ris;
+}
+
+async function loadResults(){
+  try{
+    const res = await fetch("risultati.json", {cache:"no-store"});
+    if(!res.ok) return null;
+    const data = await res.json();
+    (data.results||[]).forEach(r=>{ RES[resKey(r.date,r.cat,r.home,r.away)] = r; });
+    return data;
+  }catch(_){ return null; }
+}
+
+async function init(){
+  try{
+    const res = await fetch("calendario.json", {cache:"no-store"});
+    if(!res.ok) throw new Error("HTTP "+res.status);
+    const data = await res.json();
+
+    V    = data.venues     || {};
+    CAT  = data.categories || {};
+    DAYS = data.days       || [];
+    DOW  = data.dow        || {};
+    TEAM = data.fondiTeam  || "HC Fondi";
+    D    = data.matches    || [];
+    Object.keys(CAT).forEach(c=> state.cats[c]=true);
+
+    // anno di ogni giornata: dal campo "year" della partita, altrimenti dalla data di inizio
+    const y0 = +(data.start||"").slice(6,10) || data.year || new Date().getFullYear();
+    const m0 = +(data.start||"").slice(3,5) || 1;
+    D.forEach(m=>{ DAY_YEAR[m.date] = m.year || (+m.date.slice(3,5) >= m0 ? y0 : y0+1); });
+    DAYS = DAYS.filter(d=> DAY_YEAR[d]).sort((a,b)=> dayNum(a)-dayNum(b));
+
+    const saved = loadDur();
+    if(Number.isFinite(saved._buffer)) BUFFER = saved._buffer;
+    else if(data.mister && Number.isFinite(+data.mister.buffer)) BUFFER = +data.mister.buffer;
+    delete saved._buffer; catDur = saved;
+    const dur = (data.mister||{}).durate || {};
+    Object.keys(CAT).forEach(c=>{
+      const d = dur[c];
+      CAT_TOTAL[c] = d ? (2*(+d.tempo||0) + (+d.pausa||0)) : (FALLBACK_DUR[c] ?? 60);
+    });
+
+    const times = [...new Set(D.filter(m=>m.time).map(m=>m.time))].sort((a,b)=>toMin(a)-toMin(b));
+    TIMES = (D.some(m=>!m.time) ? [EV_ROW] : []).concat(times);
+
+    // mese di partenza: quello della prossima giornata (o l'ultimo, a stagione finita)
+    const {next} = todayInfo();
+    state.month = monthKey(next || DAYS[DAYS.length-1]);
+
+    const resMeta = await loadResults();
+    applyMeta(data.event, resMeta);
+    buildControls();
+    renderMisterPanel();
+    build();
+    markToday();
+    updateView();
+    requestAnimationFrame(()=> focusToday(false));
+  }catch(err){
+    document.querySelector(".board").innerHTML =
+      `<div class="none">
+        <b>Impossibile caricare <code>calendario.json</code>.</b><br>
+        Il file deve stare nella <b>stessa cartella</b> di questa pagina.<br><br>
+        Se stai aprendo la pagina con doppio clic dal disco (<code>file://</code>), il browser blocca
+        il caricamento del JSON: dalla cartella esegui <code>python3 -m http.server 8000</code>
+        e apri <code>http://localhost:8000</code>. Online (GitHub Pages) funziona direttamente.<br>
+        <small>Dettaglio: ${err.message}</small>
+      </div>`;
+  }
+}
+init();
+
+/* credito (offuscato, reinserito se rimosso) */
+(function(){
+  const n = new TextDecoder().decode(Uint8Array.from(atob("Y3JlYXRlZCBieSBWaW5jZW56byBGb3J0ZQ=="), c=>c.charCodeAt(0)));
+  function ensure(){
+    let el = document.getElementById("credit");
+    if(!el){ el = document.createElement("div"); el.id = "credit"; document.body.appendChild(el); }
+    if(el.textContent !== n) el.textContent = n;
+  }
+  ensure();
+  try{ new MutationObserver(ensure).observe(document.body, {childList:true, subtree:true}); }catch(_){}
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,222 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//HC Fondi//Campionati 26-27//IT
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:HC Fondi · Serie B
+X-WR-CALDESC:Partite HC Fondi stagione 2026/2027 - https://sharkencode80.gi
+ thub.io/HC_Fondi_26_27/
+X-WR-TIMEZONE:Europe/Rome
+REFRESH-INTERVAL;VALUE=DURATION:PT6H
+X-PUBLISHED-TTL:PT6H
+BEGIN:VTIMEZONE
+TZID:Europe/Rome
+X-LIC-LOCATION:Europe/Rome
+BEGIN:DAYLIGHT
+TZOFFSETFROM:+0100
+TZOFFSETTO:+0200
+TZNAME:CEST
+DTSTART:19700329T020000
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU
+END:DAYLIGHT
+BEGIN:STANDARD
+TZOFFSETFROM:+0200
+TZOFFSETTO:+0100
+TZNAME:CET
+DTSTART:19701025T030000
+RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:serieb-hc-fondi-benevento-23-serieb@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20261107T180000
+DTEND;TZID=Europe/Rome:20261107T191000
+SUMMARY:Serie B · HC Fondi – BENEVENTO 23
+LOCATION:Fondi Palasport - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Serie B
+END:VEVENT
+BEGIN:VEVENT
+UID:serieb-genea-lanzara-2012-hc-fondi-serieb@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20261122T180000
+DTEND;TZID=Europe/Rome:20261122T191000
+SUMMARY:Serie B · GENEA LANZARA 2012 – HC Fondi
+LOCATION:Palestra Palumbo - Salerno
+DESCRIPTION:In trasferta\nCalendario completo: https://sharkencode80.github
+ .io/HC_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Serie B
+END:VEVENT
+BEGIN:VEVENT
+UID:serieb-hc-fondi-theo-gaeta-serieb@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20261212T180000
+DTEND;TZID=Europe/Rome:20261212T191000
+SUMMARY:Serie B · HC Fondi – THEO GAETA
+LOCATION:Fondi Palasport - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Serie B
+END:VEVENT
+BEGIN:VEVENT
+UID:serieb-hc-fondi-hc-roma-serieb@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20261220T153000
+DTEND;TZID=Europe/Rome:20261220T164000
+SUMMARY:Serie B · HC Fondi – HC ROMA
+LOCATION:Fondi Palasport - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Serie B
+END:VEVENT
+BEGIN:VEVENT
+UID:serieb-benevento-23-hc-fondi-serieb@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270117T190000
+DTEND;TZID=Europe/Rome:20270117T201000
+SUMMARY:Serie B · BENEVENTO 23 – HC Fondi
+LOCATION:Pala Valentino Ferrara ex Paladua - Benevento
+DESCRIPTION:In trasferta\nCalendario completo: https://sharkencode80.github
+ .io/HC_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Serie B
+END:VEVENT
+BEGIN:VEVENT
+UID:serieb-hc-fondi-genea-lanzara-2012-serieb@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270207T153000
+DTEND;TZID=Europe/Rome:20270207T164000
+SUMMARY:Serie B · HC Fondi – GENEA LANZARA 2012
+LOCATION:Fondi Palasport - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Serie B
+END:VEVENT
+BEGIN:VEVENT
+UID:serieb-theo-gaeta-hc-fondi-serieb@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270213T183000
+DTEND;TZID=Europe/Rome:20270213T194000
+SUMMARY:Serie B · THEO GAETA – HC Fondi
+LOCATION:Impianto Sportivo Polivalente Palasport - Gaeta
+DESCRIPTION:In trasferta\nCalendario completo: https://sharkencode80.github
+ .io/HC_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Serie B
+END:VEVENT
+BEGIN:VEVENT
+UID:serieb-hc-roma-hc-fondi-serieb@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270228T143000
+DTEND;TZID=Europe/Rome:20270228T154000
+SUMMARY:Serie B · HC ROMA – HC Fondi
+LOCATION:Palamunicipio - Roma
+DESCRIPTION:In trasferta\nCalendario completo: https://sharkencode80.github
+ .io/HC_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Serie B
+END:VEVENT
+BEGIN:VEVENT
+UID:serieb-hc-fondi-benevento-23-2-serieb@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270307T160000
+DTEND;TZID=Europe/Rome:20270307T171000
+SUMMARY:Serie B · HC Fondi – BENEVENTO 23
+LOCATION:Fondi Palasport - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Serie B
+END:VEVENT
+BEGIN:VEVENT
+UID:serieb-genea-lanzara-2012-hc-fondi-2-serieb@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270321T180000
+DTEND;TZID=Europe/Rome:20270321T191000
+SUMMARY:Serie B · GENEA LANZARA 2012 – HC Fondi
+LOCATION:Palestra Palumbo - Salerno
+DESCRIPTION:In trasferta\nCalendario completo: https://sharkencode80.github
+ .io/HC_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Serie B
+END:VEVENT
+BEGIN:VEVENT
+UID:serieb-hc-fondi-theo-gaeta-2-serieb@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270403T183000
+DTEND;TZID=Europe/Rome:20270403T194000
+SUMMARY:Serie B · HC Fondi – THEO GAETA
+LOCATION:Fondi Palasport - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Serie B
+END:VEVENT
+BEGIN:VEVENT
+UID:serieb-hc-fondi-hc-roma-2-serieb@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270410T180000
+DTEND;TZID=Europe/Rome:20270410T191000
+SUMMARY:Serie B · HC Fondi – HC ROMA
+LOCATION:Fondi Palasport - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Serie B
+END:VEVENT
+BEGIN:VEVENT
+UID:serieb-benevento-23-hc-fondi-2-serieb@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270418T170000
+DTEND;TZID=Europe/Rome:20270418T181000
+SUMMARY:Serie B · BENEVENTO 23 – HC Fondi
+LOCATION:Pala Valentino Ferrara ex Paladua - Benevento
+DESCRIPTION:In trasferta\nCalendario completo: https://sharkencode80.github
+ .io/HC_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Serie B
+END:VEVENT
+BEGIN:VEVENT
+UID:serieb-hc-fondi-genea-lanzara-2012-2-serieb@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270422T180000
+DTEND;TZID=Europe/Rome:20270422T191000
+SUMMARY:Serie B · HC Fondi – GENEA LANZARA 2012
+LOCATION:Fondi Palasport - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Serie B
+END:VEVENT
+BEGIN:VEVENT
+UID:serieb-theo-gaeta-hc-fondi-2-serieb@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270515T180000
+DTEND;TZID=Europe/Rome:20270515T191000
+SUMMARY:Serie B · THEO GAETA – HC Fondi
+LOCATION:Impianto Sportivo Polivalente Palasport - Gaeta
+DESCRIPTION:In trasferta\nCalendario completo: https://sharkencode80.github
+ .io/HC_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Serie B
+END:VEVENT
+BEGIN:VEVENT
+UID:serieb-hc-roma-hc-fondi-2-serieb@hcfondi2627
+DTSTAMP:20261102T203700Z
+DTSTART;TZID=Europe/Rome:20270523T143000
+DTEND;TZID=Europe/Rome:20270523T154000
+SUMMARY:Serie B · HC ROMA – HC Fondi
+LOCATION:Palamunicipio - Roma
+DESCRIPTION:In trasferta\nCalendario completo: https://sharkencode80.github
+ .io/HC_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:Serie B
+END:VEVENT
+END:VCALENDAR

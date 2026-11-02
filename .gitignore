@@ -5,3 +5,5 @@
 # Python
 __pycache__/
 *.pyc
+# mockup di progettazione (non fanno parte del sito)
+mockup/
