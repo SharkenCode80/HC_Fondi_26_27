@@ -4,7 +4,7 @@
     "eyebrow": "HC Fondi · Stagione 2026/2027",
     "subtitle": "03/11/2026 – 30/06/2027 · Serie B · U18 F · U16 F · U16 M · Under 14",
     "source": "Calendario_HC_Fondi_2026_2027_completo 30 10 2026 verificato.xlsx",
-    "updated": "31/10/2026 09:54"
+    "updated": "02/11/2026 20:37"
   },
   "fondiTeam": "HC Fondi",
   "year": 2026,
@@ -148,11 +148,12 @@
   "venues": {
     "fondi-palasport-fondi": "Fondi Palasport - Fondi",
     "palestra-palumbo-salerno": "Palestra Palumbo - Salerno",
-    "palazzetto-dello-sport-c": "Palazzetto dello Sport Comunale - Cerreto Sannita",
-    "pala-valentino-ferrara-e": "Pala Valentino Ferrara ex Paladua - Benevento",
-    "impianto-sportivo-poliva": "Impianto Sportivo Polivalente Palasport - Gaeta",
-    "palasport-marica-bianchi": "Palasport Marica Bianchi - Pontinia",
-    "palamunicipio-roma": "Palamunicipio - Roma"
+    "palazzetto-dello-sport-civitavecchia": "Palazzetto dello Sport - Civitavecchia",
+    "impianto-sportivo-polivalente-palasport-gaeta": "Impianto Sportivo Polivalente Palasport - Gaeta",
+    "pala-valentino-ferrara-ex-paladua-benevento": "Pala Valentino Ferrara ex Paladua - Benevento",
+    "palasport-marica-bianchi-pontinia": "Palasport Marica Bianchi - Pontinia",
+    "palamunicipio-roma": "Palamunicipio - Roma",
+    "palazzetto-dello-sport-comunale-cerreto-sannita": "Palazzetto dello Sport Comunale - Cerreto Sannita"
   },
   "mister": {
     "buffer": 30,
@@ -265,7 +266,7 @@
       "gir": "Trasferta",
       "home": "ASD Handball Flavioni U18F",
       "away": "HC Fondi",
-      "venue": "palazzetto-dello-sport-c",
+      "venue": "palazzetto-dello-sport-civitavecchia",
       "year": 2026
     },
     {
@@ -295,7 +296,7 @@
       "gir": "Trasferta",
       "home": "CUS Cassino Gaeta U16F",
       "away": "HC Fondi",
-      "venue": "impianto-sportivo-poliva",
+      "venue": "impianto-sportivo-polivalente-palasport-gaeta",
       "year": 2026
     },
     {
@@ -305,7 +306,7 @@
       "gir": "Trasferta",
       "home": "ASD PALLAMANOBENEVENTO23",
       "away": "HC Fondi",
-      "venue": "pala-valentino-ferrara-e",
+      "venue": "pala-valentino-ferrara-ex-paladua-benevento",
       "year": 2026
     },
     {
@@ -367,7 +368,7 @@
       "gir": "Trasferta",
       "home": "ASD Handball Flavioni U16F",
       "away": "HC Fondi",
-      "venue": "palazzetto-dello-sport-c",
+      "venue": "palazzetto-dello-sport-civitavecchia",
       "year": 2026
     },
     {
@@ -418,7 +419,7 @@
       "gir": "Trasferta",
       "home": "CUS CASSINO GAETA NERO",
       "away": "HC Fondi",
-      "venue": "impianto-sportivo-poliva",
+      "venue": "impianto-sportivo-polivalente-palasport-gaeta",
       "year": 2027
     },
     {
@@ -438,7 +439,7 @@
       "gir": "Trasferta",
       "home": "BENEVENTO 23",
       "away": "HC Fondi",
-      "venue": "pala-valentino-ferrara-e",
+      "venue": "pala-valentino-ferrara-ex-paladua-benevento",
       "year": 2027
     },
     {
@@ -458,7 +459,7 @@
       "gir": "Trasferta",
       "home": "ASD Handball Flavioni U16F",
       "away": "HC Fondi",
-      "venue": "palazzetto-dello-sport-c",
+      "venue": "palazzetto-dello-sport-civitavecchia",
       "year": 2027
     },
     {
@@ -489,7 +490,7 @@
       "gir": "Trasferta",
       "home": "BCC ROMA PONTINIA",
       "away": "HC Fondi",
-      "venue": "palasport-marica-bianchi",
+      "venue": "palasport-marica-bianchi-pontinia",
       "year": 2027
     },
     {
@@ -520,7 +521,7 @@
       "gir": "Trasferta",
       "home": "THEO GAETA",
       "away": "HC Fondi",
-      "venue": "impianto-sportivo-poliva",
+      "venue": "impianto-sportivo-polivalente-palasport-gaeta",
       "year": 2027
     },
     {
@@ -530,7 +531,7 @@
       "gir": "Trasferta",
       "home": "CUS Cassino Gaeta U16F",
       "away": "HC Fondi",
-      "venue": "impianto-sportivo-poliva",
+      "venue": "impianto-sportivo-polivalente-palasport-gaeta",
       "year": 2027
     },
     {
@@ -581,7 +582,7 @@
       "gir": "Trasferta",
       "home": "ASD Handball Flavioni U18F",
       "away": "HC Fondi",
-      "venue": "palazzetto-dello-sport-c",
+      "venue": "palazzetto-dello-sport-civitavecchia",
       "year": 2027
     },
     {
@@ -704,7 +705,7 @@
       "gir": "Trasferta",
       "home": "CUS CASSINO GAETA BLU",
       "away": "HC Fondi",
-      "venue": "impianto-sportivo-poliva",
+      "venue": "impianto-sportivo-polivalente-palasport-gaeta",
       "year": 2027
     },
     {
@@ -724,7 +725,7 @@
       "gir": "Trasferta",
       "home": "BENEVENTO 23",
       "away": "HC Fondi",
-      "venue": "pala-valentino-ferrara-e",
+      "venue": "pala-valentino-ferrara-ex-paladua-benevento",
       "year": 2027
     },
     {
@@ -755,7 +756,7 @@
       "gir": "Trasferta",
       "home": "ASD HELIOS SPORTING CLUB",
       "away": "HC Fondi",
-      "venue": "palazzetto-dello-sport-c",
+      "venue": "palazzetto-dello-sport-comunale-cerreto-sannita",
       "year": 2027
     },
     {
@@ -776,7 +777,7 @@
       "gir": "Trasferta",
       "home": "THEO GAETA",
       "away": "HC Fondi",
-      "venue": "impianto-sportivo-poliva",
+      "venue": "impianto-sportivo-polivalente-palasport-gaeta",
       "year": 2027
     },
     {

@@ -152,7 +152,12 @@ def convert(xlsx):
         if not name:
             m["venue"] = ""
             continue
-        code = venue_code.setdefault(name.lower(), slug(name)[:24])
+        code = venue_code.get(name.lower())
+        if not code:                       # codice completo e univoco per ogni impianto
+            code, n = slug(name), 2
+            while code in venues:
+                code, n = f"{slug(name)}-{n}", n + 1
+            venue_code[name.lower()] = code
         venues[code] = name
         m["venue"] = code
 
@@ -204,6 +209,11 @@ def main():
     print(f"Scritto: {path} - {len(cal['matches'])} voci in {len(cal['days'])} giornate | {per_cat}")
     for w in warnings:
         print("  [attenzione]", w)
+
+    # rigenera anche i calendari da abbonamento (.ics) dal nuovo calendario.json
+    import genera_ics
+    print("Calendari .ics:")
+    genera_ics.main()
 
 
 if __name__ == "__main__":
