@@ -1,0 +1,4 @@
+# solo per sincronizza_google.py (genera_ics.py e le pagine non usano librerie esterne)
+google-api-python-client
+google-auth
+google-auth-oauthlib

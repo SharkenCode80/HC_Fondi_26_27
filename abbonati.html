@@ -34,6 +34,13 @@
     <button type="button" class="app" data-app="altro"><b>Altro</b><span>Outlook, Thunderbird…</span></button>
   </div>
   <p class="hint" id="app-hint"></p>
+  <div class="gbox hidden" id="gbox">
+    <p><b>Il modo più semplice con Google:</b> il calendario Google HC Fondi con
+      <b>tutte le partite</b>. Un tocco e lo aggiungi, anche dall'app Android.</p>
+    <a class="go" id="gbox-add" target="_blank" rel="noopener">Aggiungi a Google Calendar</a>
+    <p class="hint"><a class="link" href="calendario-google.html">Guardalo prima qui</a> ·
+      se vuoi solo alcune categorie, usa l'elenco qui sotto.</p>
+  </div>
   <ul class="subs" id="subs"></ul>
   <div class="steps hidden" id="android-steps">
     <p><b>Sul telefono Android l'app Google Calendar non permette di abbonarsi</b>: va fatto
@@ -126,7 +133,12 @@
 //                come ID di un calendario Google e dice "importato" senza aggiungere nulla):
 //                su Android si mostrano "Copia link" + la pagina "Aggiungi da URL" di Google.
 //  - Altro:      link https://… da copiare
+//  - Google, in più: il calendario Google pubblico con tutte le partite
+//                (GOOGLE_CAL_ID, render?cid=<ID>): con un ID di calendario Google
+//                funziona anche dall'app Android. Vuoto = riquadro nascosto.
 // ==========================================================================
+
+const GOOGLE_CAL_ID = "bcbce8opp025mqrok78200b18hrtvbp3@import.calendar.google.com";
 
 let CALS = [];
 const chosen = new Set();
@@ -162,12 +174,15 @@ function renderSubs(){
   const hint = document.getElementById("app-hint");
   const mode = app==="google" && ANDROID ? "android" : app;   // Google da Android: niente link diretto
   hint.innerHTML = {
-    android: "Segui i passi qui sotto: l'app Google Calendar non permette di abbonarsi direttamente.",
+    android: GOOGLE_CAL_ID
+      ? "Per tutte le partite usa il pulsante qui sotto. Per le singole categorie segui i passi più in basso: l'app Google Calendar non permette di abbonarsi a un indirizzo."
+      : "Segui i passi qui sotto: l'app Google Calendar non permette di abbonarsi direttamente.",
     apple: "Tocca <b>Abbonati</b> accanto a ogni calendario e conferma con <b>Abbonati</b> nella finestra che compare.",
     google: "Si apre Google Calendar: conferma con <b>Aggiungi</b>. Ripeti per ogni calendario. Serve essere collegati al proprio account Google.",
     altro: "Copia il link e incollalo nel tuo programma, nella funzione <b>Aggiungi calendario da URL</b> (o \"Iscriviti\").",
   }[mode];
   document.getElementById("android-steps").classList.toggle("hidden", mode!=="android");
+  document.getElementById("gbox").classList.toggle("hidden", app!=="google" || !GOOGLE_CAL_ID);
   document.querySelectorAll("#apps .app").forEach(b=> b.setAttribute("aria-pressed", String(b.dataset.app===app)));
 
   const list = CALS.filter(c=> chosen.has(c.key));
@@ -219,6 +234,8 @@ try{
 
 (async function init(){
   app = defaultApp();
+  if(GOOGLE_CAL_ID) document.getElementById("gbox-add").href =
+    "https://calendar.google.com/calendar/render?cid=" + encodeURIComponent(GOOGLE_CAL_ID);
   // la scelta consigliata in base al dispositivo
   document.querySelector(`#apps .app[data-app="${app}"] span`).insertAdjacentHTML("afterend", `<span class="tag">consigliato</span>`);
   try{

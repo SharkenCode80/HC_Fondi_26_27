@@ -7,3 +7,12 @@ __pycache__/
 *.pyc
 # mockup di progettazione (non fanno parte del sito)
 mockup/
+# sincronizzazione Google: chiavi, token e configurazione non vanno MAI nel repository
+# (di norma stanno in ~/.config/calendario-sync/, questi sono solo per sicurezza)
+client_secret*.json
+*service-account*.json
+*-key.json
+token.json
+credentials.json
+.calendario-sync/
+calendario-sync/

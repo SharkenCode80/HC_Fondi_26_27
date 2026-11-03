@@ -182,6 +182,87 @@ Le pagine con il pulsante **📅 Abbonati** sono per ora un'anteprima, raggiungi
 con link diretto (e con `noindex`): `anteprima.html`, `anteprima-mobile.html` e
 `abbonati.html`. Quando vanno bene, si sostituiscono a `index.html` / `mobile.html`.
 
+### Calendario Google condiviso — in anteprima
+
+`calendario-google.html` (in anteprima, raggiungibile da `anteprima.html`,
+`anteprima-mobile.html` e `abbonati.html`) mostra un calendario Google pubblico con
+tutte le partite, con il pulsante **Aggiungi a Google Calendar** (link
+`calendar.google.com/calendar/render?cid=<ID>`: con un ID di calendario Google funziona
+anche dall'app Android). L'ID è nella costante `GOOGLE_CAL_ID` di
+`calendario-google.html` e di `abbonati.html`.
+
+Ci sono due modi di tenere aggiornato quel calendario:
+
+| | Calendario aggiunto "Da URL" (attuale) | Calendario proprio + `sincronizza_google.py` |
+|---|---|---|
+| ID | `…@import.calendar.google.com` | `…@group.calendar.google.com` |
+| Aggiornamento | da solo, da `calendario.ics`, ma Google può impiegare **fino a 24 ore** | **subito**, quando lanci lo script |
+| Cosa fare | niente | lanciare lo script dopo ogni modifica |
+
+Un calendario aggiunto "Da URL" è in **sola lettura**: lo script non può scriverci.
+Per usare lo script serve un calendario creato con *Altri calendari → + → Crea nuovo
+calendario*.
+
+#### Sincronizzare con lo script
+
+```bash
+python3 -m pip install -r requirements.txt     # solo la prima volta
+python3 sincronizza_google.py --dry-run        # riepilogo, nessuna modifica
+python3 sincronizza_google.py                  # riepilogo + conferma + applica
+python3 sincronizza_google.py --yes            # senza conferma
+python3 sincronizza_google.py --reconfigure    # rifà le domande iniziali
+python3 -m unittest test_sincronizza -v        # test (non servono le librerie Google)
+```
+
+Lo script legge `calendario.json` e `risultati.json` (non i `.ics`, quindi non serve
+rigenerarli prima) e confronta gli eventi per UID (gli stessi di `calendario.ics`):
+crea i nuovi, aggiorna quelli cambiati, elimina quelli tolti dal JSON. Tocca **solo**
+gli eventi che ha creato lui (marcatore `source=calendario-sync` nelle proprietà
+private dell'evento): quelli aggiunti a mano nel calendario restano come sono. Un evento
+cancellato a mano su Google viene ripristinato al lancio successivo. `genera_ics.py`
+non lancia lo script: alla fine stampa solo il comando da usare.
+
+#### Configurazione iniziale (una volta)
+
+1. **Progetto Google Cloud**: <https://console.cloud.google.com/> → selettore dei
+   progetti in alto → **Nuovo progetto** (es. "HC Fondi calendario") → **Crea**.
+2. **Calendar API**: nel progetto, *API e servizi → Libreria* → cerca
+   **Google Calendar API** → **Abilita**.
+3. Scegli **uno** dei due metodi di accesso:
+   - **Account di servizio** (consigliato: nessun browser, non scade):
+     *IAM e amministrazione → Account di servizio → Crea account di servizio* (nome a
+     piacere, nessun ruolo) → apri l'account → scheda **Chiavi → Aggiungi chiave →
+     Crea nuova chiave → JSON**. Si scarica un file: spostalo in
+     `~/.config/calendario-sync/` (**mai** nella cartella del repository). Annota
+     l'email dell'account (`…@….iam.gserviceaccount.com`).
+   - **Account Google (OAuth)**: *API e servizi → Schermata consenso OAuth* → tipo
+     **Esterno**, compila nome app ed email, in **Utenti di test** aggiungi il tuo
+     indirizzo Gmail. Poi *Credenziali → Crea credenziali → ID client OAuth → Tipo:
+     App desktop* → **Scarica JSON** (`client_secret_….json`) e spostalo in
+     `~/.config/calendario-sync/`. Finché l'app è in stato **"Testing"**
+     l'autorizzazione dura **7 giorni**: poi lo script riapre da solo il browser per
+     rinnovarla (per evitarlo: *Pubblica app*).
+4. **Calendario**: in Google Calendar (da computer) *Altri calendari → + → Crea nuovo
+   calendario* (es. "HC Fondi · Tutte le partite"). Nelle sue impostazioni:
+   - *Autorizzazioni di accesso agli eventi* → **Rendi disponibile pubblicamente**
+     (serve per `calendario-google.html` e il pulsante "Aggiungi");
+   - solo con l'account di servizio: *Condividi con persone e gruppi specifici →
+     Aggiungi persone* → l'email dell'account di servizio con il permesso
+     **Apportare modifiche agli eventi**;
+   - *Integra calendario* → copia l'**ID calendario** (`…@group.calendar.google.com`).
+5. **Primo avvio**: `python3 sincronizza_google.py --dry-run`. Lo script chiede il
+   metodo (1 = account di servizio, 2 = OAuth), il percorso del file JSON e l'ID del
+   calendario (va bene anche il link pubblico o il codice `<iframe>`), e salva le
+   risposte in `~/.config/calendario-sync/config.json` (lì anche il `token.json` di
+   OAuth). Dai lanci successivi non chiede più nulla. Se il riepilogo è giusto,
+   lancia senza `--dry-run`.
+6. Metti il nuovo ID nella costante `GOOGLE_CAL_ID` di `calendario-google.html` e
+   `abbonati.html`.
+
+Se lo script dice che il calendario **non è accessibile**: con l'account di servizio
+manca la condivisione del punto 4 (lo script stampa l'email da usare); con OAuth hai
+autorizzato un account che non può modificare quel calendario.
+
 ### Cambiare tema
 
 Il tema si imposta nella riga `<link … id="tema">`, **in entrambe le pagine**
@@ -280,6 +361,10 @@ HC_Fondi_26_27/
 ├── risultati.json        punteggi (facoltativo)
 ├── converti_excel.py     Excel → calendario.json (+ lancia genera_ics.py)
 ├── genera_ics.py         calendario.json → calendario*.ics + calendari.json
+├── eventi_comuni.py      UID e contenuto degli eventi, in comune tra .ics e Google
+├── sincronizza_google.py calendario.json → calendario Google condiviso (a mano)
+├── test_sincronizza.py   test della sincronizzazione (API Google simulata)
+├── requirements.txt      librerie Google (solo per sincronizza_google.py)
 ├── css/
 │   ├── base.css          struttura + variabili (colori, font, dimensioni)
 │   ├── tema-*.css        ogni tema importa base.css e ridefinisce le variabili

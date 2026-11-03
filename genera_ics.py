@@ -19,10 +19,10 @@ di comparire due volte. Se il contenuto non cambia, i file restano identici.
 Uso:  python3 genera_ics.py          (nessuna libreria esterna)
 """
 
-import datetime, json, os, re, unicodedata
+import datetime, json, os, shlex
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-SITE_URL = "https://sharkencode80.github.io/HC_Fondi_26_27/"
+from eventi_comuni import HERE, SITE_URL, load, eventi_con_uid, uid, cerca_risultato, campi_evento
+
 CAL_PREFIX = "HC Fondi"
 REFRESH = "PT6H"                      # ogni quanto suggeriamo alle app di riscaricare
 
@@ -76,48 +76,11 @@ def fold(line):
     return "\r\n ".join(out)
 
 
-def slug(s):
-    s = unicodedata.normalize("NFKD", s).encode("ascii", "ignore").decode().lower()
-    return re.sub(r"[^a-z0-9]+", "-", s).strip("-")
-
-
-def norm(s):
-    return re.sub(r"\s+", " ", (s or "")).strip().upper()
-
-
-def load(name, default=None):
-    path = os.path.join(HERE, name)
-    if not os.path.exists(path):
-        return default
-    with open(path, encoding="utf-8") as f:
-        return json.load(f)
-
-
 def main():
     cal = load("calendario.json")
     ris = load("risultati.json", {}) or {}
-    cats, venues = cal["categories"], cal["venues"]
-    durate = (cal.get("mister") or {}).get("durate") or {}
-    team = cal.get("fondiTeam", "HC Fondi")
-
-    # anno di ogni partita: campo "year", altrimenti dalla data di inizio stagione
-    y0, m0 = int(cal["start"][6:10]), int(cal["start"][3:5])
-    def date_of(m):
-        d, mo = int(m["date"][:2]), int(m["date"][3:5])
-        return datetime.date(m.get("year") or (y0 if mo >= m0 else y0 + 1), mo, d)
-
-    results = {}
-    for r in ris.get("results", []):
-        results[(r["date"][:5], r["cat"], norm(r["home"]), norm(r["away"]))] = r
-
-    def result_for(m):
-        r = results.get((m["date"][:5], m["cat"], norm(m["home"]), norm(m["away"])))
-        if r:
-            return r["hs"], r["as"], r.get("status", "")
-        r = results.get((m["date"][:5], m["cat"], norm(m["away"]), norm(m["home"])))
-        if r:
-            return r["as"], r["hs"], r.get("status", "")
-        return None
+    cats = cal["categories"]
+    result_for = cerca_risultato(ris)
 
     # DTSTAMP fisso = ultimo aggiornamento dei dati: file identici se nulla cambia
     stamp_src = ris.get("updated") or cal["event"].get("updated") or "01/01/2026 00:00"
@@ -129,50 +92,24 @@ def main():
             return datetime.datetime(2026, 1, 1)
     stamp = max(parse_upd(stamp_src), parse_upd(cal_upd)).strftime("%Y%m%dT%H%M00")
 
-    # UID stabile: categoria + squadre (+ data per gli eventi senza squadre)
-    seen, events = {}, []
-    for m in cal["matches"]:
-        d = date_of(m)
-        base = f"{m['cat']}-{slug(m['home'])}-{slug(m['away'])}" if not m.get("event") \
-            else f"{m['cat']}-{slug(m['home'])}-{d:%Y%m%d}"
-        seen[base] = seen.get(base, 0) + 1
-        if seen[base] > 1:
-            base += f"-{seen[base]}"
-        events.append((m, d, base))
+    # UID stabile (vedi eventi_comuni.eventi_con_uid)
+    events = eventi_con_uid(cal)
 
-    def vevent(m, d, uid, calkey):
-        label = cats.get(m["cat"], m["cat"])
-        lines = ["BEGIN:VEVENT", f"UID:{uid}-{calkey}@hcfondi2627", f"DTSTAMP:{stamp}Z"]
-        if m.get("time"):
-            h, mi = map(int, m["time"].split("."))
-            start = datetime.datetime(d.year, d.month, d.day, h, mi)
-            dur = durate.get(m["cat"]) or {}
-            minutes = 2 * int(dur.get("tempo", 0)) + int(dur.get("pausa", 0)) or 60
-            end = start + datetime.timedelta(minutes=minutes)
-            lines += [f"DTSTART;TZID=Europe/Rome:{start:%Y%m%dT%H%M%S}",
-                      f"DTEND;TZID=Europe/Rome:{end:%Y%m%dT%H%M%S}"]
+    def vevent(m, d, base, calkey):
+        e = campi_evento(cal, m, d, result_for)
+        lines = ["BEGIN:VEVENT", f"UID:{uid(base, calkey)}", f"DTSTAMP:{stamp}Z"]
+        if not e["giornata"]:
+            lines += [f"DTSTART;TZID=Europe/Rome:{e['start']:%Y%m%dT%H%M%S}",
+                      f"DTEND;TZID=Europe/Rome:{e['end']:%Y%m%dT%H%M%S}"]
         else:
-            lines += [f"DTSTART;VALUE=DATE:{d:%Y%m%d}",
-                      f"DTEND;VALUE=DATE:{d + datetime.timedelta(days=1):%Y%m%d}",
+            lines += [f"DTSTART;VALUE=DATE:{e['start']:%Y%m%d}",
+                      f"DTEND;VALUE=DATE:{e['end']:%Y%m%d}",
                       "TRANSP:TRANSPARENT"]
-        if m.get("event"):
-            summary = m["home"] if m["cat"] == "sel" else f"{label} · {m['home']}"
-        else:
-            summary = f"{label} · {m['home']} – {m['away']}"
-        lines.append(f"SUMMARY:{esc(summary)}")
-        venue = venues.get(m.get("venue", ""), m.get("venue", ""))
-        if venue:
-            lines.append(f"LOCATION:{esc(venue)}")
-        desc = []
-        if not m.get("event"):
-            desc.append("In casa" if m["home"].startswith(team) else "In trasferta")
-        r = None if m.get("event") else result_for(m)
-        if r:
-            desc.append(f"Risultato: {m['home']} {r[0]} – {r[1]} {m['away']}"
-                        + (f" ({r[2]})" if r[2] else ""))
-        desc.append(f"Calendario completo: {SITE_URL}")
-        lines += [f"DESCRIPTION:{esc(chr(10).join(desc))}", f"URL:{SITE_URL}",
-                  f"CATEGORIES:{esc(label)}", "END:VEVENT"]
+        lines.append(f"SUMMARY:{esc(e['summary'])}")
+        if e["location"]:
+            lines.append(f"LOCATION:{esc(e['location'])}")
+        lines += [f"DESCRIPTION:{esc(e['description'])}", f"URL:{e['url']}",
+                  f"CATEGORIES:{esc(e['label'])}", "END:VEVENT"]
         return lines
 
     def write_ics(fname, calkey, title, include):
@@ -210,6 +147,17 @@ def main():
         json.dump({"site": SITE_URL, "calendars": manifest}, f, ensure_ascii=False, indent=2)
         f.write("\n")
     print("calendari.json: elenco per abbonati.html")
+
+    # il calendario Google condiviso NON si aggiorna da qui: si lancia a parte
+    script = os.path.relpath(os.path.join(HERE, "sincronizza_google.py"))
+    if script.startswith(".."):
+        script = os.path.join(HERE, "sincronizza_google.py")
+    cmd = f"python3 {shlex.quote(script)}"
+    print()
+    print("Calendario Google condiviso (non aggiornato in automatico). Per sincronizzarlo:")
+    print(f"  {cmd} --dry-run    # mostra cosa cambierebbe, senza toccare nulla")
+    print(f"  {cmd}              # applica (chiede conferma)")
+    print("Prima configurazione: README, sezione \"Calendario Google condiviso\".")
 
 
 if __name__ == "__main__":

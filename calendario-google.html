@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- ANTEPRIMA (calendario Google condiviso): raggiungibile solo con link diretto -->
+<meta name="robots" content="noindex">
+<title>Calendario Google · HC Fondi Campionati 26-27</title>
+<link rel="stylesheet" href="css/tema-rossoblu.css" id="tema">
+<link rel="stylesheet" href="css/abbonati.css">
+</head>
+<body class="abbonati gcal">
+
+<a class="back" id="back" href="anteprima.html">← Torna al calendario</a>
+<h1>Calendario Google</h1>
+<p class="lead">Tutte le partite HC Fondi in un calendario Google pubblico. Puoi
+  guardarlo qui oppure aggiungerlo al tuo Google Calendar: <b>si aggiorna da solo</b>.</p>
+
+<section class="card">
+  <a class="go" id="gcal-add" target="_blank" rel="noopener">Aggiungi a Google Calendar</a>
+  <p class="hint gcal-note">Serve essere collegati al proprio account Google. Funziona dal
+    computer e dall'app Google Calendar del telefono. Per iPhone e altre app usa
+    <a class="link" href="abbonati.html">Abbonati al calendario</a>.</p>
+</section>
+
+<section class="card gcal-frame">
+  <iframe id="gcal" title="Calendario Google HC Fondi" loading="lazy"></iframe>
+  <p class="hint gcal-note"><a class="link" id="gcal-open" target="_blank" rel="noopener">Apri il
+    calendario a schermo intero</a></p>
+</section>
+
+<script>
+// ==========================================================================
+//  Calendario Google pubblico con tutte le partite. È un calendario aggiunto
+//  "Da URL" (calendario.ics): Google lo riscarica da solo (può impiegare fino
+//  a 24 ore). Se un giorno si passa a un calendario proprio aggiornato da
+//  sincronizza_google.py, basta cambiare l'ID qui sotto (e in abbonati.html).
+// ==========================================================================
+const GOOGLE_CAL_ID = "bcbce8opp025mqrok78200b18hrtvbp3@import.calendar.google.com";
+
+const mobile = matchMedia("(max-width:600px)").matches;
+const embed = "https://calendar.google.com/calendar/embed?" + new URLSearchParams({
+  src: GOOGLE_CAL_ID, ctz: "Europe/Rome", wkst: "2", hl: "it", color: "#ad1457",
+  mode: mobile ? "AGENDA" : "MONTH",
+  showTitle: "0", showPrint: "0", showCalendars: "0", showTz: "0",
+});
+document.getElementById("gcal").src = embed;
+document.getElementById("gcal-open").href = embed;
+document.getElementById("gcal-add").href =
+  "https://calendar.google.com/calendar/render?cid=" + encodeURIComponent(GOOGLE_CAL_ID);
+
+// "Torna al calendario": alla pagina da cui si è arrivati, se è di questo sito
+try{
+  const ref = document.referrer && new URL(document.referrer);
+  if(ref && ref.origin===location.origin && !/calendario-google\.html$/.test(ref.pathname))
+    document.getElementById("back").href = ref.href;
+}catch(_){}
+
+/* credito (offuscato, reinserito se rimosso) */
+(function(){
+  const n = new TextDecoder().decode(Uint8Array.from(atob("Y3JlYXRlZCBieSBWaW5jZW56byBGb3J0ZQ=="), c=>c.charCodeAt(0)));
+  function ensure(){
+    let el = document.getElementById("credit");
+    if(!el){ el = document.createElement("div"); el.id = "credit"; document.body.appendChild(el); }
+    if(el.textContent !== n) el.textContent = n;
+  }
+  ensure();
+  try{ new MutationObserver(ensure).observe(document.body, {childList:true, subtree:true}); }catch(_){}
+})();
+</script>
+</body>
+</html>
