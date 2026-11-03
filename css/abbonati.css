@@ -110,21 +110,23 @@ details a,.card a.link{color:var(--fondi)}
   .app .tag{margin-top:0}
 }
 
-/* ---------- calendario Google (calendario-google.html e box in abbonati.html) ---------- */
+/* ---------- calendario Google (calendario-google.html) ---------- */
 .gcal .card > .go{display:inline-block}
 .gcal-note{margin:10px 0 0}
-.gcal-note a,.gbox a.link{color:var(--fondi)}
+.gcal-note a,#app-hint a.link{color:var(--fondi)}
 .gcal-frame{padding:8px}
 .gcal-frame iframe{display:block;width:100%;height:640px;border:0;border-radius:8px;background:#fff}
 .gcal-frame .gcal-note{padding:0 6px 4px}
-.gbox{
-  margin:0 0 12px;padding:12px 14px;border-radius:10px;
-  background:var(--fondi-tint);border:1px solid var(--fondi);font-size:14px;line-height:1.5;
-}
-.gbox p{margin:0 0 10px}
-.gbox .go{display:inline-block}
-.gbox .hint{margin:10px 0 0}
 @media (max-width:600px){
   .gcal-frame{padding:4px}
   .gcal-frame iframe{height:70vh;min-height:420px}
 }
+/* scelta del calendario da vedere */
+.gsel{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+.gsel:empty{display:none}
+.gsel button{
+  display:inline-flex;align-items:center;gap:6px;cursor:pointer;font:inherit;font-size:13.5px;font-weight:600;
+  color:var(--ink);background:var(--panel);border:1.5px solid var(--line-strong);border-radius:999px;padding:5px 11px;
+}
+.gsel .dot{width:10px;height:10px;border-radius:3px}
+.gsel button[aria-pressed="true"]{border-color:var(--fondi);background:var(--fondi-tint)}

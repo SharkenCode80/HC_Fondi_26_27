@@ -184,12 +184,18 @@ con link diretto (e con `noindex`): `anteprima.html`, `anteprima-mobile.html` e
 
 ### Calendario Google condiviso — in anteprima
 
-`calendario-google.html` (in anteprima, raggiungibile da `anteprima.html`,
-`anteprima-mobile.html` e `abbonati.html`) mostra un calendario Google pubblico con
-tutte le partite, con il pulsante **Aggiungi a Google Calendar** (link
-`calendar.google.com/calendar/render?cid=<ID>`: con un ID di calendario Google funziona
-anche dall'app Android). L'ID è nella costante `GOOGLE_CAL_ID` di
-`calendario-google.html` e di `abbonati.html`.
+Per ogni calendario di `calendari.json` (tutte + una per categoria) c'è un calendario
+Google pubblico, aggiunto su Google *Da URL* con l'indirizzo del sito
+(`https://sharkencode80.github.io/HC_Fondi_26_27/calendario-<chiave>.ics`; **non**
+quello `github.com/…/blob/…`, che è una pagina HTML e dà un calendario vuoto).
+Gli ID sono in `js/calendari-google.js` (vuoto = nessun calendario Google).
+
+- `calendario-google.html` (anteprima, link da `anteprima.html` e
+  `anteprima-mobile.html`): mostra il calendario scelto e il pulsante **Aggiungi a
+  Google Calendar**; `calendario-google.html?cal=serieb` apre direttamente la Serie B.
+- `abbonati.html`, scegliendo Google: **Aggiungi** accanto a ogni calendario
+  (`calendar.google.com/calendar/render?cid=<ID>`): con un ID di calendario Google
+  funziona anche dall'app Android.
 
 Ci sono due modi di tenere aggiornato quel calendario:
 
@@ -256,8 +262,7 @@ non lancia lo script: alla fine stampa solo il comando da usare.
    risposte in `~/.config/calendario-sync/config.json` (lì anche il `token.json` di
    OAuth). Dai lanci successivi non chiede più nulla. Se il riepilogo è giusto,
    lancia senza `--dry-run`.
-6. Metti il nuovo ID nella costante `GOOGLE_CAL_ID` di `calendario-google.html` e
-   `abbonati.html`.
+6. Metti il nuovo ID in `js/calendari-google.js` (chiave `tutte`).
 
 Se lo script dice che il calendario **non è accessibile**: con l'account di servizio
 manca la condivisione del punto 4 (lo script stampa l'email da usare); con OAuth hai
