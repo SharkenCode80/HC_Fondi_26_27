@@ -1,5 +1,8 @@
 {
-  "updated": null,
+  "updated": "03/11/2026 20:00",
   "source": "inserimento manuale",
-  "results": []
+  "results": [
+    { "date": "03/11", "cat": "u16f", "home": "HC Fondi", "away": "PDO Handball Salerno U16F",
+      "hs": 28, "as": 20, "status": "FINE" }
+  ]
 }
