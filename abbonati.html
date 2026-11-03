@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
-<title>Abbonati al calendario · HC Fondi Campionati 26-27</title>
+<title>Iscriviti al calendario · HC Fondi Campionati 26-27</title>
 <!-- tema (lo stesso delle altre pagine) + stile di questa pagina -->
 <link rel="stylesheet" href="css/tema-rossoblu.css" id="tema">
 <link rel="stylesheet" href="css/abbonati.css">
@@ -13,7 +13,7 @@
 <body class="abbonati">
 
 <a class="back" id="back" href="anteprima.html">← Torna al calendario</a>
-<h1>Abbonati al calendario</h1>
+<h1>Iscriviti al calendario</h1>
 <p class="lead">Le partite compaiono nell'app Calendario del tuo telefono o computer e
   <b>si aggiornano da sole</b> se cambia una data, un orario o un impianto. Quando è
   disponibile, nella partita trovi anche il risultato.</p>
@@ -48,13 +48,13 @@
     </ol>
     <a class="go" href="https://calendar.google.com/calendar/r/settings/addbyurl" target="_blank" rel="noopener">Apri "Aggiungi da URL" di Google</a>
     <p class="hint">Più semplice ancora: apri questa pagina da un computer e usa
-      <b>Abbonati</b>.</p>
+      <b>Iscriviti</b>.</p>
   </div>
 </section>
 
 <section class="card">
   <p class="stepn">Come disiscriversi</p>
-  <p class="hint">Il sito non può togliere un abbonamento dal tuo telefono: si fa
+  <p class="hint">Il sito non può togliere un'iscrizione dal tuo telefono: si fa
     dall'app, in pochi tocchi. Se vuoi solo non vederlo per un po', basta
     <b>togliere la spunta</b> al calendario nell'elenco dei calendari.</p>
   <details>
@@ -111,7 +111,7 @@
   </details>
   <details>
     <summary>Ho già aggiunto alcune partite una per una</summary>
-    <p>Gli eventi aggiunti singolarmente restano dove sono: dopo l'abbonamento puoi
+    <p>Gli eventi aggiunti singolarmente restano dove sono: dopo l'iscrizione puoi
       cancellarli, così non li vedi due volte.</p>
   </details>
 </section>
@@ -173,10 +173,10 @@ function renderSubs(){
   const tutti = list.length > 0 && list.every(gid);
   const copia = mode==="android" && list.some(c=> !gid(c));
   hint.innerHTML = app==="google" && (tutti || !list.length) && Object.values(GID).some(Boolean)
-    ? "Tocca <b>Aggiungi</b> accanto a ogni calendario: si apre Google Calendar (sul telefono, l'app) e confermi con <b>Aggiungi</b>. Serve essere collegati al proprio account Google. <a class=\"link\" href=\"calendario-google.html\">Guardali prima qui</a>."
+    ? "Tocca <b>Aggiungi</b> accanto a ogni calendario: si apre Google Calendar (sul telefono, l'app) e confermi con <b>Aggiungi</b>. Serve essere collegati al proprio account Google."
     : {
     android: "Segui i passi qui sotto: l'app Google Calendar non permette di abbonarsi a un indirizzo.",
-    apple: "Tocca <b>Abbonati</b> accanto a ogni calendario e conferma con <b>Abbonati</b> nella finestra che compare.",
+    apple: "Tocca <b>Iscriviti</b> accanto a ogni calendario e conferma con <b>Abbonati</b> nella finestra che compare.",
     google: "Si apre Google Calendar: conferma con <b>Aggiungi</b>. Ripeti per ogni calendario. Serve essere collegati al proprio account Google.",
     altro: "Copia il link e incollalo nel tuo programma, nella funzione <b>Aggiungi calendario da URL</b> (o \"Iscriviti\").",
   }[mode];
@@ -190,7 +190,7 @@ function renderSubs(){
       ? `<a class="go" href="${esc(googleIdUrl(gid(c)))}" target="_blank" rel="noopener">Aggiungi</a>`
       : mode==="altro" || mode==="android"
       ? `<button type="button" class="go" data-copy="${esc(httpsUrl(c.file))}">Copia link</button>`
-      : `<a class="go" href="${esc(app==="apple" ? webcalUrl(c.file) : googleUrl(c.file))}"${app==="google"?' target="_blank" rel="noopener"':""}>Abbonati</a>`;
+      : `<a class="go" href="${esc(app==="apple" ? webcalUrl(c.file) : googleUrl(c.file))}"${app==="google"?' target="_blank" rel="noopener"':""}>Iscriviti</a>`;
     return `<li><span class="dot ${c.key}"></span>
       <span class="nm">${esc(c.label)}<small>${esc(gid(c) || mode==="apple" || mode==="google" ? c.count+" eventi" : httpsUrl(c.file))}</small></span>${btn}</li>`;
   }).join("");

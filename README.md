@@ -178,7 +178,7 @@ python3 genera_ics.py      # nessuna libreria esterna
 `risultati.json` a mano (anche da GitHub), rilancia `genera_ics.py` e pubblica anche i
 `.ics`**, altrimenti i calendari degli abbonati restano indietro.
 
-Le pagine con il pulsante **📅 Abbonati** sono per ora un'anteprima, raggiungibile solo
+Le pagine con il pulsante **📅 Iscriviti** sono per ora un'anteprima, raggiungibile solo
 con link diretto (e con `noindex`): `anteprima.html`, `anteprima-mobile.html` e
 `abbonati.html`. Quando vanno bene, si sostituiscono a `index.html` / `mobile.html`.
 
@@ -190,8 +190,8 @@ Google pubblico, aggiunto su Google *Da URL* con l'indirizzo del sito
 quello `github.com/…/blob/…`, che è una pagina HTML e dà un calendario vuoto).
 Gli ID sono in `js/calendari-google.js` (vuoto = nessun calendario Google).
 
-- `calendario-google.html` (anteprima, link da `anteprima.html` e
-  `anteprima-mobile.html`): mostra il calendario scelto e il pulsante **Aggiungi a
+- `calendario-google.html` (anteprima, **per ora nascosta**: i link in `anteprima.html`
+  e `anteprima-mobile.html` sono commentati): mostra il calendario scelto e il pulsante **Aggiungi a
   Google Calendar**; `calendario-google.html?cal=serieb` apre direttamente la Serie B.
 - `abbonati.html`, scegliendo Google: **Aggiungi** accanto a ogni calendario
   (`calendar.google.com/calendar/render?cid=<ID>`): con un ID di calendario Google
