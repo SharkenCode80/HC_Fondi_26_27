@@ -286,9 +286,9 @@ footer{margin-top:16px;color:var(--muted);font-size:12px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 
-/* ---------- pulsante "Segui" + "?" con la piccola guida (js/segui-aiuto.js) ---------- */
-.segui-wrap{position:relative;display:inline-flex;align-items:center;gap:6px;margin-top:10px}
-.segui-wrap .switch-view{margin-top:0}
+/* ---------- pulsante "Sincronizza" + "?" con la piccola guida (js/sincronizza-aiuto.js) ---------- */
+.sincronizza-wrap{position:relative;display:inline-flex;align-items:center;gap:6px;margin-top:10px}
+.sincronizza-wrap .switch-view{margin-top:0}
 .help-btn{
   flex:0 0 auto;width:26px;height:26px;border-radius:50%;border:0;cursor:pointer;padding:0;
   background:#1e9bd7;color:#fff;font:700 15px/26px var(--font-body);text-align:center;

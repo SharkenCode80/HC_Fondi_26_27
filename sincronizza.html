@@ -4,16 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
-<title>Segui il calendario · HC Fondi Campionati 26-27</title>
+<title>Sincronizza il calendario · HC Fondi Campionati 26-27</title>
 <!-- tema (lo stesso delle altre pagine) + stile di questa pagina -->
 <link rel="stylesheet" href="css/tema-rossoblu.css" id="tema">
-<link rel="stylesheet" href="css/segui.css">
+<link rel="stylesheet" href="css/sincronizza.css">
 <script src="js/calendari-google.js"></script>
 </head>
-<body class="segui">
+<body class="sincronizza">
 
 <a class="back" id="back" href="anteprima.html">← Torna al calendario</a>
-<h1>Segui il calendario</h1>
+<h1>Sincronizza il calendario</h1>
 <p class="lead">Le partite compaiono nell'app Calendario del tuo telefono o computer e
   <b>si aggiornano da sole</b> se cambia una data, un orario o un impianto. Quando è
   disponibile, nella partita trovi anche il risultato. È gratis e lo togli quando vuoi.</p>
@@ -24,7 +24,7 @@
     nell'app, che puoi mostrare o nascondere quando vuoi.</p>
   <div id="cals"></div>
   <p class="warn">Scegli <b>Tutte le partite</b> <i>oppure</i> le singole categorie:
-    se li segui entrambi, le partite compaiono due volte.</p>
+    se li sincronizzi entrambi, le partite compaiono due volte.</p>
 </section>
 
 <section class="card">
@@ -109,14 +109,14 @@
   </details>
   <details>
     <summary>Ho già aggiunto alcune partite una per una</summary>
-    <p>Gli eventi aggiunti singolarmente restano dove sono: dopo aver seguito il calendario puoi
+    <p>Gli eventi aggiunti singolarmente restano dove sono: dopo aver sincronizzato il calendario puoi
       cancellarli, così non li vedi due volte.</p>
   </details>
 </section>
 
 <script>
 // ==========================================================================
-//  "Segui il calendario": calendari .ics generati da genera_ics.py.
+//  "Sincronizza il calendario": calendari .ics generati da genera_ics.py.
 //  L'elenco dei calendari arriva da calendari.json (stessa cartella).
 //  - iPhone/Mac: link webcal://…  (iOS chiede conferma)
 //  - Google:     calendar.google.com/calendar/render?cid=https%3A%2F%2F…  (indirizzo https codificato:
@@ -173,8 +173,8 @@ function renderSubs(){
   hint.innerHTML = app==="google" && (tutti || !list.length) && Object.values(GID).some(Boolean)
     ? "Tocca <b>Aggiungi</b> accanto a ogni calendario: si apre Google Calendar (sul telefono, l'app) e confermi con <b>Aggiungi</b>. Serve essere collegati al proprio account Google."
     : {
-    android: "Segui i passi qui sotto: l'app Google Calendar non permette di abbonarsi a un indirizzo.",
-    apple: "Tocca <b>Segui</b> accanto a ogni calendario e conferma nella finestra che compare.",
+    android: "Fai come nei passi qui sotto: l'app Google Calendar non permette di aggiungere un calendario da un indirizzo.",
+    apple: "Tocca <b>Sincronizza</b> accanto a ogni calendario e conferma nella finestra che compare.",
     google: "Si apre Google Calendar: conferma con <b>Aggiungi</b>. Ripeti per ogni calendario. Serve essere collegati al proprio account Google.",
     altro: "Copia il link e incollalo nel tuo programma, nella funzione <b>Aggiungi calendario da URL</b>.",
   }[mode];
@@ -188,7 +188,7 @@ function renderSubs(){
       ? `<a class="go" href="${esc(googleIdUrl(gid(c)))}" target="_blank" rel="noopener">Aggiungi</a>`
       : mode==="altro" || mode==="android"
       ? `<button type="button" class="go" data-copy="${esc(httpsUrl(c.file))}">Copia link</button>`
-      : `<a class="go" href="${esc(app==="apple" ? webcalUrl(c.file) : googleUrl(c.file))}"${app==="google"?' target="_blank" rel="noopener"':""}>Segui</a>`;
+      : `<a class="go" href="${esc(app==="apple" ? webcalUrl(c.file) : googleUrl(c.file))}"${app==="google"?' target="_blank" rel="noopener"':""}>Sincronizza</a>`;
     return `<li><span class="dot ${c.key}"></span>
       <span class="nm">${esc(c.label)}<small>${esc(gid(c) || mode==="apple" || mode==="google" ? c.count+" eventi" : httpsUrl(c.file))}</small></span>${btn}</li>`;
   }).join("");
@@ -225,7 +225,7 @@ document.getElementById("subs").addEventListener("click", e=>{
 // "Torna al calendario": alla pagina da cui si è arrivati, se è di questo sito
 try{
   const ref = document.referrer && new URL(document.referrer);
-  if(ref && ref.origin===location.origin && !/segui\.html$/.test(ref.pathname))
+  if(ref && ref.origin===location.origin && !/sincronizza\.html$/.test(ref.pathname))
     document.getElementById("back").href = ref.href;
 }catch(_){}
 

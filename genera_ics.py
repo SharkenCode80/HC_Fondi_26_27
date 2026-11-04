@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-HC Fondi - Campionati 2026/2027 - calendari da seguire (.ics)
+HC Fondi - Campionati 2026/2027 - calendari da sincronizzare (.ics)
 -----------------------------------------------------------------
 Legge calendario.json (+ risultati.json, se c'e') e scrive, nella stessa
 cartella:
     calendario.ics            tutte le partite e gli eventi
     calendario-<cat>.ics      un calendario per categoria
-    calendari.json            elenco dei calendari (letto da segui.html)
+    calendari.json            elenco dei calendari (letto da sincronizza.html)
 
 Le gare interne (es. U18F contro U16F) finiscono sia nel calendario U18 F
 sia in quello U16 F; in "tutte" compaiono una volta sola.
@@ -146,7 +146,7 @@ def main():
     with open(os.path.join(HERE, "calendari.json"), "w", encoding="utf-8") as f:
         json.dump({"site": SITE_URL, "calendars": manifest}, f, ensure_ascii=False, indent=2)
         f.write("\n")
-    print("calendari.json: elenco per segui.html")
+    print("calendari.json: elenco per sincronizza.html")
 
     # il calendario Google condiviso NON si aggiorna da qui: si lancia a parte
     script = os.path.relpath(os.path.join(HERE, "sincronizza_google.py"))

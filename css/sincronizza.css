@@ -1,12 +1,12 @@
 /* ==========================================================================
-   Pagina "Segui il calendario" (segui.html)
+   Pagina "Sincronizza il calendario" (sincronizza.html)
    Va collegato DOPO il file tema: usa le stesse variabili.
    ========================================================================== */
 
-body.segui{max-width:760px;margin:0 auto;padding:20px 16px 60px}
+body.sincronizza{max-width:760px;margin:0 auto;padding:20px 16px 60px}
 .back{font-size:14px;color:var(--muted);text-decoration:none}
 .back:hover{color:var(--fondi)}
-body.segui h1{font-size:clamp(28px,7vw,44px);margin-top:8px}
+body.sincronizza h1{font-size:clamp(28px,7vw,44px);margin-top:8px}
 .lead{color:var(--muted);font-size:14.5px;margin:12px 0 0;max-width:620px}
 
 .card{
@@ -64,7 +64,7 @@ body.segui h1{font-size:clamp(28px,7vw,44px);margin-top:8px}
 }
 .app[aria-pressed="true"]{border-color:var(--head-bg);box-shadow:0 0 0 2px var(--head-bg) inset}
 
-/* elenco dei calendari scelti con il pulsante "Segui" */
+/* elenco dei calendari scelti con il pulsante "Sincronizza" */
 .subs{list-style:none;margin:0;padding:0}
 .subs li{
   display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line);
@@ -102,7 +102,7 @@ details a,.card a.link{color:var(--fondi)}
 
 
 @media (max-width:600px){
-  body.segui{padding:14px 12px 50px}
+  body.sincronizza{padding:14px 12px 50px}
   .card{padding:14px 14px 16px}
   .apps{grid-template-columns:1fr}
   .app{display:flex;align-items:center;gap:10px;flex-wrap:wrap}

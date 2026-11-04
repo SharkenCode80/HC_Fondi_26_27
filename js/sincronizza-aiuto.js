@@ -1,18 +1,18 @@
 // ==========================================================================
-//  Pulsante "?" accanto a "Segui": apre una piccola guida (testo qui sotto,
+//  Pulsante "?" accanto a "Sincronizza": apre una piccola guida (testo qui sotto,
 //  uguale per la versione completa e quella cellulare). Si chiude con ×,
 //  toccando fuori o con Esc.
 // ==========================================================================
 (function(){
   const TESTO = `
     <button type="button" class="help-close" aria-label="Chiudi">×</button>
-    <p>Con <b>Segui</b> le partite compaiono nell'app Calendario del tuo telefono o
+    <p>Con <b>Sincronizza</b> le partite compaiono nell'app Calendario del tuo telefono o
       computer e <b>si aggiornano da sole</b>. È gratis e lo togli quando vuoi.</p>
     <ul>
       <li><b>Tutte le partite</b>: un solo calendario con tutti gli eventi.</li>
       <li>Oppure solo le <b>categorie</b> che ti interessano, un calendario per ognuna.</li>
     </ul>
-    <p class="help-warn">Attenzione: se segui <b>Tutte le partite</b> e anche le singole
+    <p class="help-warn">Attenzione: se sincronizzi <b>Tutte le partite</b> e anche le singole
       categorie, ogni partita compare due volte.</p>`;
 
   const pops = () => document.querySelectorAll(".help-pop");

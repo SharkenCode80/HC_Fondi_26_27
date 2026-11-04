@@ -159,7 +159,7 @@ Aggiungi i punteggi in `risultati.json`, con lo stesso formato del Festival dell
 girato in automatico). In alternativa si può usare `generatore.html` del progetto
 Festival della Pallamano (sezione *Risultati extra*).
 
-### Calendari da seguire (.ics) — in anteprima
+### Calendari da sincronizzare (.ics) — in anteprima
 
 `genera_ics.py` crea, da `calendario.json` e `risultati.json`, i calendari a cui ci si
 può abbonare dal telefono (si aggiornano da soli quando cambia il file sul sito):
@@ -168,7 +168,7 @@ può abbonare dal telefono (si aggiornano da soli quando cambia il file sul sito
 |---|---|
 | `calendario.ics` | tutte le partite ed eventi |
 | `calendario-<categoria>.ics` | una categoria (`serieb`, `u18f`, `u16f`, `u16m`, `u14`, `sel`); le gare interne sono sia in U18 F sia in U16 F |
-| `calendari.json` | elenco dei calendari, letto da `segui.html` |
+| `calendari.json` | elenco dei calendari, letto da `sincronizza.html` |
 
 ```bash
 python3 genera_ics.py      # nessuna libreria esterna
@@ -176,12 +176,12 @@ python3 genera_ics.py      # nessuna libreria esterna
 
 `converti_excel.py` lo lancia già da solo alla fine. **Se modifichi `calendario.json` o
 `risultati.json` a mano (anche da GitHub), rilancia `genera_ics.py` e pubblica anche i
-`.ics`**, altrimenti i calendari di chi li segue restano indietro.
+`.ics`**, altrimenti i calendari di chi li sincronizza restano indietro.
 
-Le pagine con il pulsante **📅 Segui** (e il **?** azzurro con una piccola guida,
-testo in `js/segui-aiuto.js`) sono per ora un'anteprima, raggiungibile solo
+Le pagine con il pulsante **📅 Sincronizza** (e il **?** azzurro con una piccola guida,
+testo in `js/sincronizza-aiuto.js`) sono per ora un'anteprima, raggiungibile solo
 con link diretto (e con `noindex`): `anteprima.html`, `anteprima-mobile.html` e
-`segui.html`. Quando vanno bene, si sostituiscono a `index.html` / `mobile.html`.
+`sincronizza.html`. Quando vanno bene, si sostituiscono a `index.html` / `mobile.html`.
 
 ### Calendario Google condiviso — in anteprima
 
@@ -194,7 +194,7 @@ Gli ID sono in `js/calendari-google.js` (vuoto = nessun calendario Google).
 - `calendario-google.html` (anteprima, **per ora nascosta**: i link in `anteprima.html`
   e `anteprima-mobile.html` sono commentati): mostra il calendario scelto e il pulsante **Aggiungi a
   Google Calendar**; `calendario-google.html?cal=serieb` apre direttamente la Serie B.
-- `segui.html`, scegliendo Google: **Aggiungi** accanto a ogni calendario
+- `sincronizza.html`, scegliendo Google: **Aggiungi** accanto a ogni calendario
   (`calendar.google.com/calendar/render?cid=<ID>`): con un ID di calendario Google
   funziona anche dall'app Android.
 
