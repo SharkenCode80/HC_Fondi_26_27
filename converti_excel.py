@@ -210,7 +210,7 @@ def main():
     for w in warnings:
         print("  [attenzione]", w)
 
-    # rigenera anche i calendari da abbonamento (.ics) dal nuovo calendario.json
+    # rigenera anche i calendari da seguire (.ics) dal nuovo calendario.json
     import genera_ics
     print("Calendari .ics:")
     genera_ics.main()

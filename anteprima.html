@@ -6,9 +6,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>HC Fondi Campionati 26-27</title>
 <!-- sceglie in automatico la versione completa o cellulare (vedi js/vista.js) -->
-<!-- ANTEPRIMA (pulsante "Iscriviti al calendario"): raggiungibile solo con link diretto -->
+<!-- ANTEPRIMA (pulsante "Segui il calendario"): raggiungibile solo con link diretto -->
 <meta name="robots" content="noindex">
 <script src="js/vista.js" data-full="anteprima.html" data-mobile="anteprima-mobile.html"></script>
+<script src="js/segui-aiuto.js" defer></script>
 <!-- ===== STILE =====
      Tutto l'aspetto della pagina è nei file della cartella css/.
      Per cambiare tema sostituisci il nome del file qui sotto con uno di:
@@ -24,7 +25,11 @@
     <h1 id="ev-title">HC Fondi Campionati 26-27</h1>
     <p class="sub" id="ev-sub">Caricamento…</p>
     <a class="switch-view" href="anteprima-mobile.html?v=mobile">📱 Versione cellulare</a>
-    <a class="switch-view" href="abbonati.html">📅 Iscriviti al calendario</a>
+    <span class="segui-wrap">
+      <a class="switch-view" href="segui.html">📅 Segui il calendario</a>
+      <button type="button" class="help-btn" aria-label="Come funziona" aria-expanded="false" aria-controls="segui-aiuto">?</button>
+      <div class="help-pop" id="segui-aiuto" role="dialog" aria-label="Come funziona" hidden></div>
+    </span>
     <!-- per ora nascosto: <a class="switch-view" href="calendario-google.html">🗓 Calendario Google</a> -->
   </header>
 

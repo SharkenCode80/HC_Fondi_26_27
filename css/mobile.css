@@ -24,7 +24,7 @@ body.mobile{padding:0 0 90px;max-width:720px;margin:0 auto}
 .mbar h1{font-size:26px;line-height:1}
 .mbar h1::after{display:none}   /* niente decorazioni del titolo su mobile */
 
-/* titolo + pulsante "Abbonati" sulla stessa riga */
+/* titolo + pulsanti "Segui" e "?" sulla stessa riga */
 .ab-top{display:flex;align-items:flex-end;justify-content:space-between;gap:8px}
 .ab-btn{
   flex:0 0 auto;display:inline-flex;align-items:center;gap:5px;text-decoration:none;
@@ -150,3 +150,9 @@ body.mobile{border-top-width:5px}
 @media (min-width:721px){
   .mbar h1{font-size:32px}
 }
+
+/* "Segui" + "?" a destra del titolo: la guida si apre verso sinistra */
+.mbar .segui-wrap{margin-top:0}
+.mbar .help-pop{left:auto;right:0}
+/* titolo un po' più piccolo sugli schermi stretti, così "26-27" non va a capo */
+.mbar .ab-top h1{font-size:clamp(19px, 5.9vw, 26px)}

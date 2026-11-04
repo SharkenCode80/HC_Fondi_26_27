@@ -285,3 +285,30 @@ footer{margin-top:16px;color:var(--muted);font-size:12px}
   #mister-panel{gap:8px 12px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* ---------- pulsante "Segui" + "?" con la piccola guida (js/segui-aiuto.js) ---------- */
+.segui-wrap{position:relative;display:inline-flex;align-items:center;gap:6px;margin-top:10px}
+.segui-wrap .switch-view{margin-top:0}
+.help-btn{
+  flex:0 0 auto;width:26px;height:26px;border-radius:50%;border:0;cursor:pointer;padding:0;
+  background:#1e9bd7;color:#fff;font:700 15px/26px var(--font-body);text-align:center;
+}
+.help-btn:hover,.help-btn[aria-expanded="true"]{background:#137fb3}
+.help-btn:focus-visible{outline:2px solid #1e9bd7;outline-offset:2px}
+.help-pop{
+  position:absolute;top:calc(100% + 8px);left:0;z-index:40;width:min(330px, calc(100vw - 24px));
+  background:var(--panel);color:var(--ink);border:1px solid var(--line);border-top:3px solid #1e9bd7;
+  border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.18);padding:12px 32px 12px 14px;
+  font-family:var(--font-body);font-size:13.5px;line-height:1.45;text-align:left;
+  text-transform:none;letter-spacing:normal;font-weight:400;white-space:normal;
+}
+.help-pop[hidden]{display:none}
+.help-pop p{margin:0 0 6px}
+.help-pop ul{margin:0 0 8px;padding-left:18px}
+.help-pop li{margin:2px 0}
+.help-pop .help-warn{margin:0;padding:6px 8px;border-radius:6px;background:var(--fondi-tint)}
+.help-close{
+  position:absolute;top:4px;right:6px;border:0;background:none;cursor:pointer;
+  font-size:20px;line-height:1;color:var(--muted);padding:2px 4px;
+}
+.help-close:hover{color:var(--ink)}

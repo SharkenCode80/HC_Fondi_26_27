@@ -4,8 +4,8 @@
 //  sito (https://sharkencode80.github.io/HC_Fondi_26_27/calendario-<chiave>.ics,
 //  NON quello di github.com/…/blob/…) e reso pubblico: si aggiorna da solo.
 //  L'ID si trova in Google Calendar → impostazioni del calendario → Integra calendario.
-//  Vuoto = nessun calendario Google: si usa l'abbonamento all'indirizzo .ics.
-//  Usato da abbonati.html e calendario-google.html.
+//  Vuoto = nessun calendario Google: si usa l'indirizzo .ics.
+//  Usato da segui.html e calendario-google.html.
 // ==========================================================================
 window.GOOGLE_CAL_IDS = {
   tutte:  "bcbce8opp025mqrok78200b18hrtvbp3@import.calendar.google.com",
