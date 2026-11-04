@@ -37,7 +37,8 @@ può contenere tutte le pagine che servono.
 | `index.html` | ✅ | versione completa (tabellone) |
 | `mobile.html` | ✅ | versione cellulare |
 | `css/` (tutta la cartella) | ✅ | stile, temi e layout mobile |
-| `js/vista.js` | ✅ | scelta automatica della versione |
+| `js/` (tutta la cartella) | ✅ | scelta automatica della versione, guida "?", calendari Google |
+| `sincronizza.html`, `calendario*.ics`, `calendari.json` | ✅ | pagina **Sincronizza il calendario** e i calendari |
 | `calendario.json` | ✅ | il calendario |
 | `risultati.json` | ✅ | i punteggi (anche vuoto) |
 | `README.md`, `.gitignore` | consigliato | queste istruzioni e l'elenco dei file da escludere |
@@ -159,7 +160,7 @@ Aggiungi i punteggi in `risultati.json`, con lo stesso formato del Festival dell
 girato in automatico). In alternativa si può usare `generatore.html` del progetto
 Festival della Pallamano (sezione *Risultati extra*).
 
-### Calendari da sincronizzare (.ics) — in anteprima
+### Calendari da sincronizzare (.ics)
 
 `genera_ics.py` crea, da `calendario.json` e `risultati.json`, i calendari a cui ci si
 può abbonare dal telefono (si aggiornano da soli quando cambia il file sul sito):
@@ -178,12 +179,12 @@ python3 genera_ics.py      # nessuna libreria esterna
 `risultati.json` a mano (anche da GitHub), rilancia `genera_ics.py` e pubblica anche i
 `.ics`**, altrimenti i calendari di chi li sincronizza restano indietro.
 
-Le pagine con il pulsante **📅 Sincronizza** (e il **?** azzurro con una piccola guida,
-testo in `js/sincronizza-aiuto.js`) sono per ora un'anteprima, raggiungibile solo
-con link diretto (e con `noindex`): `anteprima.html`, `anteprima-mobile.html` e
-`sincronizza.html`. Quando vanno bene, si sostituiscono a `index.html` / `mobile.html`.
+`index.html` e `mobile.html` hanno il pulsante **📅 Sincronizza** (e il **?** azzurro con
+una piccola guida, testo in `js/sincronizza-aiuto.js`), che porta a `sincronizza.html`.
+Le versioni precedenti, senza il pulsante, restano come `index-old.html` e
+`mobile-old.html` (raggiungibili solo con link diretto, con `noindex`).
 
-### Calendario Google condiviso — in anteprima
+### Calendario Google condiviso
 
 Per ogni calendario di `calendari.json` (tutte + una per categoria) c'è un calendario
 Google pubblico, aggiunto su Google *Da URL* con l'indirizzo del sito
@@ -191,8 +192,8 @@ Google pubblico, aggiunto su Google *Da URL* con l'indirizzo del sito
 quello `github.com/…/blob/…`, che è una pagina HTML e dà un calendario vuoto).
 Gli ID sono in `js/calendari-google.js` (vuoto = nessun calendario Google).
 
-- `calendario-google.html` (anteprima, **per ora nascosta**: i link in `anteprima.html`
-  e `anteprima-mobile.html` sono commentati): mostra il calendario scelto e il pulsante **Aggiungi a
+- `calendario-google.html` (**per ora nascosta**: i link in `index.html`
+  e `mobile.html` sono commentati): mostra il calendario scelto e il pulsante **Aggiungi a
   Google Calendar**; `calendario-google.html?cal=serieb` apre direttamente la Serie B.
 - `sincronizza.html`, scegliendo Google: **Aggiungi** accanto a ogni calendario
   (`calendar.google.com/calendar/render?cid=<ID>`): con un ID di calendario Google
@@ -363,6 +364,10 @@ resta aperta. Entrambe le pagine si ricaricano da sole ogni 10 minuti.
 HC_Fondi_26_27/
 ├── index.html            versione completa: HTML + JavaScript, nessuno stile interno
 ├── mobile.html           versione cellulare (agenda + pannello dettagli)
+├── sincronizza.html      "Sincronizza il calendario" (calendari .ics e Google)
+├── calendario-google.html calendario Google incorporato (per ora nascosta)
+├── index-old.html        versione precedente, senza "Sincronizza" (noindex)
+├── mobile-old.html       versione cellulare precedente (noindex)
 ├── calendario.json       dati del calendario (generato dall'Excel)
 ├── risultati.json        punteggi (facoltativo)
 ├── converti_excel.py     Excel → calendario.json (+ lancia genera_ics.py)
@@ -374,9 +379,12 @@ HC_Fondi_26_27/
 ├── css/
 │   ├── base.css          struttura + variabili (colori, font, dimensioni)
 │   ├── tema-*.css        ogni tema importa base.css e ridefinisce le variabili
-│   └── mobile.css        layout agenda di mobile.html (usa le variabili del tema)
+│   ├── mobile.css        layout agenda di mobile.html (usa le variabili del tema)
+│   └── sincronizza.css   pagine sincronizza.html e calendario-google.html
 ├── js/
-│   └── vista.js          sceglie index.html o mobile.html in base allo schermo
+│   ├── vista.js          sceglie index.html o mobile.html in base allo schermo
+│   ├── sincronizza-aiuto.js  guida del pulsante "?" accanto a "Sincronizza"
+│   └── calendari-google.js   ID dei calendari Google pubblici
 ├── README.md
 └── .gitignore
 ```

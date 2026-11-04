@@ -10,9 +10,9 @@
    - ?v=auto annulla la scelta manuale.
    Caricato nel <head> di entrambe le pagine, prima del CSS, per evitare
    di mostrare per un attimo la versione sbagliata.
-   Una coppia di pagine diversa (es. l'anteprima) si indica sul tag:
-     <script src="js/vista.js" data-full="anteprima.html"
-             data-mobile="anteprima-mobile.html"></script>
+   Una coppia di pagine diversa (es. la versione precedente) si indica sul tag:
+     <script src="js/vista.js" data-full="index-old.html"
+             data-mobile="mobile-old.html"></script>
    Senza attributi la coppia è index.html / mobile.html.
    ========================================================================== */
 (function(){

@@ -8,6 +8,7 @@
 <title>HC Fondi Campionati 26-27</title>
 <!-- sceglie in automatico la versione completa o cellulare (vedi js/vista.js) -->
 <script src="js/vista.js"></script>
+<script src="js/sincronizza-aiuto.js" defer></script>
 <!-- ===== STILE =====
      1) il tema (lo stesso di index.html): css/tema-classico.css, tema-scuro,
         tema-arancio, tema-minimal, tema-compatto, tema-rossoblu
@@ -20,7 +21,14 @@
 
 <header class="mbar">
   <p class="eyebrow" id="ev-eyebrow">HC Fondi</p>
-  <h1 id="ev-title">HC Fondi Campionati 26-27</h1>
+  <div class="ab-top">
+    <h1 id="ev-title">HC Fondi Campionati 26-27</h1>
+    <span class="sincronizza-wrap">
+      <a class="ab-btn" href="sincronizza.html">📅 Sincronizza</a>
+      <button type="button" class="help-btn" aria-label="Come funziona" aria-expanded="false" aria-controls="sincronizza-aiuto">?</button>
+      <div class="help-pop" id="sincronizza-aiuto" role="dialog" aria-label="Come funziona" hidden></div>
+    </span>
+  </div>
   <nav class="mscroll" id="months" aria-label="Mese"></nav>
   <nav class="mscroll" id="cats" aria-label="Categorie"></nav>
 </header>
@@ -29,6 +37,7 @@
 
 <footer class="mfoot">
   <span id="ev-foot"></span>
+  <!-- per ora nascosto: <a class="switch-view" href="calendario-google.html">🗓 Calendario Google</a> -->
   <a class="switch-view" href="index.html?v=full">🖥 Versione completa (tabellone)</a>
 </footer>
 
