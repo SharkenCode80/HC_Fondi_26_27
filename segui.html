@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Segui il calendario · HC Fondi Campionati 26-27</title>
+<!-- tema (lo stesso delle altre pagine) + stile di questa pagina -->
+<link rel="stylesheet" href="css/tema-rossoblu.css" id="tema">
+<link rel="stylesheet" href="css/segui.css">
+<script src="js/calendari-google.js"></script>
+</head>
+<body class="segui">
+
+<a class="back" id="back" href="anteprima.html">← Torna al calendario</a>
+<h1>Segui il calendario</h1>
+<p class="lead">Le partite compaiono nell'app Calendario del tuo telefono o computer e
+  <b>si aggiornano da sole</b> se cambia una data, un orario o un impianto. Quando è
+  disponibile, nella partita trovi anche il risultato. È gratis e lo togli quando vuoi.</p>
+
+<section class="card">
+  <p class="stepn">1 · Quali calendari?</p>
+  <p class="hint">Puoi sceglierne più di uno: ognuno diventa un calendario separato
+    nell'app, che puoi mostrare o nascondere quando vuoi.</p>
+  <div id="cals"></div>
+  <p class="warn">Scegli <b>Tutte le partite</b> <i>oppure</i> le singole categorie:
+    se li segui entrambi, le partite compaiono due volte.</p>
+</section>
+
+<section class="card">
+  <p class="stepn">2 · Con quale app?</p>
+  <div class="apps" id="apps">
+    <button type="button" class="app" data-app="apple"><b>iPhone · iPad · Mac</b><span>app Calendario di Apple</span></button>
+    <button type="button" class="app" data-app="google"><b>Google Calendar</b><span>telefoni Android e computer</span></button>
+    <button type="button" class="app" data-app="altro"><b>Altro</b><span>Outlook, Thunderbird…</span></button>
+  </div>
+  <p class="hint" id="app-hint"></p>
+  <ul class="subs" id="subs"></ul>
+  <div class="steps hidden" id="android-steps">
+    <p><b>Sul telefono Android l'app Google Calendar non permette di abbonarsi</b>: va fatto
+      una volta dal sito di Google, poi il calendario compare da solo anche nell'app.</p>
+    <ol>
+      <li>Tocca <b>Copia link</b> accanto al calendario.</li>
+      <li>Apri la pagina di Google qui sotto. Se invece si apre l'app, aprila dal browser
+        (Chrome) e attiva <b>⋮ → Sito desktop</b>.</li>
+      <li>Incolla il link nel campo <b>URL del calendario</b> e tocca <b>Aggiungi calendario</b>.
+        Ripeti per ogni calendario.</li>
+    </ol>
+    <a class="go" href="https://calendar.google.com/calendar/r/settings/addbyurl" target="_blank" rel="noopener">Apri "Aggiungi da URL" di Google</a>
+    <p class="hint">Più semplice ancora: apri questa pagina da un computer e usa il
+      pulsante accanto al calendario.</p>
+  </div>
+</section>
+
+<section class="card">
+  <p class="stepn">Come toglierlo</p>
+  <p class="hint">Il sito non può togliere il calendario dal tuo telefono: si fa
+    dall'app, in pochi tocchi. Se vuoi solo non vederlo per un po', basta
+    <b>togliere la spunta</b> al calendario nell'elenco dei calendari.</p>
+  <details>
+    <summary>iPhone e iPad</summary>
+    <ol>
+      <li>Apri l'app <b>Calendario</b> e tocca <b>Calendari</b> in basso.</li>
+      <li>Tocca <b>ⓘ</b> accanto a "HC Fondi · …".</li>
+      <li>Scorri in fondo e tocca <b>Elimina calendario</b>.</li>
+    </ol>
+  </details>
+  <details>
+    <summary>Mac</summary>
+    <ol>
+      <li>Apri l'app <b>Calendario</b>.</li>
+      <li>Nella barra laterale fai clic destro su "HC Fondi · …".</li>
+      <li>Dal menu che compare scegli la voce per toglierlo.</li>
+    </ol>
+  </details>
+  <details>
+    <summary>Google Calendar (Android e computer)</summary>
+    <ol>
+      <li>Apri <a href="https://calendar.google.com/calendar/r/settings" target="_blank" rel="noopener">le impostazioni di Google Calendar</a>
+        (dal computer o dal browser del telefono).</li>
+      <li>A sinistra, sotto <b>Impostazioni per i miei calendari / Altri calendari</b>, scegli "HC Fondi · …".</li>
+      <li>In fondo alla pagina, nella sezione <b>Rimuovi calendario</b>, tocca il pulsante per toglierlo.</li>
+    </ol>
+    <p>Nell'app Android si può solo nascondere il calendario: per eliminarlo serve il sito.</p>
+  </details>
+</section>
+
+<section class="card">
+  <p class="stepn">Domande</p>
+  <details>
+    <summary>Ogni quanto si aggiorna?</summary>
+    <p>iPhone e Mac controllano di solito ogni poche ore (sull'iPhone si può cambiare in
+      <b>Impostazioni → Calendario → Account</b>).
+      Google Calendar decide da solo e può impiegare <b>fino a 24 ore</b>: per un cambio
+      dell'ultimo minuto controlla sempre anche il sito.</p>
+  </details>
+  <details>
+    <summary>Con Android il calendario non compare nell'app</summary>
+    <p>Controlla prima di averlo aggiunto dal sito di Google (vedi il punto 2: dall'app non
+      si può). Poi apri l'app Google Calendar → <b>Impostazioni</b> → tocca il calendario
+      "HC Fondi · …" → attiva <b>Sincronizza</b>. La prima volta le partite possono
+      comparire anche dopo qualche ora.</p>
+  </details>
+  <details>
+    <summary>Su Google il calendario si chiama come l'indirizzo</summary>
+    <p>Google a volte usa l'indirizzo del file come nome. Per cambiarlo: da computer apri
+      <a href="https://calendar.google.com/calendar/r/settings" target="_blank" rel="noopener">le impostazioni di Google Calendar</a>,
+      scegli il calendario a sinistra e scrivi il nome che preferisci nel campo <b>Nome</b>.</p>
+  </details>
+  <details>
+    <summary>Ho già aggiunto alcune partite una per una</summary>
+    <p>Gli eventi aggiunti singolarmente restano dove sono: dopo aver seguito il calendario puoi
+      cancellarli, così non li vedi due volte.</p>
+  </details>
+</section>
+
+<script>
+// ==========================================================================
+//  "Segui il calendario": calendari .ics generati da genera_ics.py.
+//  L'elenco dei calendari arriva da calendari.json (stessa cartella).
+//  - iPhone/Mac: link webcal://…  (iOS chiede conferma)
+//  - Google:     calendar.google.com/calendar/render?cid=https%3A%2F%2F…  (indirizzo https codificato:
+//                con webcal:// in chiaro l'app Android mostrava il nome con caratteri strani)
+//                L'app Google Calendar per Android NON sa abbonarsi da indirizzo (legge cid
+//                come ID di un calendario Google e dice "importato" senza aggiungere nulla):
+//                su Android si mostrano "Copia link" + la pagina "Aggiungi da URL" di Google.
+//  - Altro:      link https://… da copiare
+//  - Google, se il calendario ha un calendario Google pubblico (js/calendari-google.js):
+//                render?cid=<ID Google>. Così funziona anche dall'app Android,
+//                che legge cid proprio come ID di un calendario Google.
+// ==========================================================================
+
+const GID = window.GOOGLE_CAL_IDS || {};
+const googleIdUrl = id => "https://calendar.google.com/calendar/render?cid=" + encodeURIComponent(id);
+
+let CALS = [];
+const chosen = new Set();
+let app = "";
+
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const httpsUrl = f => new URL(f, location.href).href;
+const webcalUrl = f => httpsUrl(f).replace(/^https?:/, "webcal:");
+const googleUrl = f => "https://calendar.google.com/calendar/render?cid=" + encodeURIComponent(httpsUrl(f));
+
+// Android (o ?android=1 per provare la versione Android da computer)
+const ANDROID = /Android/i.test(navigator.userAgent) || new URLSearchParams(location.search).has("android");
+
+function defaultApp(){
+  const ua = navigator.userAgent;
+  const apple = /iPhone|iPad|iPod|Macintosh/.test(ua) && !/Android/.test(ua);
+  return apple ? "apple" : "google";
+}
+
+function renderCals(){
+  const box = document.getElementById("cals");
+  const all = CALS.filter(c=> c.all), cats = CALS.filter(c=> !c.all);
+  const opt = c => `<label class="opt${c.all?" all":""}${chosen.has(c.key)?" on":""}">
+      <input type="checkbox" value="${c.key}"${chosen.has(c.key)?" checked":""}>
+      <span class="ck"></span><span class="dot ${c.key}"></span>
+      <span class="nm">${esc(c.label)}${c.note?`<small>${esc(c.note)}</small>`:""}</span>
+      <span class="ct">${c.count} ${c.count===1?"evento":"eventi"}</span>
+    </label>`;
+  box.innerHTML = all.map(opt).join("") + `<p class="sepl">oppure solo alcune categorie</p>` + cats.map(opt).join("");
+}
+
+function renderSubs(){
+  const hint = document.getElementById("app-hint");
+  const list = CALS.filter(c=> chosen.has(c.key));
+  const gid = c => app==="google" && GID[c.key];          // calendario Google pubblico
+  const mode = app==="google" && ANDROID ? "android" : app; // Google da Android: niente link .ics diretto
+  const tutti = list.length > 0 && list.every(gid);
+  const copia = mode==="android" && list.some(c=> !gid(c));
+  hint.innerHTML = app==="google" && (tutti || !list.length) && Object.values(GID).some(Boolean)
+    ? "Tocca <b>Aggiungi</b> accanto a ogni calendario: si apre Google Calendar (sul telefono, l'app) e confermi con <b>Aggiungi</b>. Serve essere collegati al proprio account Google."
+    : {
+    android: "Segui i passi qui sotto: l'app Google Calendar non permette di abbonarsi a un indirizzo.",
+    apple: "Tocca <b>Segui</b> accanto a ogni calendario e conferma nella finestra che compare.",
+    google: "Si apre Google Calendar: conferma con <b>Aggiungi</b>. Ripeti per ogni calendario. Serve essere collegati al proprio account Google.",
+    altro: "Copia il link e incollalo nel tuo programma, nella funzione <b>Aggiungi calendario da URL</b>.",
+  }[mode];
+  document.getElementById("android-steps").classList.toggle("hidden", !copia);
+  document.querySelectorAll("#apps .app").forEach(b=> b.setAttribute("aria-pressed", String(b.dataset.app===app)));
+
+  const box = document.getElementById("subs");
+  if(!list.length){ box.innerHTML = `<li class="empty-sel">Scegli almeno un calendario al punto 1.</li>`; return; }
+  box.innerHTML = list.map(c=>{
+    const btn = gid(c)
+      ? `<a class="go" href="${esc(googleIdUrl(gid(c)))}" target="_blank" rel="noopener">Aggiungi</a>`
+      : mode==="altro" || mode==="android"
+      ? `<button type="button" class="go" data-copy="${esc(httpsUrl(c.file))}">Copia link</button>`
+      : `<a class="go" href="${esc(app==="apple" ? webcalUrl(c.file) : googleUrl(c.file))}"${app==="google"?' target="_blank" rel="noopener"':""}>Segui</a>`;
+    return `<li><span class="dot ${c.key}"></span>
+      <span class="nm">${esc(c.label)}<small>${esc(gid(c) || mode==="apple" || mode==="google" ? c.count+" eventi" : httpsUrl(c.file))}</small></span>${btn}</li>`;
+  }).join("");
+}
+
+async function copy(text, btn){
+  try{ await navigator.clipboard.writeText(text); }
+  catch(_){                                    // vecchi browser: selezione manuale
+    const t = document.createElement("textarea"); t.value = text; document.body.appendChild(t);
+    t.select(); try{ document.execCommand("copy"); }catch(e){} t.remove();
+  }
+  btn.textContent = "Copiato"; btn.classList.add("done");
+}
+
+document.getElementById("cals").addEventListener("change", e=>{
+  const key = e.target.value, c = CALS.find(x=> x.key===key);
+  if(e.target.checked){
+    if(c.all) chosen.clear();                    // "Tutte" esclude le singole categorie
+    else CALS.filter(x=> x.all).forEach(x=> chosen.delete(x.key));
+    chosen.add(key);
+  } else chosen.delete(key);
+  renderCals(); renderSubs();
+});
+document.getElementById("apps").addEventListener("click", e=>{
+  const b = e.target.closest(".app"); if(!b) return;
+  app = b.dataset.app; renderSubs();
+});
+document.getElementById("subs").addEventListener("click", e=>{
+  const cp = e.target.closest("[data-copy]");
+  if(cp){ copy(cp.dataset.copy, cp); return; }
+  const go = e.target.closest("a.go"); if(go) go.classList.add("done");
+});
+
+// "Torna al calendario": alla pagina da cui si è arrivati, se è di questo sito
+try{
+  const ref = document.referrer && new URL(document.referrer);
+  if(ref && ref.origin===location.origin && !/segui\.html$/.test(ref.pathname))
+    document.getElementById("back").href = ref.href;
+}catch(_){}
+
+(async function init(){
+  app = defaultApp();
+  // la scelta consigliata in base al dispositivo
+  document.querySelector(`#apps .app[data-app="${app}"] span`).insertAdjacentHTML("afterend", `<span class="tag">consigliato</span>`);
+  try{
+    const res = await fetch("calendari.json", {cache:"no-store"});
+    if(!res.ok) throw new Error("HTTP "+res.status);
+    CALS = (await res.json()).calendars || [];
+  }catch(err){
+    document.getElementById("cals").innerHTML = `<p class="hint">Impossibile caricare l'elenco dei calendari (${esc(err.message)}).</p>`;
+  }
+  renderCals(); renderSubs();
+})();
+
+/* credito (offuscato, reinserito se rimosso) */
+(function(){
+  const n = new TextDecoder().decode(Uint8Array.from(atob("Y3JlYXRlZCBieSBWaW5jZW56byBGb3J0ZQ=="), c=>c.charCodeAt(0)));
+  function ensure(){
+    let el = document.getElementById("credit");
+    if(!el){ el = document.createElement("div"); el.id = "credit"; document.body.appendChild(el); }
+    if(el.textContent !== n) el.textContent = n;
+  }
+  ensure();
+  try{ new MutationObserver(ensure).observe(document.body, {childList:true, subtree:true}); }catch(_){}
+})();
+</script>
+</body>
+</html>
