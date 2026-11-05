@@ -16,3 +16,5 @@ token.json
 credentials.json
 .calendario-sync/
 calendario-sync/
+# copie dei dati FIGH scaricate da verifica_figh.py (opzione 1): temporanee, non vanno pubblicate
+*-FIGH.json

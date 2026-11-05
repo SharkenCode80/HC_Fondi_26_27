@@ -115,6 +115,7 @@ Lo stato passa da `building` a `built` in un paio di minuti.
 ```mermaid
 flowchart LR
     X["Excel<br/>Calendario_HC_Fondi_….xlsx"] -->|python3 converti_excel.py| J["calendario.json"]
+    F["sito FIGH"] -.->|python3 verifica_figh.py| R
     R["risultati.json<br/>(punteggi)"] --> G
     J --> G["Upload su GitHub<br/>(web o git push)"]
     C["css/tema-….css"] --> G
@@ -159,6 +160,43 @@ Aggiungi i punteggi in `risultati.json`, con lo stesso formato del Festival dell
 (maiuscole e spazi non contano; se casa e ospite sono invertiti, il punteggio viene
 girato in automatico). In alternativa si può usare `generatore.html` del progetto
 Festival della Pallamano (sezione *Risultati extra*).
+
+I risultati già pubblicati sul sito FIGH si possono caricare in automatico con
+`python3 verifica_figh.py` → **4 · Carica risultati** (vedi sotto).
+
+### Controllo con il sito FIGH (`verifica_figh.py`)
+
+Confronta `calendario.json` e `risultati.json` con le partite pubblicate dalla FIGH
+(campionati territoriali, [Area 7](https://www.federhandball.it/campionati-territoriali/area-7/))
+e, solo se lo confermi, carica i risultati in `risultati.json`. Nessuna libreria esterna.
+
+```bash
+python3 verifica_figh.py              # menu
+python3 verifica_figh.py online       # oppure direttamente: scarica | online | offline | carica
+```
+
+| Opzione | Cosa fa | Modifica file? |
+|---|---|---|
+| **1 · Scarica dati da FIGH** | salva `calendario-FIGH.json` (partite di HC Fondi) e `risultati-FIGH.json` (partite giocate) | solo questi due (esclusi da git) |
+| **2 · Confronta online** | confronta con il sito e mostra le differenze | no |
+| **3 · Confronta offline** | come la 2, ma con i file scaricati dall'opzione 1 | no |
+| **4 · Carica risultati** | dal sito o da `risultati-FIGH.json`: elenca risultati nuovi (`+`), diversi (`~`) e non caricabili (`!`), poi chiede conferma | `risultati.json`, solo rispondendo **s** |
+
+Cosa controlla, per ogni partita di HC Fondi: che ci sia da entrambe le parti, categoria
+(U16 F / U18 F / gara interna), ora, casa/trasferta, avversario, impianto e risultato
+(indicando se sul sito è già ufficiale). U14, Selezione Talenti e finali non sono sul
+sito FIGH Area 7 e non vengono controllati. Per `online`/`offline` il codice di uscita è
+0 se tutto coincide, 1 se ci sono differenze, 2 se i dati FIGH non si possono leggere.
+
+Dopo aver caricato i risultati: **rilancia `python3 genera_ics.py`** e pubblica
+`risultati.json` e i `.ics`.
+
+Dove sono i dati sul sito: ogni pagina di girone (Serie B, Under 16 M, Under 18-16 F)
+contiene tutte le partite in un blocco JSON `const calendario = {...}`; il punteggio è
+in `team1-setwin`/`team2-setwin`. HC Fondi si riconosce dal codice società FIGH **`0031`**
+(i nomi cambiano: "BANCAPOPOLARE DI FONDI", "HC BANCAPOPOLARE DI FONDI U16F"…). Se la FIGH
+cambia gli indirizzi dei gironi (es. nuova stagione), vanno aggiornati in `GIRONI`.
+Test: `python3 -m unittest test_verifica_figh` (pagine FIGH finte, nessun accesso alla rete).
 
 ### Calendari da sincronizzare (.ics)
 
@@ -375,6 +413,8 @@ HC_Fondi_26_27/
 ├── eventi_comuni.py      UID e contenuto degli eventi, in comune tra .ics e Google
 ├── sincronizza_google.py calendario.json → calendario Google condiviso (a mano)
 ├── test_sincronizza.py   test della sincronizzazione (API Google simulata)
+├── verifica_figh.py      controllo con il sito FIGH + caricamento risultati
+├── test_verifica_figh.py test del controllo FIGH (pagine finte)
 ├── requirements.txt      librerie Google (solo per sincronizza_google.py)
 ├── css/
 │   ├── base.css          struttura + variabili (colori, font, dimensioni)
