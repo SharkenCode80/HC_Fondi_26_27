@@ -160,7 +160,7 @@
     "durate": {
       "serieb": {
         "tempo": 30,
-        "pausa": 10
+        "pausa": 20
       },
       "u18f": {
         "tempo": 30,
@@ -168,19 +168,19 @@
       },
       "u16f": {
         "tempo": 30,
-        "pausa": 10
+        "pausa": 20
       },
       "u16m": {
         "tempo": 30,
-        "pausa": 10
+        "pausa": 20
       },
       "u14": {
         "tempo": 30,
-        "pausa": 10
+        "pausa": 20
       },
       "interna": {
         "tempo": 30,
-        "pausa": 10
+        "pausa": 20
       },
       "sel": {
         "tempo": 0,
