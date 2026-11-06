@@ -167,15 +167,15 @@
         "pausa": 10
       },
       "u16f": {
-        "tempo": 25,
+        "tempo": 30,
         "pausa": 10
       },
       "u16m": {
-        "tempo": 25,
+        "tempo": 30,
         "pausa": 10
       },
       "u14": {
-        "tempo": 20,
+        "tempo": 30,
         "pausa": 10
       },
       "interna": {
