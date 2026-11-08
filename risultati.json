@@ -7,7 +7,9 @@
     { "date": "05/11", "cat": "u16m", "home": "HC Fondi", "away": "BCC Roma Pontinia",
       "hs": 40, "as": 23, "status": "FINE" },
     { "date": "07/11", "cat": "serieb", "home": "HC Fondi", "away": "BENEVENTO 23",
-      "hs": 23, "as": 21, "status": "FINE" }
+      "hs": 23, "as": 21, "status": "FINE" },
+    { "date": "08/11", "cat": "u16f", "home": "HC Fondi", "away": "ASD Handball Flavioni U16F",
+      "hs": 29, "as": 13, "status": "FINE" }
     
   ]
 }
