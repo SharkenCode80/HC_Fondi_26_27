@@ -389,6 +389,11 @@ In `mobile.html`, subito dopo, resta sempre `<link rel="stylesheet" href="css/mo
 - **Giornata in evidenza:** quella di oggi (**OGGI**) o la prossima in calendario
   (**PROSSIMA**) ha il bordo giallo. Le partite in corso in questo momento hanno il badge
   **in corso**.
+- **Clic su una partita** (o Tab + Invio da tastiera): si apre una finestra con data
+  completa, squadre, punteggio, orario con fine indicativa e impianto, più due pulsanti:
+  **Mappa** (Google Maps) e **Aggiungi al calendario** (file `.ics` della sola partita).
+  Si chiude con la ×, cliccando fuori o con Esc. È lo stesso pannello della versione
+  cellulare (`js/dettagli.js`).
 
 ### Filtri
 
@@ -461,13 +466,14 @@ HC_Fondi_26_27/
 ├── test_verifica_figh.py test del controllo FIGH (pagine finte)
 ├── requirements.txt      librerie Google (solo per sincronizza_google.py)
 ├── css/
-│   ├── base.css          struttura + variabili (colori, font, dimensioni)
+│   ├── base.css          struttura + variabili (colori, font, dimensioni) + pannello dettagli
 │   ├── tema-*.css        ogni tema importa base.css e ridefinisce le variabili
 │   ├── mobile.css        layout agenda di mobile.html (usa le variabili del tema)
 │   └── sincronizza.css   pagine sincronizza.html e calendario-google.html
 ├── js/
 │   ├── vista.js          sceglie index.html o mobile.html in base allo schermo
 │   ├── sincronizza-aiuto.js  guida del pulsante "?" accanto a "Sincronizza"
+│   ├── dettagli.js       pannello dettagli di una partita (index.html e mobile.html)
 │   └── calendari-google.js   ID dei calendari Google pubblici
 ├── README.md
 └── .gitignore

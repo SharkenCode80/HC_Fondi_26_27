@@ -8,6 +8,7 @@
 <!-- sceglie in automatico la versione completa o cellulare (vedi js/vista.js) -->
 <script src="js/vista.js"></script>
 <script src="js/sincronizza-aiuto.js" defer></script>
+<script src="js/dettagli.js" defer></script>
 <!-- ===== STILE =====
      Tutto l'aspetto della pagina è nei file della cartella css/.
      Per cambiare tema sostituisci il nome del file qui sotto con uno di:
@@ -108,7 +109,7 @@ function teamHTML(name, win){
 }
 function matchHTML(m, i){
   if(m.event){
-    return `<div class="m event ${m.cat}" data-cat="${m.cat}" data-i="${i}">
+    return `<div class="m event ${m.cat}" data-cat="${m.cat}" data-i="${i}" tabindex="0" role="button" aria-haspopup="dialog">
       <span class="cat">${CAT[m.cat]||m.cat}</span>
       <div class="teams">${m.home}</div>
     </div>`;
@@ -124,7 +125,7 @@ function matchHTML(m, i){
     const hasScore = Number.isFinite(r.hs) && Number.isFinite(r.as);
     scoreLine = `<div class="score">${hasScore ? `${r.hs} – ${r.as}` : ""}${st?`<span class="badge ${cls}">${st}</span>`:""}</div>`;
   }
-  return `<div class="m ${m.cat}${home?" home":""}" data-cat="${m.cat}" data-i="${i}">
+  return `<div class="m ${m.cat}${home?" home":""}" data-cat="${m.cat}" data-i="${i}" tabindex="0" role="button" aria-haspopup="dialog">
     <span class="cat">${CAT[m.cat]||m.cat}</span><span class="where${home?" casa":""}">${m.gir}</span>
     <div class="teams">${teamHTML(m.home,homeWin)} <span class="vs">–</span> ${teamHTML(m.away,awayWin)}</div>
     ${scoreLine}
@@ -380,6 +381,24 @@ async function init(){
       </div>`;
   }
 }
+// clic (o Invio/spazio) su una partita: pannello dettagli con mappa e "Aggiungi al calendario"
+function openDetails(i){
+  const m = D[i], r = m.event ? null : resultFor(m);
+  Dettagli.apri({ m, indice:i,
+    data: new Date(DAY_YEAR[m.date], +m.date.slice(3,5)-1, +m.date.slice(0,2)),
+    categoria: CAT[m.cat]||m.cat, impianto: V[m.venue]||m.venue||"",
+    durata: CAT_TOTAL[m.cat] ?? FALLBACK_DUR[m.cat] ?? 60, isOurs,
+    risultato: r, stato: r ? statoRisultato(r.status) : null });
+}
+const grid = document.getElementById("grid");
+grid.addEventListener("click", e=>{
+  const c = e.target.closest(".m[data-i]"); if(c) openDetails(+c.dataset.i);
+});
+grid.addEventListener("keydown", e=>{
+  if(e.key!=="Enter" && e.key!==" ") return;
+  const c = e.target.closest(".m[data-i]"); if(!c) return;
+  e.preventDefault(); openDetails(+c.dataset.i);
+});
 init();
 
 /* credito (offuscato, reinserito se rimosso) */
