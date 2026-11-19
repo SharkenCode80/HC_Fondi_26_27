@@ -158,7 +158,23 @@ Aggiungi i punteggi in `risultati.json`, con lo stesso formato del Festival dell
 
 `date`, `cat`, `home` e `away` devono corrispondere alla partita in `calendario.json`
 (maiuscole e spazi non contano; se casa e ospite sono invertiti, il punteggio viene
-girato in automatico). In alternativa si può usare `generatore.html` del progetto
+girato in automatico).
+
+`status` indica a che punto è la partita:
+
+| `status` | Sul sito | Vinta / Persa / Pareggio |
+|---|---|---|
+| `FINE` (o assente) | risultato finale | sì |
+| `PARZIALE` | Parziale | no |
+| `1T` (anche `I Tempo`) | I Tempo | no |
+| `INTERVALLO` | Intervallo | no |
+| `2T` (anche `II Tempo`) | II Tempo | no |
+
+L'esito (e il vincitore in grassetto nel tabellone) si calcola solo sul risultato finale;
+con gli altri stati si vede il punteggio con l'indicazione dello stato. Maiuscole e spazi
+non contano. Nei calendari `.ics` la descrizione riporta, ad esempio, "(parziale, I Tempo)".
+
+In alternativa si può usare `generatore.html` del progetto
 Festival della Pallamano (sezione *Risultati extra*).
 
 I risultati già pubblicati sul sito FIGH si possono caricare in automatico con

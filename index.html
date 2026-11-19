@@ -88,6 +88,16 @@ function resultFor(m){
   return null;
 }
 
+// stato del risultato: "FINE" (o vuoto) = finale; PARZIALE, 1T, INTERVALLO, 2T = partita in corso
+// (vinta/persa/pareggio e vincente in grassetto solo sul risultato finale)
+const STATI = { "FINE":"Finale", "PARZIALE":"Parziale", "1T":"I Tempo", "INTERVALLO":"Intervallo", "2T":"II Tempo" };
+const STATI_ALIAS = { "I TEMPO":"1T", "PRIMO TEMPO":"1T", "1° TEMPO":"1T", "II TEMPO":"2T", "SECONDO TEMPO":"2T", "2° TEMPO":"2T" };
+function statoRisultato(st){
+  let s = String(st||"").trim().toUpperCase().replace(/\s+/g," ");
+  s = STATI_ALIAS[s] || s;
+  return { finale: !s || s==="FINE", codice: s, label: STATI[s] || String(st||"").trim() };
+}
+
 function teamHTML(name, win){
   const cls = (isOurs(name) ? "fp" : "") + (win ? " win" : "");
   return cls.trim() ? `<span class="${cls.trim()}">${name}</span>` : name;
@@ -101,11 +111,12 @@ function matchHTML(m, i){
   }
   const home = isOurs(m.home);
   const r = resultFor(m);
-  const homeWin = r && r.hs>r.as, awayWin = r && r.as>r.hs;
+  const sr = r ? statoRisultato(r.status) : null;
+  const homeWin = r && sr.finale && r.hs>r.as, awayWin = r && sr.finale && r.as>r.hs;
   let scoreLine = "";
   if(r){
-    const st = (r.status||"").toUpperCase();
-    const cls = st==="FINE" ? "fine" : (st ? "live" : "");
+    const st = sr.codice==="FINE" ? "FINE" : sr.label;
+    const cls = sr.finale ? "fine" : "live";
     const hasScore = Number.isFinite(r.hs) && Number.isFinite(r.as);
     scoreLine = `<div class="score">${hasScore ? `${r.hs} – ${r.as}` : ""}${st?`<span class="badge ${cls}">${st}</span>`:""}</div>`;
   }

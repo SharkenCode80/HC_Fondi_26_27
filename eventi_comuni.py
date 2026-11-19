@@ -63,6 +63,20 @@ def uid(base, calkey):
     return f"{base}-{calkey}@{UID_DOMINIO}"
 
 
+# stati del risultato: "FINE" (o vuoto) = finale; gli altri indicano una partita in corso
+STATI = {"FINE": "FINE", "PARZIALE": "parziale", "1T": "parziale, I Tempo",
+         "INTERVALLO": "parziale, Intervallo", "2T": "parziale, II Tempo"}
+STATI_ALIAS = {"I TEMPO": "1T", "PRIMO TEMPO": "1T", "1° TEMPO": "1T",
+               "II TEMPO": "2T", "SECONDO TEMPO": "2T", "2° TEMPO": "2T"}
+
+
+def etichetta_stato(stato):
+    """Testo dello stato per la descrizione dell'evento (es. "1T" -> "parziale, I Tempo")."""
+    s = " ".join(str(stato or "").upper().split())
+    s = STATI_ALIAS.get(s, s)
+    return STATI.get(s, str(stato or "").strip())
+
+
 def cerca_risultato(ris):
     """Funzione partita -> (gol casa, gol ospite, stato) oppure None."""
     results = {}
@@ -112,7 +126,7 @@ def campi_evento(cal, m, d, result_for):
     r = None if m.get("event") else result_for(m)
     if r:
         desc.append(f"Risultato: {m['home']} {r[0]} – {r[1]} {m['away']}"
-                    + (f" ({r[2]})" if r[2] else ""))
+                    + (f" ({etichetta_stato(r[2])})" if r[2] else ""))
     desc.append(f"Calendario completo: {SITE_URL}")
 
     return {"label": label, "summary": summary, "location": venue,

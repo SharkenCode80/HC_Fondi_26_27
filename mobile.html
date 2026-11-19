@@ -77,15 +77,32 @@ function resultFor(m){
   if(rr) return {hs:+rr.as, as:+rr.hs, status:rr.status};
   return null;
 }
-// esito dal punto di vista di HC Fondi: "w" / "l" / "d" (gare interne: nessun esito)
+// stato del risultato: "FINE" (o vuoto) = finale; PARZIALE, 1T, INTERVALLO, 2T = partita in corso
+// (vinta/persa/pareggio e vincente in grassetto solo sul risultato finale)
+const STATI = { "FINE":"Finale", "PARZIALE":"Parziale", "1T":"I Tempo", "INTERVALLO":"Intervallo", "2T":"II Tempo" };
+const STATI_ALIAS = { "I TEMPO":"1T", "PRIMO TEMPO":"1T", "1° TEMPO":"1T", "II TEMPO":"2T", "SECONDO TEMPO":"2T", "2° TEMPO":"2T" };
+function statoRisultato(st){
+  let s = String(st||"").trim().toUpperCase().replace(/\s+/g," ");
+  s = STATI_ALIAS[s] || s;
+  return { finale: !s || s==="FINE", codice: s, label: STATI[s] || String(st||"").trim() };
+}
+// esito dal punto di vista di HC Fondi: "w" / "l" / "d" (gare interne e risultati parziali: nessun esito)
 function outcome(m, r){
   if(!r || !Number.isFinite(r.hs) || !Number.isFinite(r.as)) return null;
+  if(!statoRisultato(r.status).finale) return null;
   const homeOurs = isOurs(m.home), awayOurs = isOurs(m.away);
   if(homeOurs && awayOurs) return null;
   const our = homeOurs ? r.hs : r.as, their = homeOurs ? r.as : r.hs;
   return our>their ? "w" : our<their ? "l" : "d";
 }
 const OUT_LABEL = { w:"Vinta", l:"Persa", d:"Pareggio" };
+// etichetta sotto il punteggio: esito se finale, altrimenti lo stato (Parziale, I Tempo, ...)
+function resLabel(o, r){
+  if(o) return `<small>${OUT_LABEL[o]}</small>`;
+  const sr = statoRisultato(r.status);
+  return sr.finale ? "" : `<small>${esc(sr.label)}</small>`;
+}
+const resClass = (o, r) => o || (statoRisultato(r.status).finale ? "" : "live");
 
 // avversario mostrato nella card (per le gare interne: entrambe le squadre)
 function opponentHTML(m){
@@ -99,7 +116,7 @@ function cardHTML(m, i){
   const r = m.event ? null : resultFor(m);
   const o = outcome(m, r);
   const right = r && Number.isFinite(r.hs)
-    ? `<span class="res ${o||""}">${r.hs}–${r.as}${o?`<small>${OUT_LABEL[o]}</small>`:""}</span>`
+    ? `<span class="res ${resClass(o,r)}">${r.hs}–${r.as}${resLabel(o,r)}</span>`
     : `<span class="go" aria-hidden="true">›</span>`;
   return `<button type="button" class="m ${m.cat}${home?" home":""}${m.event?" event":""}" data-i="${i}">
     <span class="t">${m.time || "—"}${m.event ? "<small>evento</small>" : ""}</span>
@@ -144,7 +161,7 @@ function openSheet(i){
   const team = n => `<span class="${isOurs(n)?"fp":""}">${esc(n)}</span>`;
   const teams = m.event ? esc(m.home) : `${team(m.home)} <span class="vs">–</span> ${team(m.away)}`;
   const score = r && Number.isFinite(r.hs)
-    ? `<p class="score res ${o||""}">${r.hs} – ${r.as}${o?`<small>${OUT_LABEL[o]}</small>`:""}</p>` : "";
+    ? `<p class="score res ${resClass(o,r)}">${r.hs} – ${r.as}${resLabel(o,r)}</p>` : "";
   const end = m.time ? (()=>{ const [h,mm]=m.time.split(".").map(Number); const t=h*60+mm+(DUR[m.cat]||60);
     return `${Math.floor(t/60)}:${String(t%60).padStart(2,"0")}`; })() : "";
 
@@ -161,7 +178,7 @@ function openSheet(i){
     <dl>
       ${m.time ? `<dt>Orario</dt><dd>${m.time.replace(".",":")}${end ? ` – fine indicativa ${end}` : ""}</dd>` : ""}
       ${venue ? `<dt>Impianto</dt><dd>${esc(venue)}</dd>` : ""}
-      ${r && r.status ? `<dt>Stato</dt><dd>${esc(r.status)}</dd>` : ""}
+      ${r && r.status ? `<dt>Stato</dt><dd>${esc(statoRisultato(r.status).label)}</dd>` : ""}
     </dl>
     <div class="acts">
       ${venue ? `<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(venue)}" target="_blank" rel="noopener">Mappa</a>` : ""}
