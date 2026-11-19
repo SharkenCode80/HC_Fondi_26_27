@@ -169,9 +169,12 @@ girato in automatico).
 | `1T` (anche `I Tempo`) | I Tempo | no |
 | `INTERVALLO` | Intervallo | no |
 | `2T` (anche `II Tempo`) | II Tempo | no |
+| `DA_INIZIARE` (anche `Da iniziare`) | nessun risultato | no |
 
 L'esito (e il vincitore in grassetto nel tabellone) si calcola solo sul risultato finale;
-con gli altri stati si vede il punteggio con l'indicazione dello stato. Maiuscole e spazi
+con gli stati parziali si vede il punteggio con l'indicazione dello stato; con
+`DA_INIZIARE` la partita appare come se non avesse risultato (utile per preparare la riga
+in anticipo). Maiuscole e spazi
 non contano. Nei calendari `.ics` la descrizione riporta, ad esempio, "(parziale, I Tempo)".
 
 In alternativa si può usare `generatore.html` del progetto

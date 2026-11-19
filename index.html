@@ -82,16 +82,17 @@ const resKey = (d,c,h,a) => normDate(d)+"|"+(c||"")+"|"+normTeam(h)+"|"+normTeam
 
 function resultFor(m){
   const r = RES[resKey(m.date,m.cat,m.home,m.away)];
-  if(r) return {hs:+r.hs, as:+r.as, status:r.status};
-  const rr = RES[resKey(m.date,m.cat,m.away,m.home)];
-  if(rr) return {hs:+rr.as, as:+rr.hs, status:rr.status};
-  return null;
+  const rr = r ? null : RES[resKey(m.date,m.cat,m.away,m.home)];
+  const x = r || rr;
+  if(!x || statoRisultato(x.status).codice==="DA_INIZIARE") return null;
+  return r ? {hs:+r.hs, as:+r.as, status:r.status} : {hs:+rr.as, as:+rr.hs, status:rr.status};
 }
 
 // stato del risultato: "FINE" (o vuoto) = finale; PARZIALE, 1T, INTERVALLO, 2T = partita in corso
+// DA_INIZIARE = nessun risultato da mostrare (come se la partita non fosse in risultati.json)
 // (vinta/persa/pareggio e vincente in grassetto solo sul risultato finale)
 const STATI = { "FINE":"Finale", "PARZIALE":"Parziale", "1T":"I Tempo", "INTERVALLO":"Intervallo", "2T":"II Tempo" };
-const STATI_ALIAS = { "I TEMPO":"1T", "PRIMO TEMPO":"1T", "1° TEMPO":"1T", "II TEMPO":"2T", "SECONDO TEMPO":"2T", "2° TEMPO":"2T" };
+const STATI_ALIAS = { "DA INIZIARE":"DA_INIZIARE", "I TEMPO":"1T", "PRIMO TEMPO":"1T", "1° TEMPO":"1T", "II TEMPO":"2T", "SECONDO TEMPO":"2T", "2° TEMPO":"2T" };
 function statoRisultato(st){
   let s = String(st||"").trim().toUpperCase().replace(/\s+/g," ");
   s = STATI_ALIAS[s] || s;

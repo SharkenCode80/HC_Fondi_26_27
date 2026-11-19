@@ -13,6 +13,10 @@
     { "date": "15/11", "cat": "u16m", "home": "GENEA HANDBALL LANZARA 2012 A", "away": "HC Fondi",
       "hs": 25, "as": 32, "status": "FINE" },
     { "date": "15/11", "cat": "u18f", "home": "PDO Handball Salerno 1985 U16F", "away": "HC Fondi",
-      "hs": 20, "as": 34, "status": "FINE" }
+      "hs": 20, "as": 34, "status": "FINE" },
+    { "date": "19/11", "cat": "u16m", "home": "HC Fondi", "away": "GENEA HANDBALL LANZARA 2012 B",
+      "hs": 33, "as": 23, "status": "FINE" },
+    { "date": "20/11", "cat": "u16f", "home": "ASD Handball Flavioni U18F", "away": "HC Fondi",
+      "hs": 0, "as": 0, "status": "DA_INIZIARE" }
   ]
 }

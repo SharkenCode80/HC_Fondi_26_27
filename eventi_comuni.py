@@ -64,16 +64,22 @@ def uid(base, calkey):
 
 
 # stati del risultato: "FINE" (o vuoto) = finale; gli altri indicano una partita in corso
+# (DA_INIZIARE = nessun risultato: la partita viene trattata come se non ci fosse)
 STATI = {"FINE": "FINE", "PARZIALE": "parziale", "1T": "parziale, I Tempo",
          "INTERVALLO": "parziale, Intervallo", "2T": "parziale, II Tempo"}
-STATI_ALIAS = {"I TEMPO": "1T", "PRIMO TEMPO": "1T", "1° TEMPO": "1T",
+STATI_ALIAS = {"DA INIZIARE": "DA_INIZIARE", "I TEMPO": "1T", "PRIMO TEMPO": "1T", "1° TEMPO": "1T",
                "II TEMPO": "2T", "SECONDO TEMPO": "2T", "2° TEMPO": "2T"}
+
+
+def codice_stato(stato):
+    """Stato normalizzato: "da iniziare" -> "DA_INIZIARE", "I Tempo" -> "1T", ..."""
+    s = " ".join(str(stato or "").upper().split())
+    return STATI_ALIAS.get(s, s)
 
 
 def etichetta_stato(stato):
     """Testo dello stato per la descrizione dell'evento (es. "1T" -> "parziale, I Tempo")."""
-    s = " ".join(str(stato or "").upper().split())
-    s = STATI_ALIAS.get(s, s)
+    s = codice_stato(stato)
     return STATI.get(s, str(stato or "").strip())
 
 
@@ -81,6 +87,8 @@ def cerca_risultato(ris):
     """Funzione partita -> (gol casa, gol ospite, stato) oppure None."""
     results = {}
     for r in (ris or {}).get("results", []):
+        if codice_stato(r.get("status")) == "DA_INIZIARE":
+            continue
         results[(r["date"][:5], r["cat"], norm(r["home"]), norm(r["away"]))] = r
 
     def result_for(m):
