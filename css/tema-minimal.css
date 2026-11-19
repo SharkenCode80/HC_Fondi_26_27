@@ -2,7 +2,7 @@
    TEMA MINIMAL — bianco e nero, angoli vivi, niente ombre, un solo font.
    Pulito e molto leggibile, adatto anche alla stampa.
    ========================================================================== */
-@import url("base.css");
+@import url("base.css?v=2.4.2");
 
 :root{
   --font-display:"Inter",system-ui,sans-serif;

@@ -460,6 +460,8 @@ HC_Fondi_26_27/
 ├── eventi_comuni.py      UID e contenuto degli eventi, id delle partite, lettura/scrittura risultati
 ├── aggiorna_id.py        id mancanti in calendario.json + risultati.json nel formato con id
 ├── test_id.py            test di id, sigle e risultati con id
+├── aggiorna_versione.py  numero di versione "?v=" dei file css/ e js/ nelle pagine
+├── test_pagine.py        test: stessa versione "?v=" in tutte le pagine e i temi
 ├── sincronizza_google.py calendario.json → calendario Google condiviso (a mano)
 ├── test_sincronizza.py   test della sincronizzazione (API Google simulata)
 ├── verifica_figh.py      controllo con il sito FIGH + caricamento risultati
@@ -586,6 +588,23 @@ sequenceDiagram
 - **Credito:** la scritta in alto a destra viene inserita da uno script in fondo a
   `index.html`. Il testo è codificato in Base64 e lo script lo ripristina se qualcuno lo
   rimuove. L'aspetto è definito dalla regola `#credit` in `css/base.css`.
+
+### Versione dei file CSS e JavaScript (`?v=`)
+
+Le pagine collegano i file di `css/` e `js/` con un numero di versione, per esempio
+`js/dettagli.js?v=2.4.2` (e i temi importano `base.css?v=2.4.2`). GitHub Pages fa tenere i file
+in cache per 10 minuti: senza il numero, subito dopo un aggiornamento un telefono può usare la
+pagina nuova con un file `.js` vecchio, e la pagina va in errore.
+
+**Quando si modifica un file in `css/` o `js/`**, prima del commit:
+
+```bash
+python3 aggiorna_versione.py 2.4.3     # stesso numero del tag che si sta per creare
+python3 -m unittest test_pagine        # controlla che il numero sia uguale ovunque
+```
+
+Non serve per `calendario.json` e `risultati.json`: le pagine li leggono sempre senza cache,
+quindi si possono aggiornare anche dal sito github.com come prima.
 
 ### Provare in locale
 

@@ -25,7 +25,8 @@ python3 converti_excel.py          # Excel -> calendario.json (+ genera_ics.py)
 python3 genera_ics.py              # dopo OGNI modifica a calendario.json o risultati.json
 python3 verifica_figh.py           # menu: scarica / confronta online / offline / carica risultati
 python3 aggiorna_id.py             # id mancanti in calendario.json, risultati.json col formato a id
-python3 -m unittest test_sincronizza test_verifica_figh test_id
+python3 aggiorna_versione.py X.Y.Z # dopo modifiche a css/ o js/: "?v=" nelle pagine e nei temi
+python3 -m unittest test_sincronizza test_verifica_figh test_id test_pagine
 python3 -m http.server 8000        # prova in locale (http://localhost:8000)
 ```
 Solo libreria standard di Python (3.9), tranne `sincronizza_google.py` (`requirements.txt`).
@@ -44,3 +45,6 @@ Solo libreria standard di Python (3.9), tranne `sincronizza_google.py` (`require
 - Pagine: niente parole come "abbonati"/"iscriviti" (sembrano a pagamento): si usa
   "Sincronizza". Verificare le modifiche grafiche anche a 360/390/430 px (versione cellulare).
 - Dopo modifiche a `calendario.json`/`risultati.json`: rigenerare i `.ics` e pubblicarli insieme.
+- Dopo modifiche a file in `css/` o `js/`: `python3 aggiorna_versione.py X.Y.Z` (stesso numero del
+  tag) prima del commit, altrimenti i browser possono usare per 10 minuti il file vecchio con la
+  pagina nuova. I JSON non c'entrano (sono letti senza cache).

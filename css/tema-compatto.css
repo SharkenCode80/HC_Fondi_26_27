@@ -3,7 +3,7 @@
    entrano più giornate nello schermo (comodo sullo smartphone).
    Colori come il tema classico.
    ========================================================================== */
-@import url("base.css");
+@import url("base.css?v=2.4.2");
 
 :root{
   --col-min:150px;

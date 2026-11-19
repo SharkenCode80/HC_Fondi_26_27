@@ -6,16 +6,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>HC Fondi Campionati 26-27</title>
 <!-- sceglie in automatico la versione completa o cellulare (vedi js/vista.js) -->
-<script src="js/vista.js"></script>
-<script src="js/sincronizza-aiuto.js" defer></script>
-<script src="js/dettagli.js"></script>
+<script src="js/vista.js?v=2.4.2"></script>
+<script src="js/sincronizza-aiuto.js?v=2.4.2" defer></script>
+<script src="js/dettagli.js?v=2.4.2"></script>
 <!-- ===== STILE =====
      Tutto l'aspetto della pagina è nei file della cartella css/.
      Per cambiare tema sostituisci il nome del file qui sotto con uno di:
        css/tema-classico.css  css/tema-scuro.css  css/tema-arancio.css
        css/tema-minimal.css   css/tema-compatto.css
 -->
-<link rel="stylesheet" href="css/tema-rossoblu.css" id="tema">
+<link rel="stylesheet" href="css/tema-rossoblu.css?v=2.4.2" id="tema">
 </head>
 <body>
 <div class="wrap">
@@ -325,10 +325,12 @@ async function loadResults(){
 }
 
 async function init(){
+  let caricato = false;      // true quando calendario.json è arrivato: un errore dopo è di visualizzazione
   try{
     const res = await fetch("calendario.json", {cache:"no-store"});
     if(!res.ok) throw new Error("HTTP "+res.status);
     const data = await res.json();
+    caricato = true;
 
     V    = data.venues     || {};
     CAT  = data.categories || {};
@@ -370,8 +372,14 @@ async function init(){
     updateView();
     requestAnimationFrame(()=> focusToday(false));
   }catch(err){
-    document.querySelector(".board").innerHTML =
-      `<div class="none">
+    document.querySelector(".board").innerHTML = caricato
+      ? `<div class="none">
+        <b>Non è stato possibile mostrare il calendario.</b><br>
+        Ricarica la pagina: di solito succede subito dopo un aggiornamento del sito,
+        quando il browser ha ancora in memoria una parte dei file vecchi.<br>
+        <small>Dettaglio: ${err.message}</small>
+      </div>`
+      : `<div class="none">
         <b>Impossibile caricare <code>calendario.json</code>.</b><br>
         Il file deve stare nella <b>stessa cartella</b> di questa pagina.<br><br>
         Se stai aprendo la pagina con doppio clic dal disco (<code>file://</code>), il browser blocca

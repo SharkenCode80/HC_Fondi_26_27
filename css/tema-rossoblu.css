@@ -4,7 +4,7 @@
    a strisce verticali rosso/blu che richiama la maglia del club.
    Per regolare le tonalità basta cambiare --rosso e --blu qui sotto.
    ========================================================================== */
-@import url("base.css");
+@import url("base.css?v=2.4.2");
 
 :root{
   /* colori del club */

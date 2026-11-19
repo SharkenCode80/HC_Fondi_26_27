@@ -3,7 +3,7 @@
    (grigio chiaro, intestazione blu notte, card bianche, casa in arancio)
    Per cambiare un colore basta ridefinire la variabile in :root qui sotto.
    ========================================================================== */
-@import url("base.css");
+@import url("base.css?v=2.4.2");
 
 :root{
   /* nessuna modifica: valori di default di base.css */
