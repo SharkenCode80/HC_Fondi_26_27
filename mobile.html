@@ -9,7 +9,7 @@
 <!-- sceglie in automatico la versione completa o cellulare (vedi js/vista.js) -->
 <script src="js/vista.js"></script>
 <script src="js/sincronizza-aiuto.js" defer></script>
-<script src="js/dettagli.js" defer></script>
+<script src="js/dettagli.js"></script>
 <!-- ===== STILE =====
      1) il tema (lo stesso di index.html): css/tema-classico.css, tema-scuro,
         tema-arancio, tema-minimal, tema-compatto, tema-rossoblu
@@ -119,7 +119,7 @@ function cardHTML(m, i){
   const r = m.event ? null : resultFor(m);
   const o = outcome(m, r);
   const right = r && Number.isFinite(r.hs)
-    ? `<span class="res ${resClass(o,r)}">${r.hs}–${r.as}${resLabel(o,r)}</span>`
+    ? `<span class="res ${resClass(o,r)}">${Dettagli.punteggio(m, r, isOurs, "–")}${resLabel(o,r)}</span>`
     : `<span class="go" aria-hidden="true">›</span>`;
   return `<button type="button" class="m ${m.cat}${home?" home":""}${m.event?" event":""}" data-i="${i}">
     <span class="t">${m.time || "—"}${m.event ? "<small>evento</small>" : ""}</span>

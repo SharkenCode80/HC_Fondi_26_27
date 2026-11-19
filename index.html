@@ -8,7 +8,7 @@
 <!-- sceglie in automatico la versione completa o cellulare (vedi js/vista.js) -->
 <script src="js/vista.js"></script>
 <script src="js/sincronizza-aiuto.js" defer></script>
-<script src="js/dettagli.js" defer></script>
+<script src="js/dettagli.js"></script>
 <!-- ===== STILE =====
      Tutto l'aspetto della pagina è nei file della cartella css/.
      Per cambiare tema sostituisci il nome del file qui sotto con uno di:
@@ -123,7 +123,7 @@ function matchHTML(m, i){
     const st = sr.codice==="FINE" ? "FINE" : sr.label;
     const cls = sr.finale ? "fine" : "live";
     const hasScore = Number.isFinite(r.hs) && Number.isFinite(r.as);
-    scoreLine = `<div class="score">${hasScore ? `${r.hs} – ${r.as}` : ""}${st?`<span class="badge ${cls}">${st}</span>`:""}</div>`;
+    scoreLine = `<div class="score">${hasScore ? Dettagli.punteggio(m, r, isOurs) : ""}${st?`<span class="badge ${cls}">${st}</span>`:""}</div>`;
   }
   return `<div class="m ${m.cat}${home?" home":""}" data-cat="${m.cat}" data-i="${i}" tabindex="0" role="button" aria-haspopup="dialog">
     <span class="cat">${CAT[m.cat]||m.cat}</span><span class="where${home?" casa":""}">${m.gir}</span>

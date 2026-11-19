@@ -308,6 +308,9 @@ dialog.sheet[open]{animation:sheet-up .2s ease-out}
 .sheet .teams .vs{color:var(--muted);font-weight:500}
 .sheet .score{font-family:var(--font-display);font-weight:700;font-size:34px;margin:6px 0 0}
 .sheet .score small{font-size:14px;letter-spacing:.08em;margin-left:8px}
+/* punteggio: gol di HC Fondi in rosso e in grassetto (pannello, tabellone, card del cellulare) */
+.res .gf,.m .score .gf{color:var(--fondi);font-weight:700}
+.res .ga,.m .score .ga{font-weight:500}
 .sheet .tags{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 4px}
 .sheet .tags span{
   font-family:var(--font-display);font-weight:600;font-size:13px;letter-spacing:.05em;text-transform:uppercase;

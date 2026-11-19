@@ -8,6 +8,8 @@
    Sul cellulare il pannello sale dal basso, sullo schermo largo è una finestra
    al centro (stili "dialog.sheet" in css/base.css).
    Si chiude con la ×, cliccando fuori o con Esc.
+   Dettagli.punteggio(m, r, isOurs, sep) scrive il punteggio con i gol di HC Fondi
+   evidenziati (usato anche dalle card di mobile.html).
 
    Dettagli.apri({
      m,          // la voce di calendario.json
@@ -46,6 +48,12 @@
     return noi > loro ? "w" : noi < loro ? "l" : "d";
   }
 
+  // punteggio "casa – ospite" con i gol di HC Fondi in rosso e in grassetto (classe "gf")
+  function punteggio(m, r, isOurs, sep){
+    var g = function(n, nostro){ return '<span class="' + (nostro ? "gf" : "ga") + '">' + n + "</span>"; };
+    return g(r.hs, isOurs(m.home)) + (sep == null ? " – " : sep) + g(r.as, isOurs(m.away));
+  }
+
   function fine(p){
     if(!p.m.time) return "";
     var hm = p.m.time.split(".").map(Number), t = hm[0]*60 + hm[1] + (p.durata || 60);
@@ -82,7 +90,7 @@
       var parziale = p.stato && !p.stato.finale;
       var cls = o || (parziale ? "live" : "");
       var label = o ? ESITO[o] : (parziale ? p.stato.label : "");
-      score = '<p class="score res ' + cls + '">' + r.hs + " – " + r.as +
+      score = '<p class="score res ' + cls + '">' + punteggio(m, r, p.isOurs) +
               (label ? "<small>" + esc(label) + "</small>" : "") + "</p>";
     }
     var end = fine(p), venue = p.impianto || "";
@@ -138,5 +146,5 @@
     setTimeout(function(){ URL.revokeObjectURL(a.href); }, 2000);
   }
 
-  window.Dettagli = { apri: apri };
+  window.Dettagli = { apri: apri, punteggio: punteggio };
 })();
