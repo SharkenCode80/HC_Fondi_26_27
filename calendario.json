@@ -155,6 +155,27 @@
     "palamunicipio-roma": "Palamunicipio - Roma",
     "palazzetto-dello-sport-comunale-cerreto-sannita": "Palazzetto dello Sport Comunale - Cerreto Sannita"
   },
+  "sigle": {
+    "HC Fondi": "HCF",
+    "HC Fondi U18F": "HCF18",
+    "HC Fondi U16F": "HCF16",
+    "ASD Handball Flavioni U16F": "FLA",
+    "ASD Handball Flavioni U18F": "FLA",
+    "ASD PALLAMANOBENEVENTO23": "BEN",
+    "BENEVENTO 23": "BEN",
+    "ASD HELIOS SPORTING CLUB": "HSC",
+    "BCC Roma Pontinia": "BRP",
+    "CUS Cassino Gaeta U16F": "GAE",
+    "CUS CASSINO GAETA BLU": "GAEB",
+    "CUS CASSINO GAETA NERO": "GAEN",
+    "GENEA LANZARA 2012": "GHL",
+    "GENEA HANDBALL LANZARA 2012 A": "GHLA",
+    "GENEA HANDBALL LANZARA 2012 B": "GHLB",
+    "HC ROMA": "HCR",
+    "PDO Handball Salerno U16F": "PDO",
+    "PDO Handball Salerno 1985 U16F": "PDO",
+    "THEO GAETA": "GSC"
+  },
   "mister": {
     "buffer": 30,
     "durate": {
@@ -190,6 +211,7 @@
   },
   "matches": [
     {
+      "id": "20261103-1800-u16f-hcf-pdo",
       "date": "03/11",
       "time": "18.00",
       "cat": "u16f",
@@ -200,6 +222,7 @@
       "year": 2026
     },
     {
+      "id": "20261105-1800-u16m-hcf-brp",
       "date": "05/11",
       "time": "18.00",
       "cat": "u16m",
@@ -210,6 +233,7 @@
       "year": 2026
     },
     {
+      "id": "20261107-1800-serieb-hcf-ben",
       "date": "07/11",
       "time": "18.00",
       "cat": "serieb",
@@ -220,6 +244,7 @@
       "year": 2026
     },
     {
+      "id": "20261108-1200-u18f-hcf-fla",
       "date": "08/11",
       "time": "12.00",
       "cat": "u18f",
@@ -230,6 +255,7 @@
       "year": 2026
     },
     {
+      "id": "20261115-1030-u16m-ghla-hcf",
       "date": "15/11",
       "time": "10.30",
       "cat": "u16m",
@@ -240,6 +266,7 @@
       "year": 2026
     },
     {
+      "id": "20261115-1200-u18f-pdo-hcf",
       "date": "15/11",
       "time": "12.00",
       "cat": "u18f",
@@ -250,6 +277,7 @@
       "year": 2026
     },
     {
+      "id": "20261119-1800-u16m-hcf-ghlb",
       "date": "19/11",
       "time": "18.00",
       "cat": "u16m",
@@ -260,6 +288,7 @@
       "year": 2026
     },
     {
+      "id": "20261120-1530-u16f-fla-hcf",
       "date": "20/11",
       "time": "15.30",
       "cat": "u16f",
@@ -270,6 +299,7 @@
       "year": 2026
     },
     {
+      "id": "20261122-1000-u18f-hcf-gae",
       "date": "22/11",
       "time": "10.00",
       "cat": "u18f",
@@ -280,6 +310,7 @@
       "year": 2026
     },
     {
+      "id": "20261122-1800-serieb-ghl-hcf",
       "date": "22/11",
       "time": "18.00",
       "cat": "serieb",
@@ -290,6 +321,7 @@
       "year": 2026
     },
     {
+      "id": "20261128-1200-u16f-gae-hcf",
       "date": "28/11",
       "time": "12.00",
       "cat": "u16f",
@@ -300,6 +332,7 @@
       "year": 2026
     },
     {
+      "id": "20261128-1800-u16m-ben-hcf",
       "date": "28/11",
       "time": "18.00",
       "cat": "u16m",
@@ -310,6 +343,7 @@
       "year": 2026
     },
     {
+      "id": "20261129-sel-selezione-dei-talenti",
       "date": "29/11",
       "time": "",
       "cat": "sel",
@@ -321,6 +355,7 @@
       "year": 2026
     },
     {
+      "id": "20261206-1200-interna-hcf18-hcf16",
       "date": "06/12",
       "time": "12.00",
       "cat": "interna",
@@ -331,6 +366,7 @@
       "year": 2026
     },
     {
+      "id": "20261210-1800-u16m-hcf-gaeb",
       "date": "10/12",
       "time": "18.00",
       "cat": "u16m",
@@ -341,6 +377,7 @@
       "year": 2026
     },
     {
+      "id": "20261212-1800-serieb-hcf-gsc",
       "date": "12/12",
       "time": "18.00",
       "cat": "serieb",
@@ -351,6 +388,7 @@
       "year": 2026
     },
     {
+      "id": "20261213-u14-under-14",
       "date": "13/12",
       "time": "",
       "cat": "u14",
@@ -362,6 +400,7 @@
       "year": 2026
     },
     {
+      "id": "20261218-1530-u16f-fla-hcf",
       "date": "18/12",
       "time": "15.30",
       "cat": "u16f",
@@ -372,6 +411,7 @@
       "year": 2026
     },
     {
+      "id": "20261220-sel-selezione-dei-talenti",
       "date": "20/12",
       "time": "",
       "cat": "sel",
@@ -383,6 +423,7 @@
       "year": 2026
     },
     {
+      "id": "20261220-1530-serieb-hcf-hcr",
       "date": "20/12",
       "time": "15.30",
       "cat": "serieb",
@@ -393,6 +434,7 @@
       "year": 2026
     },
     {
+      "id": "20261222-1500-u18f-hcf-fla",
       "date": "22/12",
       "time": "15.00",
       "cat": "u18f",
@@ -403,6 +445,7 @@
       "year": 2026
     },
     {
+      "id": "20270110-1000-u16f-hcf-gae",
       "date": "10/01",
       "time": "10.00",
       "cat": "u16f",
@@ -413,6 +456,7 @@
       "year": 2027
     },
     {
+      "id": "20270114-1830-u16m-gaen-hcf",
       "date": "14/01",
       "time": "18.30",
       "cat": "u16m",
@@ -423,6 +467,7 @@
       "year": 2027
     },
     {
+      "id": "20270117-1100-u16f-pdo-hcf",
       "date": "17/01",
       "time": "11.00",
       "cat": "u16f",
@@ -433,6 +478,7 @@
       "year": 2027
     },
     {
+      "id": "20270117-1900-serieb-ben-hcf",
       "date": "17/01",
       "time": "19.00",
       "cat": "serieb",
@@ -443,6 +489,7 @@
       "year": 2027
     },
     {
+      "id": "20270121-1800-u16m-hcf-hsc",
       "date": "21/01",
       "time": "18.00",
       "cat": "u16m",
@@ -453,6 +500,7 @@
       "year": 2027
     },
     {
+      "id": "20270122-1530-u18f-fla-hcf",
       "date": "22/01",
       "time": "15.30",
       "cat": "u18f",
@@ -463,6 +511,7 @@
       "year": 2027
     },
     {
+      "id": "20270124-1000-u18f-hcf-pdo",
       "date": "24/01",
       "time": "10.00",
       "cat": "u18f",
@@ -473,6 +522,7 @@
       "year": 2027
     },
     {
+      "id": "20270131-sel-selezione-dei-talenti",
       "date": "31/01",
       "time": "",
       "cat": "sel",
@@ -484,6 +534,7 @@
       "year": 2027
     },
     {
+      "id": "20270206-1800-u16m-brp-hcf",
       "date": "06/02",
       "time": "18.00",
       "cat": "u16m",
@@ -494,6 +545,7 @@
       "year": 2027
     },
     {
+      "id": "20270207-u14-under-14-salerno",
       "date": "07/02",
       "time": "",
       "cat": "u14",
@@ -505,6 +557,7 @@
       "year": 2027
     },
     {
+      "id": "20270207-1530-serieb-hcf-ghl",
       "date": "07/02",
       "time": "15.30",
       "cat": "serieb",
@@ -515,6 +568,7 @@
       "year": 2027
     },
     {
+      "id": "20270213-1830-serieb-gsc-hcf",
       "date": "13/02",
       "time": "18.30",
       "cat": "serieb",
@@ -525,6 +579,7 @@
       "year": 2027
     },
     {
+      "id": "20270214-1100-u16f-gae-hcf",
       "date": "14/02",
       "time": "11.00",
       "cat": "u16f",
@@ -535,6 +590,7 @@
       "year": 2027
     },
     {
+      "id": "20270218-1800-u16f-hcf-fla",
       "date": "18/02",
       "time": "18.00",
       "cat": "u16f",
@@ -545,6 +601,7 @@
       "year": 2027
     },
     {
+      "id": "20270221-sel-selezione-dei-talenti",
       "date": "21/02",
       "time": "",
       "cat": "sel",
@@ -556,6 +613,7 @@
       "year": 2027
     },
     {
+      "id": "20270223-1800-interna-hcf16-hcf18",
       "date": "23/02",
       "time": "18.00",
       "cat": "interna",
@@ -566,6 +624,7 @@
       "year": 2027
     },
     {
+      "id": "20270228-1430-serieb-hcr-hcf",
       "date": "28/02",
       "time": "14.30",
       "cat": "serieb",
@@ -576,6 +635,7 @@
       "year": 2027
     },
     {
+      "id": "20270305-1530-u18f-fla-hcf",
       "date": "05/03",
       "time": "15.30",
       "cat": "u18f",
@@ -586,6 +646,7 @@
       "year": 2027
     },
     {
+      "id": "20270307-1200-u16f-hcf-fla",
       "date": "07/03",
       "time": "12.00",
       "cat": "u16f",
@@ -596,6 +657,7 @@
       "year": 2027
     },
     {
+      "id": "20270307-1600-serieb-hcf-ben",
       "date": "07/03",
       "time": "16.00",
       "cat": "serieb",
@@ -606,6 +668,7 @@
       "year": 2027
     },
     {
+      "id": "20270314-u14-under-14",
       "date": "14/03",
       "time": "",
       "cat": "u14",
@@ -617,6 +680,7 @@
       "year": 2027
     },
     {
+      "id": "20270314-1830-u16m-ghlb-hcf",
       "date": "14/03",
       "time": "18.30",
       "cat": "u16m",
@@ -627,6 +691,7 @@
       "year": 2027
     },
     {
+      "id": "20270316-1800-u16m-hcf-ghla",
       "date": "16/03",
       "time": "18.00",
       "cat": "u16m",
@@ -637,6 +702,7 @@
       "year": 2027
     },
     {
+      "id": "20270320-1730-u16m-hcf-ben",
       "date": "20/03",
       "time": "17.30",
       "cat": "u16m",
@@ -647,6 +713,7 @@
       "year": 2027
     },
     {
+      "id": "20270321-sel-selezione-dei-talenti",
       "date": "21/03",
       "time": "",
       "cat": "sel",
@@ -658,6 +725,7 @@
       "year": 2027
     },
     {
+      "id": "20270321-1800-serieb-ghl-hcf",
       "date": "21/03",
       "time": "18.00",
       "cat": "serieb",
@@ -668,6 +736,7 @@
       "year": 2027
     },
     {
+      "id": "20270403-1830-serieb-hcf-gsc",
       "date": "03/04",
       "time": "18.30",
       "cat": "serieb",
@@ -678,6 +747,7 @@
       "year": 2027
     },
     {
+      "id": "20270410-1800-serieb-hcf-hcr",
       "date": "10/04",
       "time": "18.00",
       "cat": "serieb",
@@ -688,6 +758,7 @@
       "year": 2027
     },
     {
+      "id": "20270411-u14-under-14-salerno",
       "date": "11/04",
       "time": "",
       "cat": "u14",
@@ -699,6 +770,7 @@
       "year": 2027
     },
     {
+      "id": "20270411-1100-u16m-gaeb-hcf",
       "date": "11/04",
       "time": "11.00",
       "cat": "u16m",
@@ -709,6 +781,7 @@
       "year": 2027
     },
     {
+      "id": "20270415-1800-u16m-hcf-gaen",
       "date": "15/04",
       "time": "18.00",
       "cat": "u16m",
@@ -719,6 +792,7 @@
       "year": 2027
     },
     {
+      "id": "20270418-1700-serieb-ben-hcf",
       "date": "18/04",
       "time": "17.00",
       "cat": "serieb",
@@ -729,6 +803,7 @@
       "year": 2027
     },
     {
+      "id": "20270422-1800-serieb-hcf-ghl",
       "date": "22/04",
       "time": "18.00",
       "cat": "serieb",
@@ -739,6 +814,7 @@
       "year": 2027
     },
     {
+      "id": "20270425-sel-selezione-dei-talenti",
       "date": "25/04",
       "time": "",
       "cat": "sel",
@@ -750,6 +826,7 @@
       "year": 2027
     },
     {
+      "id": "20270501-1100-u16m-hsc-hcf",
       "date": "01/05",
       "time": "11.00",
       "cat": "u16m",
@@ -760,6 +837,7 @@
       "year": 2027
     },
     {
+      "id": "20270509-u14-under-14",
       "date": "09/05",
       "time": "",
       "cat": "u14",
@@ -771,6 +849,7 @@
       "year": 2027
     },
     {
+      "id": "20270515-1800-serieb-gsc-hcf",
       "date": "15/05",
       "time": "18.00",
       "cat": "serieb",
@@ -781,6 +860,7 @@
       "year": 2027
     },
     {
+      "id": "20270523-1430-serieb-hcr-hcf",
       "date": "23/05",
       "time": "14.30",
       "cat": "serieb",
@@ -791,6 +871,7 @@
       "year": 2027
     },
     {
+      "id": "20270526-u16f-finali-u16",
       "date": "26/05",
       "time": "",
       "cat": "u16f",
@@ -802,6 +883,7 @@
       "year": 2027
     },
     {
+      "id": "20270527-u16f-finali-u16",
       "date": "27/05",
       "time": "",
       "cat": "u16f",
@@ -813,6 +895,7 @@
       "year": 2027
     },
     {
+      "id": "20270528-u16f-finali-u16",
       "date": "28/05",
       "time": "",
       "cat": "u16f",
@@ -824,6 +907,7 @@
       "year": 2027
     },
     {
+      "id": "20270529-u16f-finali-u16",
       "date": "29/05",
       "time": "",
       "cat": "u16f",
@@ -835,6 +919,7 @@
       "year": 2027
     },
     {
+      "id": "20270530-u16f-finali-u16",
       "date": "30/05",
       "time": "",
       "cat": "u16f",
@@ -846,6 +931,7 @@
       "year": 2027
     },
     {
+      "id": "20270602-u18f-finali-u18",
       "date": "02/06",
       "time": "",
       "cat": "u18f",
@@ -857,6 +943,7 @@
       "year": 2027
     },
     {
+      "id": "20270603-u18f-finali-u18",
       "date": "03/06",
       "time": "",
       "cat": "u18f",
@@ -868,6 +955,7 @@
       "year": 2027
     },
     {
+      "id": "20270604-u18f-finali-u18",
       "date": "04/06",
       "time": "",
       "cat": "u18f",
@@ -879,6 +967,7 @@
       "year": 2027
     },
     {
+      "id": "20270605-u18f-finali-u18",
       "date": "05/06",
       "time": "",
       "cat": "u18f",
@@ -890,6 +979,7 @@
       "year": 2027
     },
     {
+      "id": "20270606-u18f-finali-u18",
       "date": "06/06",
       "time": "",
       "cat": "u18f",
@@ -901,6 +991,7 @@
       "year": 2027
     },
     {
+      "id": "20270629-u14-misano-under-14",
       "date": "29/06",
       "time": "",
       "cat": "u14",
@@ -912,6 +1003,7 @@
       "year": 2027
     },
     {
+      "id": "20270630-u14-misano-under-14",
       "date": "30/06",
       "time": "",
       "cat": "u14",

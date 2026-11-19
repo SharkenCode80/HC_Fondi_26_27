@@ -21,7 +21,7 @@ Uso:  python3 genera_ics.py          (nessuna libreria esterna)
 
 import datetime, json, os, shlex
 
-from eventi_comuni import HERE, SITE_URL, load, eventi_con_uid, uid, cerca_risultato, campi_evento
+from eventi_comuni import HERE, SITE_URL, load, eventi_con_uid, uid, cerca_risultato, campi_evento, id_sconosciuti
 
 CAL_PREFIX = "HC Fondi"
 REFRESH = "PT6H"                      # ogni quanto suggeriamo alle app di riscaricare
@@ -81,6 +81,8 @@ def main():
     ris = load("risultati.json", {}) or {}
     cats = cal["categories"]
     result_for = cerca_risultato(ris)
+    for i in id_sconosciuti(cal, ris):
+        print(f"[attenzione] risultati.json: l'id {i} non esiste in calendario.json (risultato ignorato)")
 
     # DTSTAMP fisso = ultimo aggiornamento dei dati: file identici se nulla cambia
     stamp_src = ris.get("updated") or cal["event"].get("updated") or "01/01/2026 00:00"

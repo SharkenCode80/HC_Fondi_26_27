@@ -143,22 +143,48 @@ flowchart LR
 
 ### Risultati
 
-Aggiungi i punteggi in `risultati.json`, con lo stesso formato del Festival della Pallamano:
+Aggiungi i punteggi in `risultati.json`. Ogni voce indica solo l'**id** della partita
+(campo `id` in `calendario.json`), i gol e lo stato: i dati della partita stanno solo
+in `calendario.json`.
 
 ```json
 {
-  "updated": "08/11/2026 14:00",
+  "updated": "19/11/2026 20:00",
   "source": "inserimento manuale",
   "results": [
-    { "date": "03/11", "cat": "u16f", "home": "HC Fondi", "away": "PDO Handball Salerno U16F",
-      "hs": 25, "as": 19, "status": "FINE" }
+    { "id": "20261103-1800-u16f-hcf-pdo", "hs": 28, "as": 20, "status": "FINE" },
+    { "id": "20261120-1530-u16f-fla-hcf", "hs": 0, "as": 0, "status": "DA_INIZIARE" }
   ]
 }
 ```
 
-`date`, `cat`, `home` e `away` devono corrispondere alla partita in `calendario.json`
-(maiuscole e spazi non contano; se casa e ospite sono invertiti, il punteggio viene
-girato in automatico).
+- **`id`**: data con anno (`AAAAMMGG`), ora (`HHMM`), categoria e sigle delle squadre
+  (casa, poi ospite), es. `20261120-1530-u16f-fla-hcf` = 20/11/2026 ore 15.30, U16 F,
+  Flavioni – HC Fondi. Si copia da `calendario.json`.
+- **`hs` / `as`**: gol della squadra di casa e di quella ospite, nello stesso ordine
+  della partita in `calendario.json`.
+
+Le sigle sono nella tabella `"sigle"` di `calendario.json` (nome squadra → sigla; maiuscole
+e spazi nel nome non contano). Sono quelle FIGH (`acronimo`), corrette dove la FIGH ne usa una
+generica o la stessa per più squadre (es. Flavioni `FLA`, Benevento `BEN`, Cassino Gaeta
+Blu/Nero `GAEB`/`GAEN`, HC Fondi U18F/U16F nelle gare interne `HCF18`/`HCF16`). Una squadra
+senza sigla entra nell'id con il nome intero e gli script la segnalano.
+
+L'id viene scritto una volta sola e poi **non cambia più**, anche se si modifica la partita:
+se una partita viene spostata, l'id resta quello vecchio (il risultato si aggancia lo stesso).
+`converti_excel.py` riassegna gli id dall'Excel: una partita spostata nell'Excel prende un id
+nuovo e lo script segnala i risultati con un id che non esiste più.
+
+Per una partita aggiunta a mano in `calendario.json` basta lasciarla senza `id`:
+
+```bash
+python3 aggiorna_id.py       # aggiunge gli id mancanti e converte le voci nel formato precedente
+python3 genera_ics.py
+```
+
+Le voci nel formato precedente (`date`, `cat`, `home`, `away` al posto di `id`, come nel
+Festival della Pallamano) vengono ancora lette da pagine e script; `aggiorna_id.py` le
+converte nel formato con `id`.
 
 `status` indica a che punto è la partita:
 
@@ -176,9 +202,6 @@ con gli stati parziali si vede il punteggio con l'indicazione dello stato; con
 `DA_INIZIARE` la partita appare come se non avesse risultato (utile per preparare la riga
 in anticipo). Maiuscole e spazi
 non contano. Nei calendari `.ics` la descrizione riporta, ad esempio, "(parziale, I Tempo)".
-
-In alternativa si può usare `generatore.html` del progetto
-Festival della Pallamano (sezione *Risultati extra*).
 
 I risultati già pubblicati sul sito FIGH si possono caricare in automatico con
 `python3 verifica_figh.py` → **4 · Carica risultati** (vedi sotto).
@@ -215,7 +238,7 @@ contiene tutte le partite in un blocco JSON `const calendario = {...}`; il punte
 in `team1-setwin`/`team2-setwin`. HC Fondi si riconosce dal codice società FIGH **`0031`**
 (i nomi cambiano: "BANCAPOPOLARE DI FONDI", "HC BANCAPOPOLARE DI FONDI U16F"…). Se la FIGH
 cambia gli indirizzi dei gironi (es. nuova stagione), vanno aggiornati in `GIRONI`.
-Test: `python3 -m unittest test_verifica_figh` (pagine FIGH finte, nessun accesso alla rete).
+Test: `python3 -m unittest test_verifica_figh test_id` (pagine FIGH finte, nessun accesso alla rete).
 
 ### Calendari da sincronizzare (.ics)
 
@@ -429,7 +452,9 @@ HC_Fondi_26_27/
 ├── risultati.json        punteggi (facoltativo)
 ├── converti_excel.py     Excel → calendario.json (+ lancia genera_ics.py)
 ├── genera_ics.py         calendario.json → calendario*.ics + calendari.json
-├── eventi_comuni.py      UID e contenuto degli eventi, in comune tra .ics e Google
+├── eventi_comuni.py      UID e contenuto degli eventi, id delle partite, lettura/scrittura risultati
+├── aggiorna_id.py        id mancanti in calendario.json + risultati.json nel formato con id
+├── test_id.py            test di id, sigle e risultati con id
 ├── sincronizza_google.py calendario.json → calendario Google condiviso (a mano)
 ├── test_sincronizza.py   test della sincronizzazione (API Google simulata)
 ├── verifica_figh.py      controllo con il sito FIGH + caricamento risultati
@@ -479,8 +504,7 @@ sono usati in modo uniforme.
 
 ### Formato di `calendario.json`
 
-È lo stesso formato del Festival della Pallamano, quindi compatibile con il suo
-`generatore.html`:
+È il formato del Festival della Pallamano, con in più `sigle` e `id` (vedi sotto):
 
 ```json
 {
@@ -492,12 +516,15 @@ sono usati in modo uniforme.
   "dow":  { "03/11": "MAR", "…": "…" },
   "categories": { "serieb": "Serie B", "u18f": "U18 F", "…": "…" },
   "venues": { "fondi-palasport-fondi": "Fondi Palasport - Fondi", "…": "…" },
+  "sigle":  { "HC Fondi": "HCF", "PDO Handball Salerno U16F": "PDO", "…": "…" },
   "mister": { "buffer": 30, "durate": { "serieb": { "tempo": 30, "pausa": 10 }, "…": {} } },
   "matches": [
-    { "date": "03/11", "time": "18.00", "cat": "u16f", "gir": "Casa",
+    { "id": "20261103-1800-u16f-hcf-pdo",
+      "date": "03/11", "time": "18.00", "cat": "u16f", "gir": "Casa",
       "home": "HC Fondi", "away": "PDO Handball Salerno U16F",
       "venue": "fondi-palasport-fondi", "year": 2026 },
-    { "date": "29/11", "time": "", "cat": "sel", "gir": "Evento",
+    { "id": "20261129-sel-selezione-dei-talenti",
+      "date": "29/11", "time": "", "cat": "sel", "gir": "Evento",
       "home": "Selezione dei Talenti", "away": "", "venue": "", "event": true, "year": 2026 }
   ]
 }
@@ -506,7 +533,13 @@ sono usati in modo uniforme.
 Rispetto al Festival ci sono queste differenze:
 - `gir` contiene *Casa*, *Trasferta* o *Evento* invece del girone;
 - `year` per ogni partita, perché la stagione è a cavallo di due anni;
-- `event` per le voci senza orario.
+- `event` per le voci senza orario;
+- `id` per ogni voce e la tabella `sigle`, usati da `risultati.json` (vedi *Risultati*).
+
+`converti_excel.py` riscrive `calendario.json` dall'Excel ma **conserva** dal file attuale
+quello che nell'Excel non c'è: la tabella `sigle` e `mister` (durate e margine), che si
+cambiano a mano. I valori in `DURATE` dello script servono solo se `calendario.json` non
+esiste o per una categoria nuova.
 
 ### Come lavora la pagina
 

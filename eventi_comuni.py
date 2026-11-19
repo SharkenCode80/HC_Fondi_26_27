@@ -33,6 +33,74 @@ def load(name, default=None):
         return json.load(f)
 
 
+def data_partita(cal, m):
+    """Data (datetime.date) di una voce: campo "year", altrimenti dall'inizio stagione."""
+    d, mo = int(m["date"][:2]), int(m["date"][3:5])
+    if m.get("year"):
+        return datetime.date(m["year"], mo, d)
+    y0, m0 = int(cal["start"][6:10]), int(cal["start"][3:5])
+    return datetime.date(y0 if mo >= m0 else y0 + 1, mo, d)
+
+
+def sigla(cal, nome):
+    """Sigla di una squadra dalla tabella "sigle" di calendario.json (minuscola),
+    oppure None se manca. Maiuscole e spazi nel nome non contano."""
+    tab = {norm(k): v for k, v in (cal.get("sigle") or {}).items()}
+    s = tab.get(norm(nome))
+    return slug(s) if s else None
+
+
+def squadre_senza_sigla(cal):
+    """Nomi di squadre (partite, non eventi) che non hanno una sigla."""
+    out = []
+    for m in cal["matches"]:
+        if m.get("event"):
+            continue
+        for n in (m["home"], m["away"]):
+            if n and sigla(cal, n) is None and n not in out:
+                out.append(n)
+    return out
+
+
+def id_base(cal, m, d):
+    """Id "naturale" di una voce: data con anno, orario, categoria e sigle delle squadre.
+
+    Es. 20261120-1530-u16f-fla-hcf. Senza orario: 20261213-u14-under-14.
+    Per gli eventi e per le squadre senza sigla si usa il nome intero.
+    """
+    parti = [f"{d:%Y%m%d}"]
+    if m.get("time"):
+        parti.append(m["time"].replace(".", "").replace(":", "").zfill(4))
+    parti.append(m["cat"])
+    for n in (m.get("home"), m.get("away")):
+        if n:
+            parti.append((None if m.get("event") else sigla(cal, n)) or slug(n))
+    return "-".join(p for p in parti if p)
+
+
+def assegna_id(cal):
+    """Aggiunge "id" (primo campo) alle voci di calendario.json che non ce l'hanno.
+
+    Gli id gia' presenti non si toccano: i risultati li usano per trovare la partita.
+    Se due voci avrebbero lo stesso id, dalla seconda si aggiunge -2, -3, ...
+    Restituisce il numero di id aggiunti.
+    """
+    usati = {m["id"] for m in cal["matches"] if m.get("id")}
+    nuovi, out = 0, []
+    for m in cal["matches"]:
+        if not m.get("id"):
+            base = nuovo = id_base(cal, m, data_partita(cal, m))
+            n = 2
+            while nuovo in usati:
+                nuovo, n = f"{base}-{n}", n + 1
+            usati.add(nuovo)
+            m = {"id": nuovo, **m}
+            nuovi += 1
+        out.append(m)
+    cal["matches"] = out
+    return nuovi
+
+
 def eventi_con_uid(cal):
     """[(partita, data, base_uid)] nell'ordine di calendario.json.
 
@@ -40,15 +108,9 @@ def eventi_con_uid(cal):
     una partita spostata si sposta invece di comparire due volte. Se due voci
     hanno la stessa base, dalla seconda si aggiunge -2, -3, ...
     """
-    # anno di ogni partita: campo "year", altrimenti dalla data di inizio stagione
-    y0, m0 = int(cal["start"][6:10]), int(cal["start"][3:5])
-    def date_of(m):
-        d, mo = int(m["date"][:2]), int(m["date"][3:5])
-        return datetime.date(m.get("year") or (y0 if mo >= m0 else y0 + 1), mo, d)
-
     seen, events = {}, []
     for m in cal["matches"]:
-        d = date_of(m)
+        d = data_partita(cal, m)
         base = f"{m['cat']}-{slug(m['home'])}-{slug(m['away'])}" if not m.get("event") \
             else f"{m['cat']}-{slug(m['home'])}-{d:%Y%m%d}"
         seen[base] = seen.get(base, 0) + 1
@@ -83,15 +145,32 @@ def etichetta_stato(stato):
     return STATI.get(s, str(stato or "").strip())
 
 
+def id_sconosciuti(cal, ris):
+    """Id usati in risultati.json che non corrispondono a nessuna voce di calendario.json."""
+    ids = {m.get("id") for m in cal["matches"]}
+    return [r["id"] for r in (ris or {}).get("results", []) if r.get("id") and r["id"] not in ids]
+
+
 def cerca_risultato(ris):
-    """Funzione partita -> (gol casa, gol ospite, stato) oppure None."""
-    results = {}
+    """Funzione partita -> (gol casa, gol ospite, stato) oppure None.
+
+    Le voci di risultati.json si abbinano alla partita con "id" (formato attuale:
+    gol e squadre nell'ordine di calendario.json) oppure, per le voci nel formato
+    precedente, con data, categoria e squadre (girate in automatico se invertite).
+    """
+    per_id, results = {}, {}
     for r in (ris or {}).get("results", []):
         if codice_stato(r.get("status")) == "DA_INIZIARE":
             continue
-        results[(r["date"][:5], r["cat"], norm(r["home"]), norm(r["away"]))] = r
+        if r.get("id"):
+            per_id[r["id"]] = r
+        else:
+            results[(r["date"][:5], r["cat"], norm(r["home"]), norm(r["away"]))] = r
 
     def result_for(m):
+        r = per_id.get(m.get("id")) if m.get("id") else None
+        if r:
+            return r["hs"], r["as"], r.get("status", "")
         r = results.get((m["date"][:5], m["cat"], norm(m["home"]), norm(m["away"])))
         if r:
             return r["hs"], r["as"], r.get("status", "")
@@ -140,3 +219,71 @@ def campi_evento(cal, m, d, result_for):
     return {"label": label, "summary": summary, "location": venue,
             "description": "\n".join(desc), "url": SITE_URL,
             "start": start, "end": end, "giornata": giornata}
+
+
+# --------------------------------------------------------------------------
+#  risultati.json: scrittura e conversione al formato con "id"
+# --------------------------------------------------------------------------
+def testo_risultati(ris):
+    """Testo di risultati.json, leggibile a mano.
+
+    Voci con "id": una riga  { "id": ..., "hs": .., "as": .., "status": .. }
+    Voci nel formato precedente: due righe (data, categoria, squadre / punteggio).
+    """
+    def campi(d):
+        return ", ".join(f"{json.dumps(k)}: {json.dumps(v, ensure_ascii=False)}" for k, v in d.items())
+
+    righe = []
+    for r in ris.get("results", []):
+        if r.get("id"):
+            righe.append(f"    {{ {campi(r)} }}")
+            continue
+        a = {k: r[k] for k in ("date", "cat", "home", "away") if k in r}
+        b = {k: v for k, v in r.items() if k not in a}
+        righe.append(f"    {{ {campi(a)},\n      {campi(b)} }}")
+    testa = {k: v for k, v in ris.items() if k != "results"}
+    testo = "{\n" + "".join(f"  {json.dumps(k)}: {json.dumps(v, ensure_ascii=False)},\n" for k, v in testa.items())
+    testo += '  "results": [\n' + ",\n".join(righe) + ("\n" if righe else "") + "  ]\n}\n"
+    json.loads(testo)                                         # controllo prima di scrivere
+    return testo
+
+
+def scrivi(nome, testo):
+    """Scrive un file della cartella del progetto in modo sicuro (prima .tmp, poi rinomina)."""
+    path = os.path.join(HERE, nome)
+    with open(path + ".tmp", "w", encoding="utf-8") as f:
+        f.write(testo)
+    os.replace(path + ".tmp", path)
+
+
+def testo_calendario(cal):
+    return json.dumps(cal, ensure_ascii=False, indent=2) + "\n"
+
+
+def converti_risultati(cal, ris):
+    """(ris convertito, non_trovate): le voci nel formato precedente diventano
+    { "id", "hs", "as", "status" } con i gol nell'ordine di calendario.json.
+    Le voci che non corrispondono a nessuna partita restano com'erano."""
+    out, non_trovate = [], []
+    for r in (ris or {}).get("results", []):
+        if r.get("id"):
+            out.append(r)
+            continue
+        trovata = None
+        for m in cal["matches"]:
+            if m.get("event") or m["date"][:5] != r["date"][:5] or m["cat"] != r["cat"]:
+                continue
+            if (norm(m["home"]), norm(m["away"])) == (norm(r["home"]), norm(r["away"])):
+                trovata = (m, r["hs"], r["as"])
+            elif (norm(m["home"]), norm(m["away"])) == (norm(r["away"]), norm(r["home"])):
+                trovata = (m, r["as"], r["hs"])
+            if trovata:
+                break
+        if not trovata or not trovata[0].get("id"):
+            out.append(r)
+            non_trovate.append(r)
+            continue
+        m, hs, as_ = trovata
+        extra = {k: v for k, v in r.items() if k not in ("date", "cat", "home", "away", "hs", "as", "status")}
+        out.append({"id": m["id"], "hs": hs, "as": as_, "status": r.get("status", ""), **extra})
+    return dict(ris or {}, results=out), non_trovate

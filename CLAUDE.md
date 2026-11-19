@@ -10,7 +10,8 @@ Testi, commenti e messaggi di commit in **italiano**.
   schermo. Pulsante **📅 Sincronizza** + guida **?** (`js/sincronizza-aiuto.js`) →
   `sincronizza.html`. `index-old.html`/`mobile-old.html`: versioni precedenti (`noindex`).
   `calendario-google.html`: nascosta (link commentati).
-- Dati: `calendario.json` (dall'Excel con `converti_excel.py`) e `risultati.json`.
+- Dati: `calendario.json` (dall'Excel con `converti_excel.py`; ogni partita ha un `id`
+  = data+ora+categoria+sigle, tabella `sigle`) e `risultati.json` (solo `id`, gol, `status`).
 - `genera_ics.py` → `calendario*.ics` + `calendari.json` (UID da `eventi_comuni.py`).
 - `sincronizza_google.py`: sincronizzazione con un calendario Google proprio (oggi non
   usata: i calendari Google pubblici sono "Da URL", ID in `js/calendari-google.js`).
@@ -23,7 +24,8 @@ Testi, commenti e messaggi di commit in **italiano**.
 python3 converti_excel.py          # Excel -> calendario.json (+ genera_ics.py)
 python3 genera_ics.py              # dopo OGNI modifica a calendario.json o risultati.json
 python3 verifica_figh.py           # menu: scarica / confronta online / offline / carica risultati
-python3 -m unittest test_sincronizza test_verifica_figh
+python3 aggiorna_id.py             # id mancanti in calendario.json, risultati.json col formato a id
+python3 -m unittest test_sincronizza test_verifica_figh test_id
 python3 -m http.server 8000        # prova in locale (http://localhost:8000)
 ```
 Solo libreria standard di Python (3.9), tranne `sincronizza_google.py` (`requirements.txt`).

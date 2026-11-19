@@ -32,7 +32,8 @@ DOW1 = ["L", "M", "M", "G", "V", "S", "D"]          # lettera usata nella colonn
 # categorie: codice -> etichetta (l'ordine e' quello dei filtri nella pagina)
 CATEGORIES = {"serieb": "Serie B", "u18f": "U18 F", "u16f": "U16 F", "u16m": "U16 M",
               "u14": "Under 14", "interna": "Gara interna", "sel": "Selezione Talenti"}
-# durate (minuti) per la modalita' Mister: totale = 2*tempo + pausa
+# durate (minuti) per la modalita' Mister: totale = 2*tempo + pausa.
+# Solo valori di partenza: se calendario.json esiste gia', si tengono le sue durate.
 DURATE = {"serieb": {"tempo": 30, "pausa": 10}, "u18f": {"tempo": 30, "pausa": 10},
           "u16f": {"tempo": 25, "pausa": 10}, "u16m": {"tempo": 25, "pausa": 10},
           "u14": {"tempo": 20, "pausa": 10}, "interna": {"tempo": 30, "pausa": 10},
@@ -199,6 +200,26 @@ def main():
         f for f in glob.glob(os.path.join(HERE, "*.xlsx")) if not os.path.basename(f).startswith("~$"))[-1]
     cal, warnings = convert(xlsx)
     path = os.path.join(HERE, "calendario.json")
+
+    # sigle delle squadre: si tengono quelle del calendario.json attuale (non sono nell'Excel)
+    # e servono per l'id di ogni partita (vedi eventi_comuni.assegna_id)
+    from eventi_comuni import load, assegna_id, squadre_senza_sigla, id_sconosciuti
+    vecchio = load("calendario.json", {}) or {}
+    cal = {k2: v2 for k, v in cal.items()
+           for k2, v2 in ([(k, v), ("sigle", vecchio.get("sigle", {}))] if k == "venues" else [(k, v)])}
+
+    # durate e margine della modalita' Mister: non sono nell'Excel e si cambiano a mano
+    # in calendario.json, quindi si tengono quelle attuali (DURATE solo per le categorie nuove)
+    vm = vecchio.get("mister") or {}
+    if "buffer" in vm:
+        cal["mister"]["buffer"] = vm["buffer"]
+    cal["mister"]["durate"] = {**DURATE, **(vm.get("durate") or {})}
+    assegna_id(cal)
+    for n in squadre_senza_sigla(cal):
+        warnings.append(f"squadra senza sigla in \"sigle\" (nell'id va il nome intero): {n}")
+    for i in id_sconosciuti(cal, load("risultati.json", {})):
+        warnings.append(f"risultati.json: l'id {i} non esiste piu' (partita spostata o cambiata?)")
+
     with open(path, "w", encoding="utf-8") as f:
         json.dump(cal, f, ensure_ascii=False, indent=2)
         f.write("\n")

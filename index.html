@@ -57,7 +57,7 @@ const EV_ROW = "—";        // riga per gli eventi senza orario
 
 let V={}, CAT={}, DAYS=[], DOW={}, TEAM="HC Fondi", D=[], TIMES=[];
 let DAY_YEAR={};           // "GG/MM" -> anno (la stagione è a cavallo di due anni)
-let RES={};
+let RES={}, RES_ID={};
 const state = { cats:{}, month:"", mister:false };
 
 const FALLBACK_DUR = { serieb:70, u18f:70, u16f:60, u16m:60, u14:50, interna:70, sel:0 };
@@ -80,12 +80,15 @@ const normTeam = s => (s||"").toUpperCase().replace(/\s+/g," ").trim();
 const normDate = s => (s||"").slice(0,5);
 const resKey = (d,c,h,a) => normDate(d)+"|"+(c||"")+"|"+normTeam(h)+"|"+normTeam(a);
 
+// risultato di una partita: per "id" (risultati.json attuale, gol nell'ordine di
+// calendario.json) oppure, per le voci nel formato precedente, per data + categoria + squadre
 function resultFor(m){
-  const r = RES[resKey(m.date,m.cat,m.home,m.away)];
-  const rr = r ? null : RES[resKey(m.date,m.cat,m.away,m.home)];
-  const x = r || rr;
+  const ri = m.id ? RES_ID[m.id] : null;
+  const r = ri ? null : RES[resKey(m.date,m.cat,m.home,m.away)];
+  const rr = (ri || r) ? null : RES[resKey(m.date,m.cat,m.away,m.home)];
+  const x = ri || r || rr;
   if(!x || statoRisultato(x.status).codice==="DA_INIZIARE") return null;
-  return r ? {hs:+r.hs, as:+r.as, status:r.status} : {hs:+rr.as, as:+rr.hs, status:rr.status};
+  return rr ? {hs:+rr.as, as:+rr.hs, status:rr.status} : {hs:+x.hs, as:+x.as, status:x.status};
 }
 
 // stato del risultato: "FINE" (o vuoto) = finale; PARZIALE, 1T, INTERVALLO, 2T = partita in corso
@@ -312,7 +315,10 @@ async function loadResults(){
     const res = await fetch("risultati.json", {cache:"no-store"});
     if(!res.ok) return null;
     const data = await res.json();
-    (data.results||[]).forEach(r=>{ RES[resKey(r.date,r.cat,r.home,r.away)] = r; });
+    (data.results||[]).forEach(r=>{
+      if(r.id) RES_ID[r.id] = r;
+      else RES[resKey(r.date,r.cat,r.home,r.away)] = r;
+    });
     return data;
   }catch(_){ return null; }
 }

@@ -56,7 +56,7 @@ const MESI = ["","gen","feb","mar","apr","mag","giu","lug","ago","set","ott","no
 const MESI_LUNGHI = ["","gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"];
 const GIORNI = ["domenica","lunedì","martedì","mercoledì","giovedì","venerdì","sabato"];
 
-let V={}, CAT={}, DOW={}, TEAM="HC Fondi", D=[], DAYS=[], RES={}, DUR={};
+let V={}, CAT={}, DOW={}, TEAM="HC Fondi", D=[], DAYS=[], RES={}, RES_ID={}, DUR={};
 const state = { cats:{}, month:"" };
 
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -70,12 +70,15 @@ const monthKey = m => yearOf(m) + "-" + m.date.slice(3,5);
 const todayKey = () => { const n=new Date(); return n.getFullYear()*10000+(n.getMonth()+1)*100+n.getDate(); };
 const city = v => { const s = V[v] || v || ""; const i = s.lastIndexOf(" - "); return i>=0 ? s.slice(i+3) : s; };
 
+// risultato di una partita: per "id" (risultati.json attuale, gol nell'ordine di
+// calendario.json) oppure, per le voci nel formato precedente, per data + categoria + squadre
 function resultFor(m){
-  const r = RES[resKey(m.date,m.cat,m.home,m.away)];
-  const rr = r ? null : RES[resKey(m.date,m.cat,m.away,m.home)];
-  const x = r || rr;
+  const ri = m.id ? RES_ID[m.id] : null;
+  const r = ri ? null : RES[resKey(m.date,m.cat,m.home,m.away)];
+  const rr = (ri || r) ? null : RES[resKey(m.date,m.cat,m.away,m.home)];
+  const x = ri || r || rr;
   if(!x || statoRisultato(x.status).codice==="DA_INIZIARE") return null;
-  return r ? {hs:+r.hs, as:+r.as, status:r.status} : {hs:+rr.as, as:+rr.hs, status:rr.status};
+  return rr ? {hs:+rr.as, as:+rr.hs, status:rr.status} : {hs:+x.hs, as:+x.as, status:x.status};
 }
 // stato del risultato: "FINE" (o vuoto) = finale; PARZIALE, 1T, INTERVALLO, 2T = partita in corso
 // DA_INIZIARE = nessun risultato da mostrare (come se la partita non fosse in risultati.json)
@@ -278,7 +281,10 @@ async function loadResults(){
     const res = await fetch("risultati.json", {cache:"no-store"});
     if(!res.ok) return null;
     const data = await res.json();
-    (data.results||[]).forEach(r=>{ RES[resKey(r.date,r.cat,r.home,r.away)] = r; });
+    (data.results||[]).forEach(r=>{
+      if(r.id) RES_ID[r.id] = r;
+      else RES[resKey(r.date,r.cat,r.home,r.away)] = r;
+    });
     return data;
   }catch(_){ return null; }
 }

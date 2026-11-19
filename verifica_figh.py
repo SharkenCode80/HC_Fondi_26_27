@@ -28,7 +28,7 @@ vengono controllati.
 
 import datetime, json, os, re, sys, urllib.request
 
-from eventi_comuni import HERE, load, norm
+from eventi_comuni import HERE, load, norm, testo_risultati, scrivi
 
 BASE = "https://www.federhandball.it/campionati-territoriali/area-7/girone/"
 # pagina del girone -> categoria del nostro calendario (None = dal nome squadra)
@@ -231,6 +231,11 @@ def punti_nostro_verso(m, f):
 def cerca_nostro_risultato(ris, m):
     """Indice in ris["results"] e punteggio (casa, ospite) di calendario.json, o (None, None)."""
     for i, r in enumerate((ris or {}).get("results", [])):
+        if r.get("id") or m.get("id"):
+            if r.get("id") and r["id"] == m.get("id"):
+                return i, (r["hs"], r["as"])
+            if r.get("id"):
+                continue
         if r["date"][:5] != m["date"][:5] or r["cat"] != m["cat"]:
             continue
         if (norm(r["home"]), norm(r["away"])) == (norm(m["home"]), norm(m["away"])):
@@ -321,8 +326,9 @@ def risultati_da_caricare(cal, ris, figh):
             non_abbinati.append(f)
             continue
         hs, as_ = punti_nostro_verso(m, f)
-        voce = {"date": m["date"][:5], "cat": m["cat"], "home": m["home"], "away": m["away"],
-                "hs": hs, "as": as_, "status": "FINE"}
+        voce = ({"id": m["id"]} if m.get("id") else
+                {"date": m["date"][:5], "cat": m["cat"], "home": m["home"], "away": m["away"]})
+        voce.update({"hs": hs, "as": as_, "status": "FINE"})
         i, attuale = cerca_nostro_risultato(ris, m)
         if attuale is None:
             nuovi.append((m, voce, None, None, f))
@@ -335,7 +341,10 @@ def applica_risultati(ris, nuovi, cambiati, fonte):
     ris = json.loads(json.dumps(ris or {"results": []}))   # copia
     results = ris.setdefault("results", [])
     for _, voce, i, _, _ in cambiati:
-        results[i] = dict(results[i], **voce)
+        vecchia = results[i]
+        if "id" in voce:                    # voce nel formato precedente -> formato con id
+            vecchia = {k: v for k, v in vecchia.items() if k not in ("date", "cat", "home", "away")}
+        results[i] = dict(vecchia, **voce)
     for _, voce, _, _, _ in nuovi:
         results.append(voce)
     ris["updated"] = datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
@@ -344,23 +353,8 @@ def applica_risultati(ris, nuovi, cambiati, fonte):
 
 
 def scrivi_risultati(ris):
-    """Stesso formato di risultati.json scritto a mano: una partita su due righe."""
-    def campi(d):
-        return ", ".join(f"{json.dumps(k)}: {json.dumps(v, ensure_ascii=False)}" for k, v in d.items())
-
-    righe = []
-    for r in ris.get("results", []):
-        a = {k: r[k] for k in ("date", "cat", "home", "away") if k in r}
-        b = {k: v for k, v in r.items() if k not in a}
-        righe.append(f"    {{ {campi(a)},\n      {campi(b)} }}")
-    testa = {k: v for k, v in ris.items() if k != "results"}
-    testo = "{\n" + "".join(f"  {json.dumps(k)}: {json.dumps(v, ensure_ascii=False)},\n" for k, v in testa.items())
-    testo += '  "results": [\n' + ",\n".join(righe) + ("\n" if righe else "") + "  ]\n}\n"
-    json.loads(testo)                                         # controllo prima di scrivere
-    path = os.path.join(HERE, "risultati.json")
-    with open(path + ".tmp", "w", encoding="utf-8") as f:
-        f.write(testo)
-    os.replace(path + ".tmp", path)
+    """Stesso formato di risultati.json scritto a mano (vedi eventi_comuni.testo_risultati)."""
+    scrivi("risultati.json", testo_risultati(ris))
 
 
 # --------------------------------------------------------------------------
