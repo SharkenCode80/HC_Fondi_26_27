@@ -10,7 +10,7 @@
     { "id": "20261115-1200-u18f-pdo-hcf", "hs": 20, "as": 34, "status": "FINE" },
     { "id": "20261119-1800-u16m-hcf-ghlb", "hs": 33, "as": 23, "status": "FINE" },
     { "id": "20261120-1530-u16f-fla-hcf", "hs": 19, "as": 15, "status": "FINE" },
-    { "id": "20261122-1000-u18f-hcf-gae", "hs": 40, "as": 4, "status": "2T" }
+    { "id": "20261122-1000-u18f-hcf-gae", "hs": 42, "as": 4, "status": "2T" }
     
   ]
 }
