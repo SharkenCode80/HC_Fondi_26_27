@@ -203,7 +203,8 @@ def main():
 
     # sigle delle squadre: si tengono quelle del calendario.json attuale (non sono nell'Excel)
     # e servono per l'id di ogni partita (vedi eventi_comuni.assegna_id)
-    from eventi_comuni import load, assegna_id, squadre_senza_sigla, id_sconosciuti
+    from eventi_comuni import (load, assegna_id, squadre_senza_sigla, id_sconosciuti,
+                               prepara_risultati, testo_risultati, scrivi)
     vecchio = load("calendario.json", {}) or {}
     cal = {k2: v2 for k, v in cal.items()
            for k2, v2 in ([(k, v), ("sigle", vecchio.get("sigle", {}))] if k == "venues" else [(k, v)])}
@@ -228,6 +229,12 @@ def main():
         per_cat[m["cat"]] = per_cat.get(m["cat"], 0) + 1
     print(f"Letto: {os.path.basename(xlsx)}")
     print(f"Scritto: {path} - {len(cal['matches'])} voci in {len(cal['days'])} giornate | {per_cat}")
+    # risultati.json: una voce DA_INIZIARE per ogni partita nuova (vedi aggiorna_id.py)
+    ris = load("risultati.json", {"results": []}) or {"results": []}
+    ris2, aggiunte, tolte = prepara_risultati(cal, ris)
+    if ris2 != ris:
+        scrivi("risultati.json", testo_risultati(ris2))
+        print(f"risultati.json: {aggiunte} partite aggiunte (DA_INIZIARE), {tolte} tolte")
     for w in warnings:
         print("  [attenzione]", w)
 

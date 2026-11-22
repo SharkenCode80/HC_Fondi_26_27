@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta http-equiv="refresh" content="600" data-auto-refresh>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0B2A5B">
 <title>HC Fondi Campionati 26-27</title>
 <!-- sceglie in automatico la versione completa o cellulare (vedi js/vista.js) -->
-<script src="js/vista.js?v=2.4.2"></script>
-<script src="js/sincronizza-aiuto.js?v=2.4.2" defer></script>
-<script src="js/dettagli.js?v=2.4.2"></script>
+<script src="js/vista.js?v=2.5.0"></script>
+<script src="js/sincronizza-aiuto.js?v=2.5.0" defer></script>
+<script src="js/dettagli.js?v=2.5.0"></script>
+<script src="js/aggiornamento.js?v=2.5.0"></script>
 <!-- ===== STILE =====
      1) il tema (lo stesso di index.html): css/tema-classico.css, tema-scuro,
         tema-arancio, tema-minimal, tema-compatto, tema-rossoblu
      2) css/mobile.css: layout agenda per cellulare (sempre DOPO il tema)
 -->
-<link rel="stylesheet" href="css/tema-rossoblu.css?v=2.4.2" id="tema">
-<link rel="stylesheet" href="css/mobile.css?v=2.4.2">
+<link rel="stylesheet" href="css/tema-rossoblu.css?v=2.5.0" id="tema">
+<link rel="stylesheet" href="css/mobile.css?v=2.5.0">
 </head>
 <body class="mobile">
 
@@ -221,26 +221,55 @@ function applyMeta(ev, resMeta){
   document.getElementById("ev-foot").textContent = cal + ris + " ";
 }
 
+// risultati.json: indici per id (formato attuale) e per data+categoria+squadre (precedente)
+function applyResults(data){
+  RES = {}; RES_ID = {};
+  (data && data.results || []).forEach(r=>{
+    if(r.id) RES_ID[r.id] = r;
+    else RES[resKey(r.date,r.cat,r.home,r.away)] = r;
+  });
+}
+let RES_TXT = null, EV = null;     // testo di risultati.json e dati dell'evento (js/aggiornamento.js)
 async function loadResults(){
   try{
-    const res = await fetch("risultati.json", {cache:"no-store"});
+    const res = await fetch("risultati.json?t="+Date.now(), {cache:"no-store"});
     if(!res.ok) return null;
-    const data = await res.json();
-    (data.results||[]).forEach(r=>{
-      if(r.id) RES_ID[r.id] = r;
-      else RES[resKey(r.date,r.cat,r.home,r.away)] = r;
-    });
+    RES_TXT = await res.text();
+    const data = JSON.parse(RES_TXT);
+    applyResults(data);
     return data;
   }catch(_){ return null; }
+}
+
+// ---------- aggiornamento automatico dei risultati (js/aggiornamento.js) ----------
+// orari delle partite (inizio e fine indicativa, in ms): servono a capire se una è in corso
+function matchWindows(){
+  return D.filter(m=> m.time && !m.event).map(m=>{
+    const [h,mi] = m.time.split(".").map(Number);
+    const s = new Date(m.year, +m.date.slice(3,5)-1, +m.date.slice(0,2), h, mi).getTime();
+    return [s, s + (DUR[m.cat]||60)*60000];
+  });
+}
+// risultati nuovi: ridisegna la lista mantenendo filtri, posizione e pannello aperto
+function redraw(data){
+  applyResults(data);
+  applyMeta(EV, data);
+  const y = window.scrollY;
+  render();
+  window.scrollTo(0, y);
+  const i = Dettagli.aperto();
+  if(i !== null) openSheet(i);
 }
 
 async function init(){
   let caricato = false;      // true quando calendario.json è arrivato: un errore dopo è di visualizzazione
   try{
-    const res = await fetch("calendario.json", {cache:"no-store"});
+    const res = await fetch("calendario.json?t="+Date.now(), {cache:"no-store"});
     if(!res.ok) throw new Error("HTTP "+res.status);
-    const data = await res.json();
+    const calTxt = await res.text();
+    const data = JSON.parse(calTxt);
     caricato = true;
+    EV = data.event;
     V = data.venues || {}; CAT = data.categories || {}; DOW = data.dow || {};
     TEAM = data.fondiTeam || "HC Fondi";
 
@@ -263,6 +292,7 @@ async function init(){
     const ref = D.find(m=> dayKey(m)===(nextK ?? DAYS[DAYS.length-1]));
     setMonth(ref ? monthKey(ref) : "");
     if(nextK) requestAnimationFrame(goNext);
+    Aggiornamento.avvia({ risultati:RES_TXT, calendario:calTxt, finestre:matchWindows, aggiorna:redraw });
   }catch(err){
     document.getElementById("agenda").innerHTML = caricato
       ? `<p class="mempty"><b>Non è stato possibile mostrare il calendario.</b><br>

@@ -10,6 +10,8 @@
    Si chiude con la ×, cliccando fuori o con Esc.
    Dettagli.punteggio(m, r, isOurs, sep) scrive il punteggio con i gol di HC Fondi
    evidenziati (usato anche dalle card di mobile.html).
+   Dettagli.aperto() dà l'indice della partita nel pannello aperto (o null): serve
+   per aggiornare il pannello quando arrivano risultati nuovi (js/aggiornamento.js).
 
    Dettagli.apri({
      m,          // la voce di calendario.json
@@ -146,5 +148,11 @@
     setTimeout(function(){ URL.revokeObjectURL(a.href); }, 2000);
   }
 
-  window.Dettagli = { apri: apri, punteggio: punteggio };
+  // indice della partita mostrata nel pannello aperto, oppure null
+  function aperto(){
+    var d = document.getElementById("sheet");
+    return d && d.open && corrente ? corrente.indice : null;
+  }
+
+  window.Dettagli = { apri: apri, punteggio: punteggio, aperto: aperto };
 })();

@@ -146,9 +146,11 @@ def etichetta_stato(stato):
 
 
 def id_sconosciuti(cal, ris):
-    """Id usati in risultati.json che non corrispondono a nessuna voce di calendario.json."""
+    """Id usati in risultati.json che non corrispondono a nessuna voce di calendario.json
+    (escluse le voci DA_INIZIARE, che non contengono risultati)."""
     ids = {m.get("id") for m in cal["matches"]}
-    return [r["id"] for r in (ris or {}).get("results", []) if r.get("id") and r["id"] not in ids]
+    return [r["id"] for r in (ris or {}).get("results", [])
+            if r.get("id") and r["id"] not in ids and codice_stato(r.get("status")) != "DA_INIZIARE"]
 
 
 def cerca_risultato(ris):
@@ -287,3 +289,35 @@ def converti_risultati(cal, ris):
         extra = {k: v for k, v in r.items() if k not in ("date", "cat", "home", "away", "hs", "as", "status")}
         out.append({"id": m["id"], "hs": hs, "as": as_, "status": r.get("status", ""), **extra})
     return dict(ris or {}, results=out), non_trovate
+
+
+def prepara_risultati(cal, ris):
+    """(ris, aggiunte, tolte): risultati.json con una voce per ogni partita.
+
+    - Le partite (non gli eventi) senza voce ricevono
+      { "id", "hs": 0, "as": 0, "status": "DA_INIZIARE" }: basta poi scrivere
+      gol e stato.
+    - Le voci con id sono messe nell'ordine di calendario.json; quelle nel formato
+      precedente o con un id che non esiste restano in fondo, com'erano.
+    - Le voci DA_INIZIARE con un id che non esiste piu' (partita spostata o tolta)
+      vengono tolte: non contengono risultati.
+    """
+    per_id, altre, tolte = {}, [], 0
+    ids = {m.get("id") for m in cal["matches"]}
+    for r in (ris or {}).get("results", []):
+        if r.get("id") and r["id"] in ids and r["id"] not in per_id:
+            per_id[r["id"]] = r
+        elif r.get("id") and r["id"] not in ids and codice_stato(r.get("status")) == "DA_INIZIARE":
+            tolte += 1
+        else:
+            altre.append(r)
+    out, aggiunte = [], 0
+    for m in cal["matches"]:
+        if m.get("event") or not m.get("id"):
+            continue
+        if m["id"] in per_id:
+            out.append(per_id[m["id"]])
+        else:
+            out.append({"id": m["id"], "hs": 0, "as": 0, "status": "DA_INIZIARE"})
+            aggiunte += 1
+    return dict(ris or {}, results=out + altre), aggiunte, tolte

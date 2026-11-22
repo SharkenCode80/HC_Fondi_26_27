@@ -164,6 +164,19 @@ in `calendario.json`.
 - **`hs` / `as`**: gol della squadra di casa e di quella ospite, nello stesso ordine
   della partita in `calendario.json`.
 
+**`risultati.json` contiene già una riga per ogni partita** (gli eventi senza avversario,
+come Selezione, raduni U14 e finali, no), in ordine di data, con `0`-`0` e stato
+`DA_INIZIARE`. Per inserire un risultato si cerca la riga con la data della partita e si
+cambiano solo gol e stato, ad esempio:
+
+```json
+{ "id": "20261128-1200-u16f-gae-hcf", "hs": 12, "as": 15, "status": "1T" },
+```
+
+Le righe nuove le aggiungono da sole `converti_excel.py` e `aggiorna_id.py`, quando nel
+calendario compaiono partite nuove (e tolgono le righe `DA_INIZIARE` di partite che non
+esistono più).
+
 Le sigle sono nella tabella `"sigle"` di `calendario.json` (nome squadra → sigla; maiuscole
 e spazi nel nome non contano). Sono quelle FIGH (`acronimo`), corrette dove la FIGH ne usa una
 generica o la stessa per più squadre (es. Flavioni `FLA`, Benevento `BEN`, Cassino Gaeta
@@ -178,7 +191,7 @@ nuovo e lo script segnala i risultati con un id che non esiste più.
 Per una partita aggiunta a mano in `calendario.json` basta lasciarla senza `id`:
 
 ```bash
-python3 aggiorna_id.py       # aggiunge gli id mancanti e converte le voci nel formato precedente
+python3 aggiorna_id.py       # id mancanti, righe DA_INIZIARE nuove, conversione del formato precedente
 python3 genera_ics.py
 ```
 
@@ -476,6 +489,7 @@ HC_Fondi_26_27/
 │   ├── vista.js          sceglie index.html o mobile.html in base allo schermo
 │   ├── sincronizza-aiuto.js  guida del pulsante "?" accanto a "Sincronizza"
 │   ├── dettagli.js       pannello dettagli di una partita (index.html e mobile.html)
+│   ├── aggiornamento.js  aggiornamento automatico dei risultati (index.html e mobile.html)
 │   └── calendari-google.js   ID dei calendari Google pubblici
 ├── README.md
 └── .gitignore
@@ -568,6 +582,18 @@ sequenceDiagram
     P->>P: evidenzia OGGI / PROSSIMA, seleziona il mese, scorre fino alla giornata
 ```
 
+- **Aggiornamento automatico (`js/aggiornamento.js`):** la pagina non si ricarica più
+  da sola; riscarica `risultati.json` e, se è cambiato, ridisegna solo le partite
+  (filtri, scorrimento e pannello aperto restano). Durante una partita (dall'inizio alla
+  fine indicativa + 20 minuti) controlla **ogni minuto**, altrimenti ogni 10 minuti e
+  all'inizio della partita successiva; con la pagina non visibile (app in secondo piano,
+  schermo spento) non controlla, e appena torna visibile (o viene ripristinata tornando
+  indietro da un'altra pagina) controlla subito i risultati, se l'ultimo controllo è di
+  almeno 30 secondi prima. `calendario.json` si controlla fuori dalle partite e comunque
+  se sono passati almeno 10 minuti dall'ultimo controllo: se è cambiato, o se è cambiato
+  il giorno, la pagina si ricarica. I file si scaricano con `?t=…` per avere sempre l'ultima versione pubblicata.
+  Dopo aver salvato `risultati.json` su GitHub, il risultato compare in circa 1-2 minuti
+  (il tempo di pubblicazione di GitHub Pages più il controllo successivo).
 - **Filtri:** le card, le righe e le colonne vengono nascoste aggiungendo la classe
   `hidden`. Il JavaScript non scrive stili, tutto l'aspetto è nei CSS.
 - **Accavallamenti (Mister):** due gare A e B dello stesso giorno sono in conflitto se

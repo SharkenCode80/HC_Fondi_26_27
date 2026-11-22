@@ -28,7 +28,7 @@ vengono controllati.
 
 import datetime, json, os, re, sys, urllib.request
 
-from eventi_comuni import HERE, load, norm, testo_risultati, scrivi
+from eventi_comuni import HERE, load, norm, testo_risultati, scrivi, codice_stato
 
 BASE = "https://www.federhandball.it/campionati-territoriali/area-7/girone/"
 # pagina del girone -> categoria del nostro calendario (None = dal nome squadra)
@@ -229,7 +229,18 @@ def punti_nostro_verso(m, f):
 
 
 def cerca_nostro_risultato(ris, m):
-    """Indice in ris["results"] e punteggio (casa, ospite) di calendario.json, o (None, None)."""
+    """Indice in ris["results"] e punteggio (casa, ospite) di calendario.json, o (None, None).
+
+    Per le voci DA_INIZIARE (partita preparata ma senza risultato) il punteggio e' None
+    e l'indice serve per scriverci sopra il risultato.
+    """
+    i, punti = _cerca_voce(ris, m)
+    if i is not None and codice_stato(ris["results"][i].get("status")) == "DA_INIZIARE":
+        return i, None
+    return i, punti
+
+
+def _cerca_voce(ris, m):
     for i, r in enumerate((ris or {}).get("results", [])):
         if r.get("id") or m.get("id"):
             if r.get("id") and r["id"] == m.get("id"):
@@ -330,8 +341,8 @@ def risultati_da_caricare(cal, ris, figh):
                 {"date": m["date"][:5], "cat": m["cat"], "home": m["home"], "away": m["away"]})
         voce.update({"hs": hs, "as": as_, "status": "FINE"})
         i, attuale = cerca_nostro_risultato(ris, m)
-        if attuale is None:
-            nuovi.append((m, voce, None, None, f))
+        if attuale is None:                         # nessuna voce, oppure voce DA_INIZIARE (indice i)
+            nuovi.append((m, voce, i, None, f))
         elif tuple(attuale) != (hs, as_):
             cambiati.append((m, voce, i, attuale, f))
     return nuovi, cambiati, non_abbinati
@@ -345,8 +356,11 @@ def applica_risultati(ris, nuovi, cambiati, fonte):
         if "id" in voce:                    # voce nel formato precedente -> formato con id
             vecchia = {k: v for k, v in vecchia.items() if k not in ("date", "cat", "home", "away")}
         results[i] = dict(vecchia, **voce)
-    for _, voce, _, _, _ in nuovi:
-        results.append(voce)
+    for _, voce, i, _, _ in nuovi:
+        if i is None:
+            results.append(voce)
+        else:                               # voce DA_INIZIARE gia' presente: si riempie
+            results[i] = dict(results[i], **voce)
     ris["updated"] = datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
     ris["source"] = fonte
     return ris

@@ -100,6 +100,37 @@ class TestRisultati(unittest.TestCase):
         self.assertEqual(ec.id_sconosciuti(self.c, ris), ["non-esiste"])
 
 
+class TestPreparaRisultati(unittest.TestCase):
+    def setUp(self):
+        self.c = cal()
+        ec.assegna_id(self.c)
+
+    def test_una_voce_per_partita_in_ordine(self):
+        ris = {"updated": "x", "results": [
+            {"id": "20270110-1000-u16f-hcf-squadra-nuova", "hs": 3, "as": 1, "status": "1T"},
+            {"date": "01/01", "cat": "u16f", "home": "A", "away": "B", "hs": 1, "as": 0},  # formato vecchio
+            {"id": "spostata", "hs": 0, "as": 0, "status": "DA_INIZIARE"},              # da togliere
+            {"id": "sparita", "hs": 5, "as": 4, "status": "FINE"},                      # resta (ha un risultato)
+        ]}
+        nuovo, aggiunte, tolte = ec.prepara_risultati(self.c, ris)
+        self.assertEqual((aggiunte, tolte), (2, 1))
+        self.assertEqual([r.get("id") for r in nuovo["results"]], [
+            "20261120-1530-u16f-fla-hcf", "20261206-1200-interna-hcf18-hcf16",
+            "20270110-1000-u16f-hcf-squadra-nuova",          # l'evento 13/12 non ha voce
+            None, "sparita"])
+        self.assertEqual(nuovo["results"][0], {"id": "20261120-1530-u16f-fla-hcf",
+                                               "hs": 0, "as": 0, "status": "DA_INIZIARE"})
+        self.assertEqual(nuovo["results"][2]["status"], "1T")                # non toccata
+        self.assertEqual(nuovo["updated"], "x")
+        self.assertEqual(ec.prepara_risultati(self.c, nuovo)[1:], (0, 0))    # seconda volta: niente
+        self.assertEqual(ec.id_sconosciuti(self.c, nuovo), ["sparita"])
+
+    def test_da_iniziare_non_mostrato(self):
+        ris, _, _ = ec.prepara_risultati(self.c, {"results": []})
+        trova = ec.cerca_risultato(ris)
+        self.assertTrue(all(trova(m) is None for m in self.c["matches"]))
+
+
 class TestAggiornaId(unittest.TestCase):
     def setUp(self):
         self.dir = tempfile.mkdtemp()
@@ -137,8 +168,11 @@ class TestAggiornaId(unittest.TestCase):
         self.assertEqual(self.esegui(["--si"])[0], 0)
         c = json.loads(self.leggi("calendario.json"))
         self.assertEqual(c["matches"][0]["id"], "20261120-1530-u16f-fla-hcf")
-        self.assertEqual(json.loads(self.leggi("risultati.json"))["results"],
-                         [{"id": "20261120-1530-u16f-fla-hcf", "hs": 20, "as": 25, "status": "FINE"}])
+        self.assertEqual(json.loads(self.leggi("risultati.json"))["results"], [
+            {"id": "20261120-1530-u16f-fla-hcf", "hs": 20, "as": 25, "status": "FINE"},
+            {"id": "20261206-1200-interna-hcf18-hcf16", "hs": 0, "as": 0, "status": "DA_INIZIARE"},
+            {"id": "20270110-1000-u16f-hcf-squadra-nuova", "hs": 0, "as": 0, "status": "DA_INIZIARE"},
+        ])
         codice, out = self.esegui([])
         self.assertEqual(codice, 0)
         self.assertIn("Niente da cambiare", out)
@@ -163,6 +197,23 @@ class TestVerificaFighConId(tvf.Base):
         ris = json.loads(self.leggi("risultati.json"))
         self.assertTrue(all("id" in r and "home" not in r for r in ris["results"]))
         trova = ec.cerca_risultato(ris)
+        self.assertEqual(trova(self.cal["matches"][1]), (30, 31, "FINE"))
+        self.assertEqual(trova(self.cal["matches"][3]), (28, 20, "FINE"))
+
+    def test_voci_da_iniziare(self):
+        """Partite preparate (DA_INIZIARE): il confronto le tratta come senza risultato
+        e il caricamento scrive il risultato nella voce esistente, senza duplicarla."""
+        ris, _, _ = ec.prepara_risultati(self.cal, {"results": []})
+        self.scrivi("risultati.json", ris)
+        ok, problemi = vf.confronta(self.cal, ris, self.figh())
+        testo = json.dumps(problemi)
+        self.assertNotIn("non è giocata", testo)
+        self.assertIn("risultato mancante", testo)
+        with mock.patch.object(builtins, "input", side_effect=["1", "s"]), redirect_stdout(io.StringIO()):
+            vf.main(["carica"])
+        dopo = json.loads(self.leggi("risultati.json"))["results"]
+        self.assertEqual(len(dopo), len(ris["results"]))                     # nessuna voce in più
+        trova = ec.cerca_risultato({"results": dopo})
         self.assertEqual(trova(self.cal["matches"][1]), (30, 31, "FINE"))
         self.assertEqual(trova(self.cal["matches"][3]), (28, 20, "FINE"))
 

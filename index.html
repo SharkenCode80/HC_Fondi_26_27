@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta http-equiv="refresh" content="600" data-auto-refresh>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>HC Fondi Campionati 26-27</title>
 <!-- sceglie in automatico la versione completa o cellulare (vedi js/vista.js) -->
-<script src="js/vista.js?v=2.4.2"></script>
-<script src="js/sincronizza-aiuto.js?v=2.4.2" defer></script>
-<script src="js/dettagli.js?v=2.4.2"></script>
+<script src="js/vista.js?v=2.5.0"></script>
+<script src="js/sincronizza-aiuto.js?v=2.5.0" defer></script>
+<script src="js/dettagli.js?v=2.5.0"></script>
+<script src="js/aggiornamento.js?v=2.5.0"></script>
 <!-- ===== STILE =====
      Tutto l'aspetto della pagina è nei file della cartella css/.
      Per cambiare tema sostituisci il nome del file qui sotto con uno di:
        css/tema-classico.css  css/tema-scuro.css  css/tema-arancio.css
        css/tema-minimal.css   css/tema-compatto.css
 -->
-<link rel="stylesheet" href="css/tema-rossoblu.css?v=2.4.2" id="tema">
+<link rel="stylesheet" href="css/tema-rossoblu.css?v=2.5.0" id="tema">
 </head>
 <body>
 <div class="wrap">
@@ -311,26 +311,56 @@ function applyMeta(ev, resMeta){
   document.getElementById("ev-foot").textContent = cal + ris;
 }
 
+// risultati.json: indici per id (formato attuale) e per data+categoria+squadre (precedente)
+function applyResults(data){
+  RES = {}; RES_ID = {};
+  (data && data.results || []).forEach(r=>{
+    if(r.id) RES_ID[r.id] = r;
+    else RES[resKey(r.date,r.cat,r.home,r.away)] = r;
+  });
+}
+let RES_TXT = null;        // testo di risultati.json (per js/aggiornamento.js)
 async function loadResults(){
   try{
-    const res = await fetch("risultati.json", {cache:"no-store"});
+    const res = await fetch("risultati.json?t="+Date.now(), {cache:"no-store"});
     if(!res.ok) return null;
-    const data = await res.json();
-    (data.results||[]).forEach(r=>{
-      if(r.id) RES_ID[r.id] = r;
-      else RES[resKey(r.date,r.cat,r.home,r.away)] = r;
-    });
+    RES_TXT = await res.text();
+    const data = JSON.parse(RES_TXT);
+    applyResults(data);
     return data;
   }catch(_){ return null; }
 }
 
+// ---------- aggiornamento automatico dei risultati (js/aggiornamento.js) ----------
+// orari delle partite (inizio e fine indicativa, in ms): servono a capire se una è in corso
+function matchWindows(){
+  return D.filter(m=> m.time && !m.event).map(m=>{
+    const [h,mi] = m.time.split(".").map(Number);
+    const s = new Date(DAY_YEAR[m.date], +m.date.slice(3,5)-1, +m.date.slice(0,2), h, mi).getTime();
+    return [s, s + (CAT_TOTAL[m.cat] ?? FALLBACK_DUR[m.cat] ?? 60)*60000];
+  });
+}
+// risultati nuovi: ridisegna il tabellone mantenendo filtri, scorrimento e pannello aperto
+function redraw(data){
+  applyResults(data);
+  applyMeta(EV, data);
+  const b = document.querySelector(".board"), x = b.scrollLeft, y = b.scrollTop;
+  build(); markToday(); updateView();
+  b.scrollLeft = x; b.scrollTop = y;
+  const i = Dettagli.aperto();
+  if(i !== null) openDetails(i);
+}
+let EV = null;
+
 async function init(){
   let caricato = false;      // true quando calendario.json è arrivato: un errore dopo è di visualizzazione
   try{
-    const res = await fetch("calendario.json", {cache:"no-store"});
+    const res = await fetch("calendario.json?t="+Date.now(), {cache:"no-store"});
     if(!res.ok) throw new Error("HTTP "+res.status);
-    const data = await res.json();
+    const calTxt = await res.text();
+    const data = JSON.parse(calTxt);
     caricato = true;
+    EV = data.event;
 
     V    = data.venues     || {};
     CAT  = data.categories || {};
@@ -371,6 +401,7 @@ async function init(){
     markToday();
     updateView();
     requestAnimationFrame(()=> focusToday(false));
+    Aggiornamento.avvia({ risultati:RES_TXT, calendario:calTxt, finestre:matchWindows, aggiorna:redraw });
   }catch(err){
     document.querySelector(".board").innerHTML = caricato
       ? `<div class="none">
