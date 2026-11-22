@@ -173,6 +173,20 @@ cambiano solo gol e stato, ad esempio:
 { "id": "20261128-1200-u16f-gae-hcf", "hs": 12, "as": 15, "status": "1T" },
 ```
 
+#### Inserire un risultato dal sito github.com (anche dal telefono)
+
+1. Apri <https://github.com/SharkenCode80/HC_Fondi_26_27/blob/main/risultati.json> e
+   tocca la **matita** (*Edit this file*).
+2. Cerca la riga con la data della partita (l'id comincia con `AAAAMMGG-HHMM`, es.
+   `20261128-1200-…` = 28/11 ore 12.00) e cambia **solo** `hs`, `as` e `status`
+   (`1T`, `INTERVALLO`, `2T`, `PARZIALE` durante la partita, `FINE` alla fine).
+   Le virgole a fine riga e le virgolette vanno lasciate come sono.
+3. **Commit changes**. Dopo circa 1-2 minuti il risultato compare sul sito, anche a chi ha
+   già la pagina aperta (si aggiorna da sola).
+4. I calendari sincronizzati (`.ics`) non si aggiornano da soli con le modifiche fatte sul
+   web: quando conviene (di solito a fine partita o a fine giornata) dal computer
+   `git pull`, `python3 genera_ics.py`, commit e push dei `.ics`.
+
 Le righe nuove le aggiungono da sole `converti_excel.py` e `aggiorna_id.py`, quando nel
 calendario compaiono partite nuove (e tolgono le righe `DA_INIZIARE` di partite che non
 esistono più).
@@ -252,6 +266,7 @@ in `team1-setwin`/`team2-setwin`. HC Fondi si riconosce dal codice società FIGH
 (i nomi cambiano: "BANCAPOPOLARE DI FONDI", "HC BANCAPOPOLARE DI FONDI U16F"…). Se la FIGH
 cambia gli indirizzi dei gironi (es. nuova stagione), vanno aggiornati in `GIRONI`.
 Test: `python3 -m unittest test_verifica_figh test_id` (pagine FIGH finte, nessun accesso alla rete).
+Tutti i test del progetto: `python3 -m unittest test_sincronizza test_verifica_figh test_id test_pagine`.
 
 ### Calendari da sincronizzare (.ics)
 
@@ -397,7 +412,8 @@ In `mobile.html`, subito dopo, resta sempre `<link rel="stylesheet" href="css/mo
   - **CASA** o **TRASFERTA**;
   - le due squadre, con HC Fondi evidenziato;
   - l'impianto;
-  - il punteggio, se è già disponibile.
+  - il punteggio, se è già disponibile, con i gol di HC Fondi in rosso e in grassetto
+    (durante la partita anche lo stato: Parziale, I Tempo, Intervallo, II Tempo).
 - **Partite in casa:** sono evidenziate con lo sfondo colorato.
 - **Giornata in evidenza:** quella di oggi (**OGGI**) o la prossima in calendario
   (**PROSSIMA**) ha il bordo giallo. Le partite in corso in questo momento hanno il badge
@@ -435,8 +451,8 @@ non c'è abbastanza **margine**, le segna in rosso con **⚠ possibile accavalla
 ### Versione cellulare (`mobile.html`)
 
 - **Lista per giornata** che scorre in verticale. Ogni card mostra orario, categoria,
-  Casa/Trasferta, avversario e città; se c'è il punteggio, anche il risultato con
-  **Vinta / Persa / Pareggio**.
+  Casa/Trasferta, avversario e città; se c'è il punteggio, anche il risultato (gol di
+  HC Fondi in rosso) con **Vinta / Persa / Pareggio**, o lo stato durante la partita.
 - **Filtri** in alto, che scorrono in orizzontale: mese (o "Tutto") e categorie.
 - Le giornate passate sono attenuate; la prossima ha il badge **Prossima** (o **Oggi**) e
   la pagina si apre già posizionata lì. Il pulsante **↓ Prossima** in basso a destra ci
@@ -450,7 +466,20 @@ non c'è abbastanza **margine**, le segna in rosso con **⚠ possibile accavalla
 Si apre la versione cellulare sugli schermi larghi **fino a 700 px** (telefoni in
 verticale), quella completa altrimenti. I pulsanti **📱 Versione cellulare** e
 **🖥 Versione completa** permettono di cambiare a mano: la scelta vale finché la scheda
-resta aperta. Entrambe le pagine si ricaricano da sole ogni 10 minuti.
+resta aperta.
+
+### Risultati aggiornati da soli
+
+Non serve ricaricare la pagina: i risultati nuovi compaiono da soli, senza perdere filtri,
+posizione o il pannello aperto.
+- **Durante una partita** (dall'inizio fino a 20 minuti dopo la fine indicativa): controllo
+  ogni minuto.
+- **Negli altri momenti**: ogni 10 minuti, e all'inizio della partita successiva.
+- **Tornando sulla pagina** (telefono sbloccato, app o scheda riaperta): controllo subito.
+- **Pagina in secondo piano**: nessun controllo, per non consumare batteria.
+
+Dopo aver salvato `risultati.json` su GitHub il risultato compare in circa 1-2 minuti
+(dettagli tecnici in *Come lavora la pagina*).
 
 ---
 

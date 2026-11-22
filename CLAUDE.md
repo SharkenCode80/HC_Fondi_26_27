@@ -11,7 +11,11 @@ Testi, commenti e messaggi di commit in **italiano**.
   `sincronizza.html`. `index-old.html`/`mobile-old.html`: versioni precedenti (`noindex`).
   `calendario-google.html`: nascosta (link commentati).
 - Dati: `calendario.json` (dall'Excel con `converti_excel.py`; ogni partita ha un `id`
-  = data+ora+categoria+sigle, tabella `sigle`) e `risultati.json` (solo `id`, gol, `status`).
+  = data+ora+categoria+sigle, tabella `sigle`) e `risultati.json` (solo `id`, gol, `status`;
+  già una riga `DA_INIZIARE` per ogni partita, l'utente cambia solo gol e stato).
+- JS comuni alle due pagine: `js/dettagli.js` (pannello dettagli, `Dettagli.punteggio` con i
+  gol HC Fondi in rosso) e `js/aggiornamento.js` (risultati aggiornati senza ricaricare:
+  ogni minuto durante le partite, 10 minuti altrimenti, subito al ritorno sulla pagina).
 - `genera_ics.py` → `calendario*.ics` + `calendari.json` (UID da `eventi_comuni.py`).
 - `sincronizza_google.py`: sincronizzazione con un calendario Google proprio (oggi non
   usata: i calendari Google pubblici sono "Da URL", ID in `js/calendari-google.js`).
@@ -24,7 +28,7 @@ Testi, commenti e messaggi di commit in **italiano**.
 python3 converti_excel.py          # Excel -> calendario.json (+ genera_ics.py)
 python3 genera_ics.py              # dopo OGNI modifica a calendario.json o risultati.json
 python3 verifica_figh.py           # menu: scarica / confronta online / offline / carica risultati
-python3 aggiorna_id.py             # id mancanti in calendario.json, risultati.json col formato a id
+python3 aggiorna_id.py             # id mancanti, righe DA_INIZIARE nuove in risultati.json
 python3 aggiorna_versione.py X.Y.Z # dopo modifiche a css/ o js/: "?v=" nelle pagine e nei temi
 python3 -m unittest test_sincronizza test_verifica_figh test_id test_pagine
 python3 -m http.server 8000        # prova in locale (http://localhost:8000)
