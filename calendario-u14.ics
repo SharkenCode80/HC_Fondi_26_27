@@ -3,7 +3,7 @@ VERSION:2.0
 PRODID:-//HC Fondi//Campionati 26-27//IT
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
-X-WR-CALNAME:HC Fondi · Under 14
+X-WR-CALNAME:HC Fondi · U14 F
 X-WR-CALDESC:Partite HC Fondi stagione 2026/2027 - https://sharkencode80.gi
  thub.io/HC_Fondi_26_27/
 X-WR-TIMEZONE:Europe/Rome
@@ -28,87 +28,171 @@ RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU
 END:STANDARD
 END:VTIMEZONE
 BEGIN:VEVENT
-UID:u14-under-14-20261213-u14@hcfondi2627
-DTSTAMP:20261106T080000Z
-DTSTART;VALUE=DATE:20261213
-DTEND;VALUE=DATE:20261214
-TRANSP:TRANSPARENT
-SUMMARY:Under 14 · UNDER 14
-DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
- 6_27/
+UID:u14-cus-cassino-gaeta-u14f-hc-fondi-u14@hcfondi2627
+DTSTAMP:20261124T160200Z
+DTSTART;TZID=Europe/Rome:20261213T100000
+DTEND;TZID=Europe/Rome:20261213T112000
+SUMMARY:U14 F · CUS Cassino Gaeta U14F – HC Fondi
+LOCATION:Impianto Sportivo Polivalente Palasport - Gaeta
+DESCRIPTION:In trasferta\nCalendario completo: https://sharkencode80.github
+ .io/HC_Fondi_26_27/
 URL:https://sharkencode80.github.io/HC_Fondi_26_27/
-CATEGORIES:Under 14
+CATEGORIES:U14 F
 END:VEVENT
 BEGIN:VEVENT
-UID:u14-under-14-salerno-20270207-u14@hcfondi2627
-DTSTAMP:20261106T080000Z
-DTSTART;VALUE=DATE:20270207
-DTEND;VALUE=DATE:20270208
-TRANSP:TRANSPARENT
-SUMMARY:Under 14 · UNDER 14 - salerno
-DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
- 6_27/
+UID:u14-hc-fondi-pdo-handball-salerno-1985-u14@hcfondi2627
+DTSTAMP:20261124T160200Z
+DTSTART;TZID=Europe/Rome:20261213T110000
+DTEND;TZID=Europe/Rome:20261213T122000
+SUMMARY:U14 F · HC Fondi – PDO Handball Salerno 1985
+LOCATION:Impianto Sportivo Polivalente Palasport - Gaeta
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
 URL:https://sharkencode80.github.io/HC_Fondi_26_27/
-CATEGORIES:Under 14
+CATEGORIES:U14 F
 END:VEVENT
 BEGIN:VEVENT
-UID:u14-under-14-20270314-u14@hcfondi2627
-DTSTAMP:20261106T080000Z
-DTSTART;VALUE=DATE:20270314
-DTEND;VALUE=DATE:20270315
-TRANSP:TRANSPARENT
-SUMMARY:Under 14 · UNDER 14
-DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
- 6_27/
+UID:u14-hc-fondi-pdo-handball-salerno-1985-2-u14@hcfondi2627
+DTSTAMP:20261124T160200Z
+DTSTART;TZID=Europe/Rome:20270206T150000
+DTEND;TZID=Europe/Rome:20270206T162000
+SUMMARY:U14 F · HC Fondi – PDO Handball Salerno 1985
+LOCATION:Tensostruttura - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
 URL:https://sharkencode80.github.io/HC_Fondi_26_27/
-CATEGORIES:Under 14
+CATEGORIES:U14 F
 END:VEVENT
 BEGIN:VEVENT
-UID:u14-under-14-salerno-20270411-u14@hcfondi2627
-DTSTAMP:20261106T080000Z
-DTSTART;VALUE=DATE:20270411
-DTEND;VALUE=DATE:20270412
-TRANSP:TRANSPARENT
-SUMMARY:Under 14 · UNDER 14 - salerno
-DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
- 6_27/
+UID:u14-cus-cassino-gaeta-u14f-hc-fondi-2-u14@hcfondi2627
+DTSTAMP:20261124T160200Z
+DTSTART;TZID=Europe/Rome:20270206T170000
+DTEND;TZID=Europe/Rome:20270206T182000
+SUMMARY:U14 F · CUS Cassino Gaeta U14F – HC Fondi
+LOCATION:Tensostruttura - Fondi
+DESCRIPTION:In trasferta\nCalendario completo: https://sharkencode80.github
+ .io/HC_Fondi_26_27/
 URL:https://sharkencode80.github.io/HC_Fondi_26_27/
-CATEGORIES:Under 14
+CATEGORIES:U14 F
 END:VEVENT
 BEGIN:VEVENT
-UID:u14-under-14-20270509-u14@hcfondi2627
-DTSTAMP:20261106T080000Z
-DTSTART;VALUE=DATE:20270509
-DTEND;VALUE=DATE:20270510
-TRANSP:TRANSPARENT
-SUMMARY:Under 14 · UNDER 14
-DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
- 6_27/
+UID:u14-hc-fondi-pdo-handball-salerno-1985-3-u14@hcfondi2627
+DTSTAMP:20261124T160200Z
+DTSTART;TZID=Europe/Rome:20270313T140000
+DTEND;TZID=Europe/Rome:20270313T152000
+SUMMARY:U14 F · HC Fondi – PDO Handball Salerno 1985
+LOCATION:Palestra Palumbo - Salerno
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
 URL:https://sharkencode80.github.io/HC_Fondi_26_27/
-CATEGORIES:Under 14
+CATEGORIES:U14 F
+END:VEVENT
+BEGIN:VEVENT
+UID:u14-cus-cassino-gaeta-u14f-hc-fondi-3-u14@hcfondi2627
+DTSTAMP:20261124T160200Z
+DTSTART;TZID=Europe/Rome:20270313T150000
+DTEND;TZID=Europe/Rome:20270313T162000
+SUMMARY:U14 F · CUS Cassino Gaeta U14F – HC Fondi
+LOCATION:Palestra Palumbo - Salerno
+DESCRIPTION:In trasferta\nCalendario completo: https://sharkencode80.github
+ .io/HC_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U14 F
+END:VEVENT
+BEGIN:VEVENT
+UID:u14-cus-cassino-gaeta-u14f-hc-fondi-4-u14@hcfondi2627
+DTSTAMP:20261124T160200Z
+DTSTART;TZID=Europe/Rome:20270403T100000
+DTEND;TZID=Europe/Rome:20270403T112000
+SUMMARY:U14 F · CUS Cassino Gaeta U14F – HC Fondi
+LOCATION:Impianto Sportivo Polivalente Palasport - Gaeta
+DESCRIPTION:In trasferta\nCalendario completo: https://sharkencode80.github
+ .io/HC_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U14 F
+END:VEVENT
+BEGIN:VEVENT
+UID:u14-hc-fondi-pdo-handball-salerno-1985-4-u14@hcfondi2627
+DTSTAMP:20261124T160200Z
+DTSTART;TZID=Europe/Rome:20270403T110000
+DTEND;TZID=Europe/Rome:20270403T122000
+SUMMARY:U14 F · HC Fondi – PDO Handball Salerno 1985
+LOCATION:Impianto Sportivo Polivalente Palasport - Gaeta
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U14 F
+END:VEVENT
+BEGIN:VEVENT
+UID:u14-cus-cassino-gaeta-u14f-hc-fondi-5-u14@hcfondi2627
+DTSTAMP:20261124T160200Z
+DTSTART;TZID=Europe/Rome:20270411T113000
+DTEND;TZID=Europe/Rome:20270411T125000
+SUMMARY:U14 F · CUS Cassino Gaeta U14F – HC Fondi
+LOCATION:Palestra Palumbo - Salerno
+DESCRIPTION:In trasferta\nCalendario completo: https://sharkencode80.github
+ .io/HC_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U14 F
+END:VEVENT
+BEGIN:VEVENT
+UID:u14-hc-fondi-pdo-handball-salerno-1985-5-u14@hcfondi2627
+DTSTAMP:20261124T160200Z
+DTSTART;TZID=Europe/Rome:20270411T123000
+DTEND;TZID=Europe/Rome:20270411T135000
+SUMMARY:U14 F · HC Fondi – PDO Handball Salerno 1985
+LOCATION:Palestra Palumbo - Salerno
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U14 F
+END:VEVENT
+BEGIN:VEVENT
+UID:u14-cus-cassino-gaeta-u14f-hc-fondi-6-u14@hcfondi2627
+DTSTAMP:20261124T160200Z
+DTSTART;TZID=Europe/Rome:20270516T093000
+DTEND;TZID=Europe/Rome:20270516T105000
+SUMMARY:U14 F · CUS Cassino Gaeta U14F – HC Fondi
+LOCATION:Tensostruttura - Fondi
+DESCRIPTION:In trasferta\nCalendario completo: https://sharkencode80.github
+ .io/HC_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U14 F
+END:VEVENT
+BEGIN:VEVENT
+UID:u14-hc-fondi-pdo-handball-salerno-1985-6-u14@hcfondi2627
+DTSTAMP:20261124T160200Z
+DTSTART;TZID=Europe/Rome:20270516T113000
+DTEND;TZID=Europe/Rome:20270516T125000
+SUMMARY:U14 F · HC Fondi – PDO Handball Salerno 1985
+LOCATION:Tensostruttura - Fondi
+DESCRIPTION:In casa\nCalendario completo: https://sharkencode80.github.io/H
+ C_Fondi_26_27/
+URL:https://sharkencode80.github.io/HC_Fondi_26_27/
+CATEGORIES:U14 F
 END:VEVENT
 BEGIN:VEVENT
 UID:u14-misano-under-14-20270629-u14@hcfondi2627
-DTSTAMP:20261106T080000Z
+DTSTAMP:20261124T160200Z
 DTSTART;VALUE=DATE:20270629
 DTEND;VALUE=DATE:20270630
 TRANSP:TRANSPARENT
-SUMMARY:Under 14 · Misano - Under 14
+SUMMARY:U14 F · Misano - Under 14
 DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
  6_27/
 URL:https://sharkencode80.github.io/HC_Fondi_26_27/
-CATEGORIES:Under 14
+CATEGORIES:U14 F
 END:VEVENT
 BEGIN:VEVENT
 UID:u14-misano-under-14-20270630-u14@hcfondi2627
-DTSTAMP:20261106T080000Z
+DTSTAMP:20261124T160200Z
 DTSTART;VALUE=DATE:20270630
 DTEND;VALUE=DATE:20270701
 TRANSP:TRANSPARENT
-SUMMARY:Under 14 · Misano - Under 14
+SUMMARY:U14 F · Misano - Under 14
 DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
  6_27/
 URL:https://sharkencode80.github.io/HC_Fondi_26_27/
-CATEGORIES:Under 14
+CATEGORIES:U14 F
 END:VEVENT
 END:VCALENDAR

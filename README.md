@@ -1,7 +1,7 @@
 # HC Fondi Campionati 26-27
 
 Tabellone web della stagione 2026/2027 dell'**HC Fondi**: Serie B, U18 F, U16 F, U16 M,
-Under 14, gare interne ed eventi (Selezione Talenti, finali), dal 03/11/2026 al 30/06/2027.
+U14 F, gare interne ed eventi (Selezione Talenti, finali), dal 03/11/2026 al 30/06/2027.
 
 Indirizzo: **<https://sharkencode80.github.io/HC_Fondi_26_27/>**
 
@@ -43,7 +43,7 @@ può contenere tutte le pagine che servono.
 | `risultati.json` | ✅ | i punteggi (anche vuoto) |
 | `README.md`, `.gitignore` | consigliato | queste istruzioni e l'elenco dei file da escludere |
 | `converti_excel.py` | consigliato | serve per rigenerare il calendario |
-| `Calendario_…xlsx` | facoltativo | ⚠️ in un repository **pubblico** chiunque può scaricarlo |
+| `Documenti/` (Excel, backup, PDF FIGH) | ❌ | esclusa da `.gitignore`: l'Excel e i PDF FIGH contengono dati personali (recapiti, telefoni) |
 | `~$Calendario_…xlsx`, `.DS_Store` | ❌ | file temporanei, già esclusi da `.gitignore` |
 
 > GitHub Pages è gratuito solo con i repository **pubblici**: tutti i file caricati
@@ -80,7 +80,6 @@ cd ~/IdeaProjects/HC_Fondi_26_27
 
 git init -b main
 git add index.html mobile.html css js calendario.json risultati.json converti_excel.py README.md .gitignore
-# facoltativo: git add "Calendario_HC_Fondi_2026_2027_completo 30 10 2026 verificato.xlsx"
 git commit -m "Prima pubblicazione HC Fondi Campionati 26-27"
 
 # crea il repository pubblico su GitHub e carica i file
@@ -114,7 +113,7 @@ Lo stato passa da `building` a `built` in un paio di minuti.
 
 ```mermaid
 flowchart LR
-    X["Excel<br/>Calendario_HC_Fondi_….xlsx"] -->|python3 converti_excel.py| J["calendario.json"]
+    X["Excel<br/>Documenti/Calendario_HC_Fondi_….xlsx"] -->|python3 converti_excel.py| J["calendario.json"]
     F["sito FIGH"] -.->|python3 verifica_figh.py| R
     R["risultati.json<br/>(punteggi)"] --> G
     J --> G["Upload su GitHub<br/>(web o git push)"]
@@ -124,13 +123,15 @@ flowchart LR
 
 ### Calendario (dall'Excel)
 
-1. Modifica e **salva** l'Excel. Il file deve restare nella cartella del progetto.
+1. Modifica e **salva** l'Excel, che sta nella cartella **`Documenti/`** del progetto (non va nel
+   repository). Prima di modifiche grosse conviene farne una copia con `_backup` nel nome:
+   i backup sono ignorati dallo script.
 2. Rigenera il JSON:
    ```bash
    cd ~/IdeaProjects/HC_Fondi_26_27
    pip3 install openpyxl          # solo la prima volta
-   python3 converti_excel.py      # usa l'ultimo .xlsx della cartella
-   # oppure: python3 converti_excel.py "nome file.xlsx"
+   python3 converti_excel.py      # usa l'ultimo .xlsx di Documenti/ (per nome), esclusi i *_backup*
+   # oppure: python3 converti_excel.py "Documenti/nome file.xlsx"
    ```
    Lo script stampa quante voci ha letto e segnala con `[attenzione]` i giorni della
    settimana sbagliati e le celle con categoria non riconosciuta.
@@ -165,7 +166,7 @@ in `calendario.json`.
   della partita in `calendario.json`.
 
 **`risultati.json` contiene già una riga per ogni partita** (gli eventi senza avversario,
-come Selezione, raduni U14 e finali, no), in ordine di data, con `0`-`0` e stato
+come Selezione, Misano U14 e finali, no), in ordine di data, con `0`-`0` e stato
 `DA_INIZIARE`. Per inserire un risultato si cerca la riga con la data della partita e si
 cambiano solo gol e stato, ad esempio:
 
@@ -252,9 +253,15 @@ python3 verifica_figh.py online       # oppure direttamente: scarica | online | 
 | **4 · Carica risultati** | dal sito o da `risultati-FIGH.json`: elenca risultati nuovi (`+`), diversi (`~`) e non caricabili (`!`), poi chiede conferma | `risultati.json`, solo rispondendo **s** |
 
 Cosa controlla, per ogni partita di HC Fondi: che ci sia da entrambe le parti, categoria
-(U16 F / U18 F / gara interna), ora, casa/trasferta, avversario, impianto e risultato
-(indicando se sul sito è già ufficiale). U14, Selezione Talenti e finali non sono sul
-sito FIGH Area 7 e non vengono controllati. Per `online`/`offline` il codice di uscita è
+(Serie B / U18 F / U16 F / U16 M / U14 F / gara interna), ora, squadra di casa, avversario,
+impianto e risultato (indicando se sul sito è già ufficiale). Selezione Talenti e finali non
+sono sul sito FIGH Area 7 e non vengono controllati.
+
+**U14 F (concentramenti):** le tre squadre giocano nello stesso impianto e la FIGH può mettere
+HC Fondi in casa anche in una gara giocata a Gaeta o Salerno. In `calendario.json` le squadre
+sono nell'ordine della FIGH; `gir` (Casa/Trasferta) dice solo dove si gioca. Per questo
+`verifica_figh.py` confronta la squadra di casa (`home`), non `gir`, e il punteggio segue
+lo stesso ordine. Per `online`/`offline` il codice di uscita è
 0 se tutto coincide, 1 se ci sono differenze, 2 se i dati FIGH non si possono leggere.
 
 Dopo aver caricato i risultati: **rilancia `python3 genera_ics.py`** e pubblica
@@ -406,7 +413,7 @@ In `mobile.html`, subito dopo, resta sempre `<link rel="stylesheet" href="css/mo
 
 - **Colonne:** le giornate con almeno una partita o un evento (giorno della settimana e data).
 - **Righe:** gli orari di inizio. La prima riga, **Evento**, contiene le voci senza orario
-  (Selezione dei Talenti, raduni Under 14, finali).
+  (Selezione dei Talenti, Misano Under 14, finali).
 - **Card:** in ogni card trovi:
   - la categoria (etichetta colorata);
   - **CASA** o **TRASFERTA**;
@@ -445,7 +452,7 @@ non c'è abbastanza **margine**, le segna in rosso con **⚠ possibile accavalla
 
 - Le durate (in minuti) e il margine si possono cambiare nel pannello che compare in alto.
 - I valori scelti restano salvati nel browser di quel dispositivo.
-- Valori iniziali: Serie B, U18 F e gare interne 70′; U16 60′; Under 14 50′;
+- Valori iniziali: Serie B, U18 F e gare interne 70′; U16 60′; U14 F 50′;
   margine 30′, che comprende gli spostamenti.
 
 ### Versione cellulare (`mobile.html`)
@@ -534,7 +541,10 @@ giornate con due voci occupano due righe con le celle del giorno unite. Lo scrip
    settimana;
 3. legge la cella partita, divisa in tre righe:
    `CATEGORIA – HH:MM – CASA|TRASFERTA` / `vs AVVERSARIO` / `Impianto - Città`;
-4. con **CASA** mette HC Fondi come `home`, con **TRASFERTA** come `away`;
+4. con **CASA** mette HC Fondi come `home`, con **TRASFERTA** come `away`. Se la seconda
+   riga nomina le due squadre (`HC Fondi vs PDO Handball Salerno 1985`) tiene l'ordine
+   scritto: serve per i concentramenti U14 F, dove la FIGH può mettere HC Fondi in casa
+   anche fuori Fondi (CASA/TRASFERTA resta il luogo: Fondi o fuori);
 5. riconosce le gare interne (`U18F/U16F … vs HC Fondi U16F`): la squadra di casa è la
    categoria dell'intestazione che **non** compare nell'avversario (`HC Fondi U18F`);
 6. le celle senza orario diventano **eventi** (`"event": true`, `time: ""`);
@@ -549,7 +559,7 @@ sono usati in modo uniforme.
 | `u18f` | U18 F | `U18…`, `Finali U18` |
 | `u16f` | U16 F | `U16F`, `Finali U16` |
 | `u16m` | U16 M | `U16M` |
-| `u14` | Under 14 | `UNDER 14`, `U14` |
+| `u14` | U14 F | `UNDER 14`, `U14` (es. `U14F – 10:00 – TRASFERTA`) |
 | `interna` | Gara interna | intestazione con `/` (es. `U18F/U16F`) |
 | `sel` | Selezione Talenti | `Selezione dei Talenti` e testi non riconosciuti |
 

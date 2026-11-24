@@ -12,16 +12,24 @@ Formato atteso di ogni cella partita (3 righe):
     "SERIE B – 18:00 – CASA"
     "vs BENEVENTO 23"
     "Fondi Palasport - Fondi"
-Le celle senza orario (es. "Selezione dei Talenti", "Finali U16",
-"UNDER 14 - salerno") diventano eventi senza orario (time = "").
+La squadra di casa e' HC Fondi con CASA, l'avversario con TRASFERTA. Se la
+seconda riga indica le due squadre ("HC Fondi vs PDO Handball Salerno 1985"),
+l'ordine e' quello scritto: serve per i concentramenti (U14 F), dove la FIGH
+puo' mettere HC Fondi in casa anche in una gara giocata fuori Fondi.
+Le celle senza orario (es. "Selezione dei Talenti - Salerno", "Finali U16",
+"Misano - Under 14") diventano eventi senza orario (time = "").
+
+L'Excel sta nella cartella Documenti (mai nel repository). Senza argomenti si usa
+l'ultimo .xlsx di Documenti in ordine di nome, esclusi i backup (nome con
+"_backup") e i file temporanei di Excel ("~$...").
 
 Uso:  python3 converti_excel.py [file.xlsx]      (richiede: pip install openpyxl)
 """
 
 import datetime, glob, json, os, re, sys, unicodedata
-import openpyxl
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+DOCUMENTI = os.path.join(HERE, "Documenti")        # Excel e PDF: non vanno nel repository
 TEAM = "HC Fondi"
 
 MESI = {"GENNAIO": 1, "FEBBRAIO": 2, "MARZO": 3, "APRILE": 4, "MAGGIO": 5, "GIUGNO": 6,
@@ -31,7 +39,7 @@ DOW1 = ["L", "M", "M", "G", "V", "S", "D"]          # lettera usata nella colonn
 
 # categorie: codice -> etichetta (l'ordine e' quello dei filtri nella pagina)
 CATEGORIES = {"serieb": "Serie B", "u18f": "U18 F", "u16f": "U16 F", "u16m": "U16 M",
-              "u14": "Under 14", "interna": "Gara interna", "sel": "Selezione Talenti"}
+              "u14": "U14 F", "interna": "Gara interna", "sel": "Selezione Talenti"}
 # durate (minuti) per la modalita' Mister: totale = 2*tempo + pausa.
 # Solo valori di partenza: se calendario.json esiste gia', si tengono le sue durate.
 DURATE = {"serieb": {"tempo": 30, "pausa": 10}, "u18f": {"tempo": 30, "pausa": 10},
@@ -85,6 +93,11 @@ def parse_cell(text):
         opp = re.sub(r"^vs\.?\s*", "", lines[1], flags=re.I) if len(lines) > 1 else ""
         venue = lines[2] if len(lines) > 2 else ""
         casa = m.group("ha").upper() == "CASA"
+        due = re.match(r"^(?P<home>.+?)\s+vs\.?\s+(?P<away>.+)$", opp, re.I)
+        if due:                            # "HC Fondi vs PDO ...": ordine scritto (concentramenti)
+            return {"time": f"{int(m.group('h')):02d}.{m.group('m')}", "cat": cat,
+                    "gir": "Casa" if casa else "Trasferta",
+                    "home": due.group("home"), "away": due.group("away"), "venue_name": venue}
         if cat == "interna":
             # "U18F/U16F ... vs HC Fondi U16F": la nostra squadra e' quella
             # dell'intestazione che NON compare nell'avversario -> "HC Fondi U18F"
@@ -106,6 +119,7 @@ def parse_cell(text):
 
 
 def convert(xlsx):
+    import openpyxl                    # solo qui: parse_cell si usa (e si prova) anche senza
     ws = openpyxl.load_workbook(xlsx, data_only=True).active
 
     # cella -> cella in alto a sinistra del suo merge (per i giorni su 2 righe)
@@ -177,7 +191,7 @@ def convert(xlsx):
         "event": {
             "title": "HC Fondi Campionati 26-27",
             "eyebrow": "HC Fondi · Stagione 2026/2027",
-            "subtitle": f"{start:%d/%m/%Y} – {end:%d/%m/%Y} · Serie B · U18 F · U16 F · U16 M · Under 14",
+            "subtitle": f"{start:%d/%m/%Y} – {end:%d/%m/%Y} · Serie B · U18 F · U16 F · U16 M · U14 F",
             "source": os.path.basename(xlsx),
             "updated": datetime.datetime.now().strftime("%d/%m/%Y %H:%M"),
         },
@@ -195,9 +209,18 @@ def convert(xlsx):
     return cal, warnings
 
 
+def ultimo_excel(cartella=DOCUMENTI):
+    """Ultimo .xlsx della cartella (per nome), esclusi backup e file temporanei di Excel."""
+    tutti = sorted(f for f in glob.glob(os.path.join(cartella, "*.xlsx"))
+                   if not os.path.basename(f).startswith("~$") and "_backup" not in os.path.basename(f))
+    if not tutti:
+        sys.exit(f"Nessun file .xlsx in {cartella} (esclusi i backup). "
+                 "Indica il file: python3 converti_excel.py \"Documenti/nome file.xlsx\"")
+    return tutti[-1]
+
+
 def main():
-    xlsx = sys.argv[1] if len(sys.argv) > 1 else sorted(
-        f for f in glob.glob(os.path.join(HERE, "*.xlsx")) if not os.path.basename(f).startswith("~$"))[-1]
+    xlsx = sys.argv[1] if len(sys.argv) > 1 else ultimo_excel()
     cal, warnings = convert(xlsx)
     path = os.path.join(HERE, "calendario.json")
 

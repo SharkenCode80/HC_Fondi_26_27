@@ -2,9 +2,9 @@
   "event": {
     "title": "HC Fondi Campionati 26-27",
     "eyebrow": "HC Fondi · Stagione 2026/2027",
-    "subtitle": "03/11/2026 – 30/06/2027 · Serie B · U18 F · U16 F · U16 M · Under 14",
-    "source": "Calendario_HC_Fondi_2026_2027_completo 30 10 2026 verificato.xlsx",
-    "updated": "02/11/2026 20:37"
+    "subtitle": "03/11/2026 – 30/06/2027 · Serie B · U18 F · U16 F · U16 M · U14 F",
+    "source": "Calendario_HC_Fondi_2026_2027_completo 24 11 2026.xlsx",
+    "updated": "24/11/2026 16:02"
   },
   "fondiTeam": "HC Fondi",
   "year": 2026,
@@ -45,6 +45,7 @@
     "28/02",
     "05/03",
     "07/03",
+    "13/03",
     "14/03",
     "16/03",
     "20/03",
@@ -57,8 +58,8 @@
     "22/04",
     "25/04",
     "01/05",
-    "09/05",
     "15/05",
+    "16/05",
     "23/05",
     "26/05",
     "27/05",
@@ -108,6 +109,7 @@
     "28/02": "DOM",
     "05/03": "VEN",
     "07/03": "DOM",
+    "13/03": "SAB",
     "14/03": "DOM",
     "16/03": "MAR",
     "20/03": "SAB",
@@ -120,8 +122,8 @@
     "22/04": "GIO",
     "25/04": "DOM",
     "01/05": "SAB",
-    "09/05": "DOM",
     "15/05": "SAB",
+    "16/05": "DOM",
     "23/05": "DOM",
     "26/05": "MER",
     "27/05": "GIO",
@@ -141,7 +143,7 @@
     "u18f": "U18 F",
     "u16f": "U16 F",
     "u16m": "U16 M",
-    "u14": "Under 14",
+    "u14": "U14 F",
     "interna": "Gara interna",
     "sel": "Selezione Talenti"
   },
@@ -151,9 +153,10 @@
     "palazzetto-dello-sport-civitavecchia": "Palazzetto dello Sport - Civitavecchia",
     "impianto-sportivo-polivalente-palasport-gaeta": "Impianto Sportivo Polivalente Palasport - Gaeta",
     "pala-valentino-ferrara-ex-paladua-benevento": "Pala Valentino Ferrara ex Paladua - Benevento",
+    "tensostruttura-fondi": "Tensostruttura - Fondi",
     "palasport-marica-bianchi-pontinia": "Palasport Marica Bianchi - Pontinia",
     "palamunicipio-roma": "Palamunicipio - Roma",
-    "palazzetto-dello-sport-comunale-cerreto-sannita": "Palazzetto dello Sport Comunale - Cerreto Sannita"
+    "palacasoria-domenico-d-alise-casoria": "PalaCasoria Domenico D'Alise - Casoria"
   },
   "sigle": {
     "HC Fondi": "HCF",
@@ -174,7 +177,9 @@
     "HC ROMA": "HCR",
     "PDO Handball Salerno U16F": "PDO",
     "PDO Handball Salerno 1985 U16F": "PDO",
-    "THEO GAETA": "GSC"
+    "THEO GAETA": "GSC",
+    "PDO Handball Salerno 1985": "PDO",
+    "CUS Cassino Gaeta U14F": "GAE"
   },
   "mister": {
     "buffer": 30,
@@ -343,25 +348,25 @@
       "year": 2026
     },
     {
-      "id": "20261129-sel-selezione-dei-talenti",
+      "id": "20261129-sel-selezione-dei-talenti-salerno",
       "date": "29/11",
       "time": "",
       "cat": "sel",
       "gir": "Evento",
-      "home": "Selezione dei Talenti",
+      "home": "Selezione dei Talenti - Salerno",
       "away": "",
       "venue": "",
       "event": true,
       "year": 2026
     },
     {
-      "id": "20261206-1200-interna-hcf18-hcf16",
+      "id": "20261206-1200-interna-hcf16-hcf18",
       "date": "06/12",
       "time": "12.00",
       "cat": "interna",
       "gir": "Casa",
-      "home": "HC Fondi U18F",
-      "away": "HC Fondi U16F",
+      "home": "HC Fondi U16F",
+      "away": "HC Fondi U18F",
       "venue": "fondi-palasport-fondi",
       "year": 2026
     },
@@ -388,15 +393,25 @@
       "year": 2026
     },
     {
-      "id": "20261213-u14-under-14",
+      "id": "20261213-1000-u14-gae-hcf",
       "date": "13/12",
-      "time": "",
+      "time": "10.00",
       "cat": "u14",
-      "gir": "Evento",
-      "home": "UNDER 14",
-      "away": "",
-      "venue": "",
-      "event": true,
+      "gir": "Trasferta",
+      "home": "CUS Cassino Gaeta U14F",
+      "away": "HC Fondi",
+      "venue": "impianto-sportivo-polivalente-palasport-gaeta",
+      "year": 2026
+    },
+    {
+      "id": "20261213-1100-u14-hcf-pdo",
+      "date": "13/12",
+      "time": "11.00",
+      "cat": "u14",
+      "gir": "Trasferta",
+      "home": "HC Fondi",
+      "away": "PDO Handball Salerno 1985",
+      "venue": "impianto-sportivo-polivalente-palasport-gaeta",
       "year": 2026
     },
     {
@@ -411,12 +426,12 @@
       "year": 2026
     },
     {
-      "id": "20261220-sel-selezione-dei-talenti",
+      "id": "20261220-sel-torneo-dei-talenti-chieti",
       "date": "20/12",
       "time": "",
       "cat": "sel",
       "gir": "Evento",
-      "home": "Selezione dei Talenti",
+      "home": "Torneo dei Talenti - Chieti",
       "away": "",
       "venue": "",
       "event": true,
@@ -522,15 +537,37 @@
       "year": 2027
     },
     {
-      "id": "20270131-sel-selezione-dei-talenti",
+      "id": "20270131-sel-selezione-dei-talenti-fondi",
       "date": "31/01",
       "time": "",
       "cat": "sel",
       "gir": "Evento",
-      "home": "Selezione dei Talenti",
+      "home": "Selezione dei Talenti - Fondi",
       "away": "",
       "venue": "",
       "event": true,
+      "year": 2027
+    },
+    {
+      "id": "20270206-1500-u14-hcf-pdo",
+      "date": "06/02",
+      "time": "15.00",
+      "cat": "u14",
+      "gir": "Casa",
+      "home": "HC Fondi",
+      "away": "PDO Handball Salerno 1985",
+      "venue": "tensostruttura-fondi",
+      "year": 2027
+    },
+    {
+      "id": "20270206-1700-u14-gae-hcf",
+      "date": "06/02",
+      "time": "17.00",
+      "cat": "u14",
+      "gir": "Casa",
+      "home": "CUS Cassino Gaeta U14F",
+      "away": "HC Fondi",
+      "venue": "tensostruttura-fondi",
       "year": 2027
     },
     {
@@ -542,18 +579,6 @@
       "home": "BCC ROMA PONTINIA",
       "away": "HC Fondi",
       "venue": "palasport-marica-bianchi-pontinia",
-      "year": 2027
-    },
-    {
-      "id": "20270207-u14-under-14-salerno",
-      "date": "07/02",
-      "time": "",
-      "cat": "u14",
-      "gir": "Evento",
-      "home": "UNDER 14 - salerno",
-      "away": "",
-      "venue": "",
-      "event": true,
       "year": 2027
     },
     {
@@ -579,10 +604,10 @@
       "year": 2027
     },
     {
-      "id": "20270214-1100-u16f-gae-hcf",
+      "id": "20270214-1100-u18f-gae-hcf",
       "date": "14/02",
       "time": "11.00",
-      "cat": "u16f",
+      "cat": "u18f",
       "gir": "Trasferta",
       "home": "CUS Cassino Gaeta U16F",
       "away": "HC Fondi",
@@ -601,25 +626,25 @@
       "year": 2027
     },
     {
-      "id": "20270221-sel-selezione-dei-talenti",
+      "id": "20270221-sel-selezione-dei-talenti-pontinia",
       "date": "21/02",
       "time": "",
       "cat": "sel",
       "gir": "Evento",
-      "home": "Selezione dei Talenti",
+      "home": "Selezione dei Talenti - Pontinia",
       "away": "",
       "venue": "",
       "event": true,
       "year": 2027
     },
     {
-      "id": "20270223-1800-interna-hcf16-hcf18",
+      "id": "20270223-1800-interna-hcf18-hcf16",
       "date": "23/02",
       "time": "18.00",
       "cat": "interna",
       "gir": "Casa",
-      "home": "HC Fondi U16F",
-      "away": "HC Fondi U18F",
+      "home": "HC Fondi U18F",
+      "away": "HC Fondi U16F",
       "venue": "fondi-palasport-fondi",
       "year": 2027
     },
@@ -668,15 +693,25 @@
       "year": 2027
     },
     {
-      "id": "20270314-u14-under-14",
-      "date": "14/03",
-      "time": "",
+      "id": "20270313-1400-u14-hcf-pdo",
+      "date": "13/03",
+      "time": "14.00",
       "cat": "u14",
-      "gir": "Evento",
-      "home": "UNDER 14",
-      "away": "",
-      "venue": "",
-      "event": true,
+      "gir": "Trasferta",
+      "home": "HC Fondi",
+      "away": "PDO Handball Salerno 1985",
+      "venue": "palestra-palumbo-salerno",
+      "year": 2027
+    },
+    {
+      "id": "20270313-1500-u14-gae-hcf",
+      "date": "13/03",
+      "time": "15.00",
+      "cat": "u14",
+      "gir": "Trasferta",
+      "home": "CUS Cassino Gaeta U14F",
+      "away": "HC Fondi",
+      "venue": "palestra-palumbo-salerno",
       "year": 2027
     },
     {
@@ -713,12 +748,12 @@
       "year": 2027
     },
     {
-      "id": "20270321-sel-selezione-dei-talenti",
+      "id": "20270321-sel-selezione-dei-talenti-luogo-da-definire",
       "date": "21/03",
       "time": "",
       "cat": "sel",
       "gir": "Evento",
-      "home": "Selezione dei Talenti",
+      "home": "Selezione dei Talenti - luogo da definire",
       "away": "",
       "venue": "",
       "event": true,
@@ -733,6 +768,28 @@
       "home": "GENEA LANZARA 2012",
       "away": "HC Fondi",
       "venue": "palestra-palumbo-salerno",
+      "year": 2027
+    },
+    {
+      "id": "20270403-1000-u14-gae-hcf",
+      "date": "03/04",
+      "time": "10.00",
+      "cat": "u14",
+      "gir": "Trasferta",
+      "home": "CUS Cassino Gaeta U14F",
+      "away": "HC Fondi",
+      "venue": "impianto-sportivo-polivalente-palasport-gaeta",
+      "year": 2027
+    },
+    {
+      "id": "20270403-1100-u14-hcf-pdo",
+      "date": "03/04",
+      "time": "11.00",
+      "cat": "u14",
+      "gir": "Trasferta",
+      "home": "HC Fondi",
+      "away": "PDO Handball Salerno 1985",
+      "venue": "impianto-sportivo-polivalente-palasport-gaeta",
       "year": 2027
     },
     {
@@ -758,18 +815,6 @@
       "year": 2027
     },
     {
-      "id": "20270411-u14-under-14-salerno",
-      "date": "11/04",
-      "time": "",
-      "cat": "u14",
-      "gir": "Evento",
-      "home": "UNDER 14 - salerno",
-      "away": "",
-      "venue": "",
-      "event": true,
-      "year": 2027
-    },
-    {
       "id": "20270411-1100-u16m-gaeb-hcf",
       "date": "11/04",
       "time": "11.00",
@@ -778,6 +823,28 @@
       "home": "CUS CASSINO GAETA BLU",
       "away": "HC Fondi",
       "venue": "impianto-sportivo-polivalente-palasport-gaeta",
+      "year": 2027
+    },
+    {
+      "id": "20270411-1130-u14-gae-hcf",
+      "date": "11/04",
+      "time": "11.30",
+      "cat": "u14",
+      "gir": "Trasferta",
+      "home": "CUS Cassino Gaeta U14F",
+      "away": "HC Fondi",
+      "venue": "palestra-palumbo-salerno",
+      "year": 2027
+    },
+    {
+      "id": "20270411-1230-u14-hcf-pdo",
+      "date": "11/04",
+      "time": "12.30",
+      "cat": "u14",
+      "gir": "Trasferta",
+      "home": "HC Fondi",
+      "away": "PDO Handball Salerno 1985",
+      "venue": "palestra-palumbo-salerno",
       "year": 2027
     },
     {
@@ -814,12 +881,12 @@
       "year": 2027
     },
     {
-      "id": "20270425-sel-selezione-dei-talenti",
+      "id": "20270425-sel-torneo-dei-talenti-luogo-da-definire",
       "date": "25/04",
       "time": "",
       "cat": "sel",
       "gir": "Evento",
-      "home": "Selezione dei Talenti",
+      "home": "Torneo dei Talenti - luogo da definire",
       "away": "",
       "venue": "",
       "event": true,
@@ -833,19 +900,7 @@
       "gir": "Trasferta",
       "home": "ASD HELIOS SPORTING CLUB",
       "away": "HC Fondi",
-      "venue": "palazzetto-dello-sport-comunale-cerreto-sannita",
-      "year": 2027
-    },
-    {
-      "id": "20270509-u14-under-14",
-      "date": "09/05",
-      "time": "",
-      "cat": "u14",
-      "gir": "Evento",
-      "home": "UNDER 14",
-      "away": "",
-      "venue": "",
-      "event": true,
+      "venue": "palacasoria-domenico-d-alise-casoria",
       "year": 2027
     },
     {
@@ -857,6 +912,28 @@
       "home": "THEO GAETA",
       "away": "HC Fondi",
       "venue": "impianto-sportivo-polivalente-palasport-gaeta",
+      "year": 2027
+    },
+    {
+      "id": "20270516-0930-u14-gae-hcf",
+      "date": "16/05",
+      "time": "09.30",
+      "cat": "u14",
+      "gir": "Casa",
+      "home": "CUS Cassino Gaeta U14F",
+      "away": "HC Fondi",
+      "venue": "tensostruttura-fondi",
+      "year": 2027
+    },
+    {
+      "id": "20270516-1130-u14-hcf-pdo",
+      "date": "16/05",
+      "time": "11.30",
+      "cat": "u14",
+      "gir": "Casa",
+      "home": "HC Fondi",
+      "away": "PDO Handball Salerno 1985",
+      "venue": "tensostruttura-fondi",
       "year": 2027
     },
     {

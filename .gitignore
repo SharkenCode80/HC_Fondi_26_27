@@ -1,5 +1,8 @@
 # file temporanei di Excel/Office (file aperto)
 ~$*
+# Excel del calendario, backup e PDF FIGH: dati personali, mai nel repository
+Documenti/
+*.xlsx
 # macOS
 .DS_Store
 # Python

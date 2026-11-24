@@ -22,8 +22,14 @@ Dove sono i dati sul sito: ogni pagina di girone contiene tutte le partite
 in un blocco JSON  `const calendario = {...}`  (giornate -> partite, con
 data, ora, squadre, impianto, giocata/punteggio). HC Fondi si riconosce
 dal codice società FIGH "0031", non dal nome (che cambia tra i gironi).
-U14, Selezione Talenti e finali non sono sul sito FIGH Area 7 e non
-vengono controllati.
+Selezione Talenti e finali non sono sul sito FIGH Area 7 e non vengono
+controllati.
+
+U14 F: campionato a concentramento (tre squadre nello stesso impianto). La
+FIGH può mettere HC Fondi "in casa" anche in una gara giocata fuori Fondi, e
+calendario.json tiene lo stesso ordine delle squadre: per casa/ospite e per il
+verso del punteggio conta chi è la squadra di casa (home), non il campo "gir"
+(Casa/Trasferta), che dice solo dove si gioca.
 """
 
 import datetime, json, os, re, sys, urllib.request
@@ -36,9 +42,11 @@ GIRONI = {
     "serie-b-maschile-area-7-girone-unico": "serieb",
     "under-16-maschile-area-7": "u16m",
     "under-18-16-femminile-area-7-girone-unic": None,
+    "under-14-femminile-area-7-girone-unico": "u14",
 }
 COD_FONDI = "0031"
-CATEGORIE = {"serieb", "u16m", "u16f", "u18f", "interna"}   # quelle presenti sul sito
+FONDI_NOME = "HC FONDI"              # nome di HC Fondi in calendario.json (fondiTeam)
+CATEGORIE = {"serieb", "u16m", "u16f", "u18f", "u14", "interna"}   # quelle presenti sul sito
 FILE_CAL_FIGH = "calendario-FIGH.json"
 FILE_RIS_FIGH = "risultati-FIGH.json"
 
@@ -195,7 +203,11 @@ def stesso_verso(m, f):
 
 
 def in_casa(m):
-    return m.get("gir") == "Casa"
+    """True se in calendario.json HC Fondi e' la squadra di casa (prima nominata).
+
+    Non si usa "gir": nei concentramenti (U14 F) HC Fondi puo' essere la squadra di
+    casa anche in trasferta, e "gir" dice solo dove si gioca."""
+    return norm(m["home"]).startswith(FONDI_NOME) and not norm(m["away"]).startswith(FONDI_NOME)
 
 
 def abbina(cal, figh):
@@ -212,7 +224,10 @@ def abbina(cal, figh):
              and (m["cat"] == f["cat"]) == stessa_cat]
         if stessa_cat and f["cat"] != "interna":
             c = [m for m in c if m["cat"] != "interna"]
-        c.sort(key=lambda m: m.get("time") != f["ora"])
+        # prima la stessa ora, poi lo stesso avversario (es. due gare U14 F nello stesso giorno)
+        avv_figh = f["ospite"] if f["fondi_in_casa"] else f["casa"]
+        c.sort(key=lambda m: (m.get("time") != f["ora"],
+                              not stesso_nome(m["away"] if in_casa(m) else m["home"], avv_figh)))
         return c[0] if c else None
 
     for f in figh:
@@ -276,8 +291,8 @@ def confronta(cal, ris, figh):
                 diff.append(f"casa/ospite invertite: noi in casa {(noi or '?').upper()}, FIGH in casa {(loro or '?').upper()}")
         else:
             if in_casa(m) != f["fondi_in_casa"]:
-                diff.append(f"casa/trasferta: noi {'casa' if in_casa(m) else 'trasferta'}, "
-                            f"FIGH {'casa' if f['fondi_in_casa'] else 'trasferta'}")
+                diff.append(f"casa/ospite: noi HC Fondi {'in casa' if in_casa(m) else 'ospite'}, "
+                            f"FIGH HC Fondi {'in casa' if f['fondi_in_casa'] else 'ospite'}")
             avv_noi = m["away"] if in_casa(m) else m["home"]
             avv_figh = f["ospite"] if f["fondi_in_casa"] else f["casa"]
             if not stesso_nome(avv_noi, avv_figh):
@@ -315,7 +330,7 @@ def stampa_confronto(ok, problemi):
             print(f"    - {d}")
     if not problemi:
         print("calendario.json e risultati.json sono coerenti con i dati FIGH.")
-    print("\nNon controllati (non presenti sul sito FIGH Area 7): Under 14, Selezione Talenti, finali.")
+    print("\nNon controllati (non presenti sul sito FIGH Area 7): Selezione Talenti, finali.")
     print("Nessun file è stato modificato.")
 
 

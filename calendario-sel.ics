@@ -28,72 +28,72 @@ RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU
 END:STANDARD
 END:VTIMEZONE
 BEGIN:VEVENT
-UID:sel-selezione-dei-talenti-20261129-sel@hcfondi2627
-DTSTAMP:20261106T080000Z
+UID:sel-selezione-dei-talenti-salerno-20261129-sel@hcfondi2627
+DTSTAMP:20261124T160200Z
 DTSTART;VALUE=DATE:20261129
 DTEND;VALUE=DATE:20261130
 TRANSP:TRANSPARENT
-SUMMARY:Selezione dei Talenti
+SUMMARY:Selezione dei Talenti - Salerno
 DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
  6_27/
 URL:https://sharkencode80.github.io/HC_Fondi_26_27/
 CATEGORIES:Selezione Talenti
 END:VEVENT
 BEGIN:VEVENT
-UID:sel-selezione-dei-talenti-20261220-sel@hcfondi2627
-DTSTAMP:20261106T080000Z
+UID:sel-torneo-dei-talenti-chieti-20261220-sel@hcfondi2627
+DTSTAMP:20261124T160200Z
 DTSTART;VALUE=DATE:20261220
 DTEND;VALUE=DATE:20261221
 TRANSP:TRANSPARENT
-SUMMARY:Selezione dei Talenti
+SUMMARY:Torneo dei Talenti - Chieti
 DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
  6_27/
 URL:https://sharkencode80.github.io/HC_Fondi_26_27/
 CATEGORIES:Selezione Talenti
 END:VEVENT
 BEGIN:VEVENT
-UID:sel-selezione-dei-talenti-20270131-sel@hcfondi2627
-DTSTAMP:20261106T080000Z
+UID:sel-selezione-dei-talenti-fondi-20270131-sel@hcfondi2627
+DTSTAMP:20261124T160200Z
 DTSTART;VALUE=DATE:20270131
 DTEND;VALUE=DATE:20270201
 TRANSP:TRANSPARENT
-SUMMARY:Selezione dei Talenti
+SUMMARY:Selezione dei Talenti - Fondi
 DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
  6_27/
 URL:https://sharkencode80.github.io/HC_Fondi_26_27/
 CATEGORIES:Selezione Talenti
 END:VEVENT
 BEGIN:VEVENT
-UID:sel-selezione-dei-talenti-20270221-sel@hcfondi2627
-DTSTAMP:20261106T080000Z
+UID:sel-selezione-dei-talenti-pontinia-20270221-sel@hcfondi2627
+DTSTAMP:20261124T160200Z
 DTSTART;VALUE=DATE:20270221
 DTEND;VALUE=DATE:20270222
 TRANSP:TRANSPARENT
-SUMMARY:Selezione dei Talenti
+SUMMARY:Selezione dei Talenti - Pontinia
 DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
  6_27/
 URL:https://sharkencode80.github.io/HC_Fondi_26_27/
 CATEGORIES:Selezione Talenti
 END:VEVENT
 BEGIN:VEVENT
-UID:sel-selezione-dei-talenti-20270321-sel@hcfondi2627
-DTSTAMP:20261106T080000Z
+UID:sel-selezione-dei-talenti-luogo-da-definire-20270321-sel@hcfondi2627
+DTSTAMP:20261124T160200Z
 DTSTART;VALUE=DATE:20270321
 DTEND;VALUE=DATE:20270322
 TRANSP:TRANSPARENT
-SUMMARY:Selezione dei Talenti
+SUMMARY:Selezione dei Talenti - luogo da definire
 DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
  6_27/
 URL:https://sharkencode80.github.io/HC_Fondi_26_27/
 CATEGORIES:Selezione Talenti
 END:VEVENT
 BEGIN:VEVENT
-UID:sel-selezione-dei-talenti-20270425-sel@hcfondi2627
-DTSTAMP:20261106T080000Z
+UID:sel-torneo-dei-talenti-luogo-da-definire-20270425-sel@hcfondi2627
+DTSTAMP:20261124T160200Z
 DTSTART;VALUE=DATE:20270425
 DTEND;VALUE=DATE:20270426
 TRANSP:TRANSPARENT
-SUMMARY:Selezione dei Talenti
+SUMMARY:Torneo dei Talenti - luogo da definire
 DESCRIPTION:Calendario completo: https://sharkencode80.github.io/HC_Fondi_2
  6_27/
 URL:https://sharkencode80.github.io/HC_Fondi_26_27/

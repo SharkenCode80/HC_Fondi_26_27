@@ -47,7 +47,21 @@ PAGINE = {
         gara("6", "14/02/2027", "11.00", squadra("CUS CASSINO GAETA U16F"), FONDI18, "IMPIANTO PALASPORT", "GAETA"),
         gara("7", "06/12/2026", "12.00", FONDI16, FONDI18),
     ]),
+    "under-14-femminile-area-7-girone-unico": pagina("U14 F", []),   # gare nel test dedicato
 }
+
+# U14 F a concentramento: a Gaeta HC Fondi gioca una gara da ospite e una "in casa"
+GAETA_U14 = ("IMPIANTO SPORTIVO POLIVALENTE PALASPORT", "GAETA")
+PAGINA_U14 = pagina("U14 F", [
+    gara("8", "13/12/2026", "10.00", squadra("CUS CASSINO GAETA U14F"), FONDI, *GAETA_U14, punti=[10, 12]),
+    gara("9", "13/12/2026", "11.00", FONDI, squadra("PDO HANDBALL SALERNO 1985"), *GAETA_U14, punti=[15, 9]),
+])
+GARE_U14 = [
+    {"id": "20261213-1000-u14-gae-hcf", "date": "13/12", "year": 2026, "time": "10.00", "cat": "u14",
+     "gir": "Trasferta", "home": "CUS Cassino Gaeta U14F", "away": "HC Fondi", "venue": "gaeta"},
+    {"id": "20261213-1100-u14-hcf-pdo", "date": "13/12", "year": 2026, "time": "11.00", "cat": "u14",
+     "gir": "Trasferta", "home": "HC Fondi", "away": "PDO Handball Salerno 1985", "venue": "gaeta"},
+]
 
 CAL = {
     "fondiTeam": "HC Fondi",
@@ -132,6 +146,41 @@ class TestLettura(Base):
     def test_offline_senza_file(self):
         with self.assertRaises(vf.ErroreFIGH):
             vf.leggi_offline(stampa=lambda *_: None)
+
+
+class TestConcentramentoU14(Base):
+    """HC Fondi "in casa" (prima squadra) in una gara giocata a Gaeta: niente differenze
+    e punteggio nel verso giusto, anche se in calendario.json "gir" e' Trasferta."""
+
+    def setUp(self):
+        super().setUp()
+        p = mock.patch.dict(PAGINE, {"under-14-femminile-area-7-girone-unico": PAGINA_U14})
+        p.start()
+        self.addCleanup(p.stop)
+        self.cal = json.loads(json.dumps(CAL))
+        self.cal["matches"] = [m for m in self.cal["matches"] if m["cat"] != "u14"] + GARE_U14
+
+    def u14(self, problemi):
+        return [p for p in problemi if " u14 " in p[1]]
+
+    def test_nessuna_differenza(self):
+        figh = self.figh()
+        self.assertEqual({f["id"]: f["cat"] for f in figh if f["id"] in ("8", "9")}, {"8": "u14", "9": "u14"})
+        ris = {"results": [{"id": "20261213-1000-u14-gae-hcf", "hs": 10, "as": 12, "status": "FINE"},
+                           {"id": "20261213-1100-u14-hcf-pdo", "hs": 15, "as": 9, "status": "FINE"}]}
+        _, problemi = vf.confronta(self.cal, ris, figh)
+        self.assertEqual(self.u14(problemi), [])
+
+    def test_casa_ospite_invertite_e_risultati_da_caricare(self):
+        cal = json.loads(json.dumps(self.cal))
+        m = cal["matches"][-1]                    # 11.00: HC Fondi - PDO, scritta al contrario
+        m["home"], m["away"] = m["away"], m["home"]
+        _, problemi = vf.confronta(cal, {"results": []}, self.figh())
+        testo = "\n".join(f"{c} {d}" for _, c, d in self.u14(problemi))
+        self.assertIn("casa/ospite: noi HC Fondi ospite, FIGH HC Fondi in casa", testo)
+        nuovi, _, _ = vf.risultati_da_caricare(self.cal, {"results": []}, self.figh())
+        self.assertEqual({v["id"]: (v["hs"], v["as"]) for _, v, _, _, _ in nuovi if "u14" in v.get("id", "")},
+                         {"20261213-1000-u14-gae-hcf": (10, 12), "20261213-1100-u14-hcf-pdo": (15, 9)})
 
 
 class TestConfronto(Base):
