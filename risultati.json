@@ -12,7 +12,7 @@
     { "id": "20261120-1530-u16f-fla-hcf", "hs": 19, "as": 15, "status": "FINE" },
     { "id": "20261122-1000-u18f-hcf-gae", "hs": 49, "as": 4, "status": "FINE" },
     { "id": "20261122-1800-serieb-ghl-hcf", "hs": 29, "as": 21, "status": "FINE" },
-    { "id": "20261128-1200-u16f-gae-hcf", "hs": 0, "as": 3, "status": "PARZIALE" },
+    { "id": "20261128-1200-u16f-gae-hcf", "hs": 1, "as": 3, "status": "PARZIALE" },
     { "id": "20261128-1800-u16m-ben-hcf", "hs": 0, "as": 0, "status": "DA_INIZIARE" },
     { "id": "20261206-1200-interna-hcf16-hcf18", "hs": 0, "as": 0, "status": "DA_INIZIARE" },
     { "id": "20261210-1800-u16m-hcf-gaeb", "hs": 0, "as": 0, "status": "DA_INIZIARE" },
